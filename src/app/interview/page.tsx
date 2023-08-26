@@ -6,7 +6,7 @@ import ImgCardDeck2 from '@/assets/images/image-card-deck-2.png';
 import { QUESTION_CATEGORY } from '@/constants/data';
 
 export const metadata: Metadata = {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL),
+    metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL!),
     title: 'Interview',
     description: 'Start your mock interview',
 };
