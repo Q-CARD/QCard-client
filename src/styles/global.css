@@ -2,14 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-/* TODO: font 적용
 @font-face {
-  font-family: 
-  src:
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'Inter';
+    font-weight: 400;
+    font-style: normal;
+    src: url('/fonts/Inter-Regular.ttf') format('ttf');
 }
-*/
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 700;
+    font-style: normal;
+    src: url('/fonts/Inter-Bold.ttf') format('ttf');
+}
 
 :root {
     --background-color: #ffffff;
@@ -43,5 +48,6 @@
 
 body {
     color: #000000;
+    font-family: 'Inter';
     background-color: var(--background-color);
 }
