@@ -1,16 +1,13 @@
 // 어플리케이션 공통 레이아웃
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import { siteConfig } from '@/utils/site';
 
-// import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Providers from '@/components/Provider';
 import { Header } from '@/components/Header';
-
 import '@/styles/global.css';
 
-const inter = Inter({ subsets: ['latin'] });
-
 export const metadata: Metadata = {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL),
     title: {
         default: siteConfig.name,
         template: `%s - ${siteConfig.name}`,
@@ -36,21 +33,24 @@ export const metadata: Metadata = {
     creator: 'hyosin-Jang',
 };
 
-// children prop이 nested layout로 들어감
 export default function RootLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
     return (
-        <html lang="ko">
-            <body className="h-screen">
-                <div className="h-full flex flex-col overflow-x-hidden">
-                    <Header />
-                    <main className="w-screen h-full mt-[11.2rem]">
-                        {children}
-                    </main>
-                </div>
+        // 서버와 클라이언트 데이터가 다른 경우 경고 해제
+        <html lang="ko" suppressHydrationWarning>
+            <head />
+            <body className="min-h-screen">
+                <Providers>
+                    <div className="flex flex-col h-full overflow-x-hidden">
+                        <Header />
+                        <main className="w-screen h-full mt-[11.2rem]">
+                            {children}
+                        </main>
+                    </div>
+                </Providers>
             </body>
         </html>
     );
