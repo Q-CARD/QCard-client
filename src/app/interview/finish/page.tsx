@@ -5,7 +5,7 @@ import Link from 'next/link';
 import ImgCelebrate from '@/assets/images/image-celebrate.png';
 
 export const metadata: Metadata = {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL),
+    metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL!),
     title: 'Interview Finish',
     description: 'Finish interview',
 };
