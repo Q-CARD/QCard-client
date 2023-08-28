@@ -5,6 +5,7 @@ import { siteConfig } from '@/utils/site';
 import Providers from '@/components/Provider';
 import { Header } from '@/components/Header';
 import '@/styles/global.css';
+import 'animate.css'; // 아코디언 애니메이션
 
 export const metadata: Metadata = {
     metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL!),
@@ -41,7 +42,12 @@ export default function RootLayout({
     return (
         // 서버와 클라이언트 데이터가 다른 경우 경고 해제
         <html lang="ko" suppressHydrationWarning>
-            <head />
+            <head>
+                <link
+                    rel="stylesheet"
+                    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+                />
+            </head>
             <body className="min-h-screen">
                 <Providers>
                     <div className="flex flex-col h-full overflow-x-hidden">
