@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 
@@ -16,7 +15,7 @@ export function Accordian({ gptAnswer, className }: AccordianProps) {
     // 아코디언 열리는 애니메이션: animate__animated animate__slideInDown
     return (
         <div
-            className={`${className} flex justify-center items-center w-full py-[2.4rem] px-[3.6rem] text-bodySmaller border border-grey-4 rounded-3xl bg-white text-grey-5`}
+            className={`${className} flex flex-col justify-center items-center w-full py-[2.4rem] px-[3.6rem] text-bodySmaller border border-grey-4 rounded-3xl bg-white text-grey-5`}
         >
             <AccordianTrigger
                 isOpen={isOpen}

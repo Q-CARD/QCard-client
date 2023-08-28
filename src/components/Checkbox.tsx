@@ -1,4 +1,3 @@
-'use client';
 // 클라이언트 컴포넌트
 import React from 'react';
 
@@ -6,6 +5,7 @@ interface CheckboxProps {
     children: string;
     handleCategoryList: (name: string) => void;
 }
+
 export default function Checkbox({
     children,
     handleCategoryList,
