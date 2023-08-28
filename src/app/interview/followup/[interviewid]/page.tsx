@@ -5,16 +5,7 @@ import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import ChatRoom from '@/components/chat/ChatRoom';
 import { INTERVIEW_RESULT } from '@/constants/data';
-
-interface AnswerType {
-    question_id: number;
-    question: string;
-    answer: string;
-    gpt_answer: string;
-    additional_question_1: string;
-    additional_question_2: string;
-    additional_question_3: string;
-}
+import { AnswerType } from '@/types/index';
 
 export default function InterviewFollowupPage() {
     const searchParams = useSearchParams();

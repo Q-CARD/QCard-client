@@ -1,28 +1,40 @@
+import React from 'react';
+
 import ChatBubble from './ChatBubble';
 import ChatInput from './ChatInput';
-import React from 'react';
+
 import useInput from '@/hooks/useInput';
+import { AnswerType } from '@/types/index';
 
 interface ChatRoomProps {
-    additionalQuestions: any; // TODO: 타입 수정
+    additionalQuestions: AnswerType | undefined;
 }
-export default function ChatRoom({
-    additionalQuestions,
-    ...props
-}: ChatRoomProps) {
-    // data가 있고,
-    const [chatMessages, setChatMessages] = React.useState([]);
+
+interface ChatMessage {
+    type: 'question' | 'answer';
+    text: string;
+    cnt: number;
+}
+
+const ERROR_MESSAGE = '질문 Key가 없습니다';
+
+export default function ChatRoom({ additionalQuestions }: ChatRoomProps) {
+    const [chatMessages, setChatMessages] = React.useState<ChatMessage[]>([]);
 
     // 현재 답변할 차례인 질문
     const [questionCnt, setQuestionCnt] = React.useState(1);
 
-    // 사용자 답변
-    const [answerList, setAnswerList] = React.useState([]);
+    // 사용자가 꼬리질문에 작성한 답변 리스트
+    const [answerList, setAnswerList] = React.useState<string[]>([]);
 
     const handleAnswerList = (answer: string) => {
-        setAnswerList(...answerList, answer);
+        setAnswerList([...answerList, answer]);
     };
 
+    // || OR 연산자는 falsy value 체크
+    // falsy: false, undefined, null, 0, NaN, []
+
+    // ?? Null 연산자는 undefined와 null만 체크
     React.useEffect(() => {
         // questionCnt에 해당하는 질문을 chatData에 추가
         let regEx = new RegExp(`additional_question_${questionCnt}`);
@@ -30,57 +42,50 @@ export default function ChatRoom({
         if (questionCnt >= 4) return;
 
         if (additionalQuestions) {
-            let questionKey = Object.keys(
-                (additionalQuestions && additionalQuestions) || [],
-            ).find((el) => regEx.test(el));
+            // 1, 2, 3이 무조건 있어야 함
+            let questionKey: keyof AnswerType = Object.keys(
+                additionalQuestions,
+            ).find((el) => regEx.test(el)) as keyof AnswerType; // 타입 단언
 
-            let newQuestion = {
-                cnt: questionCnt,
+            let newQuestion: ChatMessage = {
                 type: 'question',
-                text: additionalQuestions[questionKey],
+                text:
+                    (additionalQuestions[questionKey] as string) ??
+                    ERROR_MESSAGE,
+                cnt: questionCnt,
             };
             setChatMessages([...chatMessages, newQuestion]);
         }
     }, [questionCnt, additionalQuestions]);
 
-    console.log('chatMessages', chatMessages);
-
-    // 사용자 입력 후, 엔터 누르면 questionCnt++
-    // questionCnt 증가 -> 다음 꼬리질문 넣기
-
-    /**
-     * {
-     *  type: "question" // 꼬리 질문
-     *  text: ""
-     *  초기에는 꼬리질문 1만 담기
-     * },
-     *
-     * {
-     *  type: "answer",
-     *  text: ""
-     *
-     * }
-     *
-     *
-     */
-
     const [value, handler, set, reset] = useInput('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (
+        e: React.FormEvent<HTMLFormElement> & { target: HTMLFormElement },
+    ) => {
         e.preventDefault();
-        handleAnswerList(value);
+        handleAnswerList(value as string);
         setQuestionCnt(questionCnt + 1);
 
-        let newAnswer = {
-            cnt: questionCnt,
+        let newAnswer: ChatMessage = {
             type: 'answer',
-            text: value,
+            text: value as string,
+            cnt: questionCnt,
         };
+
         setChatMessages([...chatMessages, newAnswer]);
+
+        // 문제: EventTarget에 reset property가 없음
+        // 1. 타입 단언
+        // (e.target as HTMLFormElement).reset()
+
+        // 2. 타입 선언
+        // target에 HTMLFormElement를 타입에 선언해줄 수 있다
+        // e: React.FormEvent<HTMLFormElement> & { target : HTMLFormElement }
         e.target.reset();
     };
 
-    const chatRoomRef = React.useRef(null);
+    const chatRoomRef = React.useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
         if (chatRoomRef.current) {
