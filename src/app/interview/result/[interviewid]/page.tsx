@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Accordian } from '@/components/Accordian'; // gpt 답변 Props로 넘기기
 import { AiOutlineArrowRight } from 'react-icons/ai';
-import { INTERVIEW_RESULT } from '@/constants/data';
+import { INTERVIEW_RESULT } from '@/constants/dummy';
 
 interface AnswerType {
     question_id: number;
