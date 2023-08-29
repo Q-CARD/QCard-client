@@ -17,11 +17,13 @@ export function Accordian({ gptAnswer, className }: AccordianProps) {
         <div
             className={`${className} flex flex-col justify-center items-center w-full py-[2.4rem] px-[3.6rem] text-bodySmaller border border-grey-4 rounded-3xl bg-white text-grey-5`}
         >
-            <AccordianTrigger
-                isOpen={isOpen}
-                handleAccordianOpen={handleAccordianOpen}
-            />
-            <AccordianContent isOpen={isOpen} value={gptAnswer} />
+            <div>
+                <AccordianTrigger
+                    isOpen={isOpen}
+                    handleAccordianOpen={handleAccordianOpen}
+                />
+                <AccordianContent isOpen={isOpen} value={gptAnswer} />
+            </div>
         </div>
     );
 }
