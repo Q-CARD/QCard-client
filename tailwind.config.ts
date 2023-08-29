@@ -23,6 +23,46 @@ const config: Config = {
                 // sans: 'AppleSDGothicNeo',
                 // logo: ['var(--logo-font)'],
             },
+            fontSize: {
+                // heading - bold
+                heading1: ['56px', { fontWeight: '700', lineHeight: '66px' }],
+                heading2: ['36px', { fontWeight: '700', lineHeight: '46px' }],
+                heading3: ['24px', { fontWeight: '700', lineHeight: '34px' }],
+                heading4: ['22px', { fontWeight: '700', lineHeight: '28px' }],
+                heading5: ['18px', { fontWeight: '700', lineHeight: '24px' }],
+                heading6: ['16px', { fontWeight: '700', lineHeight: '22px' }],
+                specialHeading: [
+                    '28px',
+                    { fontWeight: '700', lineHeight: '38px' },
+                ],
+                // body - regular
+                bodyLarge: ['22px', { fontWeight: '400', lineHeight: '36px' }],
+                bodyDefault: [
+                    '18px',
+                    { fontWeight: '400', lineHeight: '30px' },
+                ],
+                bodySmall: ['16px', { fontWeight: '400', lineHeight: '28px' }],
+                bodySmaller: [
+                    '14px',
+                    { fontWeight: '400', lineHeight: '24px' },
+                ],
+                bodyExtraLarge: [
+                    '36x',
+                    { fontWeight: '400', lineHeight: '46px' },
+                ],
+                // input
+                input: ['16px', { fontWeight: '400', lineHeight: '18px' }],
+                // button
+                buttonBlock: [
+                    '18px',
+                    { fontWeight: '700', lineHeight: '18px' },
+                ],
+                buttonRound: [
+                    '16px',
+                    { fontWeight: '700', lineHeight: '18px' },
+                ],
+                buttonChip: ['12px', { fontWeight: '700', lineHeight: '14px' }],
+            },
             colors: {
                 black: '#444449',
                 white: '#ffffff',
