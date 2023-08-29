@@ -21,6 +21,11 @@ export default function RecordCard({
         setIsRecording(!isRecording);
     };
 
+    // 다음 문제로 넘어갈 때마다 타이머 초기화
+    React.useEffect(() => {
+        setIsRecording(false);
+    }, [question]);
+
     return (
         <div className="flex flex-col items-center rounded-2xl border border-grey-4 py-[3.2rem] px-[2.4rem] gap-[5.4rem] self-stretch">
             <div className="text-heading3 text-blue-primary">
