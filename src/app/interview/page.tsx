@@ -15,11 +15,18 @@ export default function InterviewPage() {
 
     const router = useRouter();
 
-    const handleCategoryList = (category: string) => {
+    const handleCategoryList = (category: string, isChecked: boolean) => {
+        // 추가하려고 하는데 이미 최대 3개를 클릭한 경우 alert 띄우기
+        if (categoryList.length === 3 && !isChecked) {
+            alert('최대 3개까지만 선택이 가능합니다!');
+            return;
+        }
         if (categoryList.includes(category)) {
             // category가 있으면 제거하고, 없으면 추가하기
             setCategoryList([...categoryList.filter((el) => el !== category)]);
-        } else setCategoryList([...categoryList, category]);
+        } else {
+            setCategoryList([...categoryList, category]);
+        }
     };
 
     const handleInterviewStart = () => {
@@ -29,8 +36,9 @@ export default function InterviewPage() {
         router.push(pathname);
     };
 
+    //   <section className="flex justify-center pt-[17rem] min-w-[86rem] mr-[19.3rem] pb-[17.3rem] ml-[14.4rem]">
     return (
-        <section className="flex justify-center pt-[17rem] pr-[19.3rem] pb-[17.3rem] pl-[14.4rem]">
+        <section className="flex justify-center pt-[17rem] min-w-[86rem] m-auto pb-[17.3rem] ">
             <div>
                 <h1 className="text-center text-black text-5xl font-bold mb-[6.6rem]">
                     모의 면접을 시작해볼까요?
@@ -47,12 +55,13 @@ export default function InterviewPage() {
                     받고 싶은 질문 유형을 선택해주세요
                 </h5>
                 <div className="flex flex-col gap-[1.6rem] mt-[3.2rem] overflow-y-auto pr-[2rem]">
-                    {QUESTION_CATEGORY.map((category, idx) => (
+                    {QUESTION_CATEGORY.map(({ id, name }) => (
                         <Checkbox
-                            key={category.id}
+                            key={id}
                             handleCategoryList={handleCategoryList}
+                            isCheckableNum={categoryList.length}
                         >
-                            {category.name}
+                            {name}
                         </Checkbox>
                     ))}
                 </div>
