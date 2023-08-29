@@ -4,7 +4,7 @@
 import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import ChatRoom from '@/components/chat/ChatRoom';
-import { INTERVIEW_RESULT } from '@/constants/data';
+import { INTERVIEW_RESULT } from '@/constants/dummy';
 import { AnswerType } from '@/types/index';
 
 export default function InterviewFollowupPage() {
