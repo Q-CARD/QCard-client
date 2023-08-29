@@ -32,6 +32,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:20.5.6"],\
             ["@types/react", "npm:18.2.21"],\
             ["@types/react-dom", "npm:18.2.7"],\
+            ["animate.css", "npm:4.1.1"],\
             ["autoprefixer", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:10.4.15"],\
             ["axios", "npm:1.4.0"],\
             ["eslint", "npm:8.47.0"],\
@@ -687,6 +688,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["fast-json-stable-stringify", "npm:2.1.0"],\
             ["json-schema-traverse", "npm:0.4.1"],\
             ["uri-js", "npm:4.4.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["animate.css", [\
+        ["npm:4.1.1", {\
+          "packageLocation": "./.yarn/cache/animate.css-npm-4.1.1-5c526dcd84-c7eb915404.zip/node_modules/animate.css/",\
+          "packageDependencies": [\
+            ["animate.css", "npm:4.1.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -4007,6 +4017,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:20.5.6"],\
             ["@types/react", "npm:18.2.21"],\
             ["@types/react-dom", "npm:18.2.7"],\
+            ["animate.css", "npm:4.1.1"],\
             ["autoprefixer", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:10.4.15"],\
             ["axios", "npm:1.4.0"],\
             ["eslint", "npm:8.47.0"],\
