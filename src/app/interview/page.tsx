@@ -51,6 +51,7 @@ export default function InterviewPage() {
                         <Checkbox
                             key={category.id}
                             handleCategoryList={handleCategoryList}
+                            isCheckableNum={categoryList.length}
                         >
                             {category.name}
                         </Checkbox>
