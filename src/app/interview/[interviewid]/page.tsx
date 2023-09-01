@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import RecordCard from '@/components/card/RecordCard';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { INTERVIEW_QUESTION } from '@/constants/data';
+import { INTERVIEW_QUESTION } from '@/constants/dummy';
 
 // TODO: interviewid를 가지고, GET /interviews/:interview_id 요청
 

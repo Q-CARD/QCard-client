@@ -20,29 +20,19 @@ const ERROR_MESSAGE = '질문 Key가 없습니다';
 
 export default function ChatRoom({ additionalQuestions }: ChatRoomProps) {
     const [chatMessages, setChatMessages] = React.useState<ChatMessage[]>([]);
+    const [questionCnt, setQuestionCnt] = React.useState(1); // 현재 답변할 차례인 질문
+    const [answerList, setAnswerList] = React.useState<string[]>([]); // 사용자가 꼬리질문에 작성한 답변 리스트
 
-    // 현재 답변할 차례인 질문
-    const [questionCnt, setQuestionCnt] = React.useState(1);
-
-    // 사용자가 꼬리질문에 작성한 답변 리스트
-    const [answerList, setAnswerList] = React.useState<string[]>([]);
+    const chatRoomRef = React.useRef<HTMLDivElement>(null);
 
     const handleAnswerList = (answer: string) => {
         setAnswerList([...answerList, answer]);
     };
 
-    // || OR 연산자는 falsy value 체크
-    // falsy: false, undefined, null, 0, NaN, []
-
-    // ?? Null 연산자는 undefined와 null만 체크
-    React.useEffect(() => {
-        // questionCnt에 해당하는 질문을 chatData에 추가
+    const getAdditionalQuestion = () => {
         let regEx = new RegExp(`additional_question_${questionCnt}`);
 
-        if (questionCnt >= 4) return;
-
         if (additionalQuestions) {
-            // 1, 2, 3이 무조건 있어야 함
             let questionKey: keyof AnswerType = Object.keys(
                 additionalQuestions,
             ).find((el) => regEx.test(el)) as keyof AnswerType; // 타입 단언
@@ -56,6 +46,12 @@ export default function ChatRoom({ additionalQuestions }: ChatRoomProps) {
             };
             setChatMessages([...chatMessages, newQuestion]);
         }
+    };
+
+    React.useEffect(() => {
+        // questionCnt에 해당하는 질문을 chatData에 추가
+        if (questionCnt >= 4) return;
+        getAdditionalQuestion();
     }, [questionCnt, additionalQuestions]);
 
     const [value, handler, set, reset] = useInput('');
@@ -74,18 +70,8 @@ export default function ChatRoom({ additionalQuestions }: ChatRoomProps) {
         };
 
         setChatMessages([...chatMessages, newAnswer]);
-
-        // 문제: EventTarget에 reset property가 없음
-        // 1. 타입 단언
-        // (e.target as HTMLFormElement).reset()
-
-        // 2. 타입 선언
-        // target에 HTMLFormElement를 타입에 선언해줄 수 있다
-        // e: React.FormEvent<HTMLFormElement> & { target : HTMLFormElement }
         e.target.reset();
     };
-
-    const chatRoomRef = React.useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
         if (chatRoomRef.current) {
@@ -99,18 +85,14 @@ export default function ChatRoom({ additionalQuestions }: ChatRoomProps) {
                 className="flex flex-col pr-[1rem] gap-[4.8rem] overflow-y-auto pb-[5.4rem]"
                 ref={chatRoomRef}
             >
-                {chatMessages.map((chatMessage, idx) => (
-                    <ChatBubble
-                        key={`${chatMessage.type}-${chatMessage.text}`}
-                        type={chatMessage.type}
-                        cnt={chatMessage.cnt}
-                    >
-                        {chatMessage.text}
+                {chatMessages.map(({ type, cnt, text }, idx) => (
+                    <ChatBubble key={`${type}-${idx}`} type={type} cnt={cnt}>
+                        {text}
                     </ChatBubble>
                 ))}
             </div>
             <form onSubmit={handleSubmit} className="mt-auto">
-                <ChatInput handler={handler} />
+                <ChatInput disabled={questionCnt >= 4} handler={handler} />
             </form>
         </div>
     );
