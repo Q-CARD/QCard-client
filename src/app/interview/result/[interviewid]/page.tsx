@@ -7,6 +7,7 @@ import { Accordian } from '@/components/Accordian'; // gpt 답변 Props로 넘�
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { INTERVIEW_RESULT } from '@/constants/dummy';
 import { Pagination, PageItem } from '@/components/Pagination';
+
 interface AnswerType {
     question_id: number;
     question: string;
