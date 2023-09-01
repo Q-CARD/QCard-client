@@ -1,5 +1,7 @@
 // 클라이언트 컴포넌트
 import React from 'react';
+//import IconCheck from '@/assets/icons/icon-check.png';
+import Image from 'next/image';
 
 interface CheckboxProps {
     children: string;
@@ -42,14 +44,13 @@ export default function Checkbox({
         >
             <label
                 htmlFor={children}
-                className={`flex flex-1 text-base font-normal items-center ${
+                className={`flex flex-1 text-bodySmall items-center ${
                     isChecked ? 'text-blue-primary' : 'text-grey-4'
                 } cursor-pointer`}
             >
                 {children}
             </label>
             <input
-                className="cursor-pointer"
                 id={children}
                 name={children}
                 checked={isChecked}

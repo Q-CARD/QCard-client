@@ -51,7 +51,7 @@ export default function InterviewPage() {
                 />
             </div>
             <div className="flex flex-col h-[45.6rem] items-center ml-[19.3rem]">
-                <h5 className="text-grey-6 text-lg font-normal text-center">
+                <h5 className="text-grey-6 text-bodyDefault text-center">
                     받고 싶은 질문 유형을 선택해주세요
                 </h5>
                 <div className="flex flex-col gap-[1.6rem] mt-[3.2rem] overflow-y-auto pr-[2rem]">
