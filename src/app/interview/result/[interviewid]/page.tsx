@@ -6,6 +6,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Accordian } from '@/components/Accordian'; // gpt 답변 Props로 넘기기
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { INTERVIEW_RESULT } from '@/constants/dummy';
+import { Pagination, PageItem } from '@/components/Pagination';
 
 interface AnswerType {
     question_id: number;
@@ -17,8 +18,11 @@ interface AnswerType {
     additional_question_3: string;
 }
 
+// answer: 현재 답변 번호 (1~10 사이의 값)
+// answer는 다음 답변으로 넘어갈 때마다 1씩 증가함
+
 export default function InterviewResultPage() {
-    // 1. intervisewId를 가지고 결과 보기 요청
+    // intervisewId를 가지고 결과 보기 요청
     // GET /interviews/:interviewId/result
 
     const pathname = usePathname();
@@ -51,7 +55,7 @@ export default function InterviewResultPage() {
                 Number(answer) + 1
             }`;
             router.push(pathname);
-            // 10까지 온 경우 종료!
+            // 10까지 온 경우 종료
         } else router.push(`/interview/finish`);
     };
 
@@ -61,6 +65,30 @@ export default function InterviewResultPage() {
     };
 
     const NEXT_BUTTON_TEXT = answer < 10 ? '다음 질문으로' : '모의 면접 종료';
+
+    const handlePageMove = (answer: number) => {
+        console.log('handlePageMove 실행');
+        const pathname = `/interview/result/${interviewId}?answer=${answer}`;
+        router.push(pathname);
+    };
+
+    const handlePrev = () => {
+        if (answer > 1) {
+            const pathname = `/interview/result/${interviewId}?answer=${
+                answer - 1
+            }`;
+            router.push(pathname);
+        }
+    };
+
+    const handleNext = () => {
+        if (answer < 10) {
+            const pathname = `/interview/result/${interviewId}?answer=${
+                answer + 1
+            }`;
+            router.push(pathname);
+        }
+    };
 
     return (
         <section className="flex flex-col items-center min-w-[82rem] m-auto">
@@ -92,8 +120,20 @@ export default function InterviewResultPage() {
                     />
                 </button>
             </div>
-            {/* TODO: 페이지네이션 */}
-            <div className="mt-[3.4rem]">페이지네이션</div>
+            <Pagination
+                handlePrev={handlePrev}
+                handleNext={handleNext}
+                className="mt-[3.4rem]"
+            >
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_, idx) => (
+                    <PageItem
+                        key={`page-item-${idx}`}
+                        handlePageMove={handlePageMove}
+                        pageIndex={idx + 1}
+                        activeIdx={answer}
+                    />
+                ))}
+            </Pagination>
             <button onClick={handleNextQuestion} className="mt-[9rem]">
                 {NEXT_BUTTON_TEXT}
             </button>
