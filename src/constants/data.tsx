@@ -1,51 +1,123 @@
 export const QUESTION_CATEGORY = [
     {
-        id: 1,
         name: '네트워크',
+        id: 1,
     },
     {
-        id: 2,
         name: '운영체제',
+        id: 2,
     },
     {
-        id: 3,
         name: '데이터베이스',
+        id: 3,
     },
     {
-        id: 4,
         name: '자료구조',
+        id: 4,
     },
     {
-        name: 'JAVA',
+        name: '컴퓨터구조',
         id: 5,
     },
     {
-        name: 'Python',
+        name: 'JAVA',
         id: 6,
     },
     {
-        name: 'JavaScript',
+        name: 'Python',
         id: 7,
     },
     {
-        name: 'DevOps/Infra',
+        name: 'JavaScript',
         id: 8,
     },
     {
-        name: 'Backend',
+        name: 'Data Engineering',
         id: 9,
     },
     {
-        name: 'Frontend',
+        name: 'BackEnd',
         id: 10,
     },
     {
-        name: 'AI',
+        name: 'FrontEnd',
         id: 11,
     },
     {
-        name: '인성 질문',
+        name: 'AI',
         id: 12,
+    },
+    {
+        name: '인성질문',
+        id: 13,
+    },
+];
+
+export const ANSWERS_ME = [
+    {
+        answerId: 1,
+        type: 'TYPE_ANSWER',
+        account: {
+            name: '시연',
+            email: 'ashley_0726@naver.com',
+        },
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Ullamcorper eget eu non mattis. Adipiscing ut pharetra diam amet parturient tristique aliquet ac vitae. Libero cursus lacus eu venenatis. Integer senectus eu arcu massa vitae quis. Eu diam justo dui viverra at scelerisque amet. Ipsum semper id et imperdiet nisi mattis sit nunc. Congue viverra sed ut dictumst consequat sit dictum. Et egestas dictumst convallis sem fringilla euismod in pellentesque porttitor. Amet integer volutpat id nam. Elementum id elementum scelerisque est. Orci orci tempor in vivamus integer non eget sollicitudin. Purus mauris urna tempor quam nunc egestas.',
+        heartCount: 1,
+        createdAt: '2023-08-29T21:05:36.225424',
+        modifiedAt: '2023-08-29T21:05:36.225424',
+    },
+    {
+        answerId: 1,
+        type: 'TYPE_ANSWER',
+        account: {
+            name: '시연',
+            email: 'ashley_0726@naver.com',
+        },
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Ullamcorper eget eu non mattis. Adipiscing ut pharetra diam amet parturient tristique aliquet ac vitae. Libero cursus lacus eu venenatis. Integer senectus eu arcu massa vitae quis. Eu diam justo dui viverra at scelerisque amet. Ipsum semper id et imperdiet nisi mattis sit nunc. Congue viverra sed ut dictumst consequat sit dictum. Et egestas dictumst convallis sem fringilla euismod in pellentesque porttitor. Amet integer volutpat id nam. Elementum id elementum scelerisque est. Orci orci tempor in vivamus integer non eget sollicitudin. Purus mauris urna tempor quam nunc egestas.',
+        heartCount: 1,
+        createdAt: '2023-08-29T21:05:46.282517',
+        modifiedAt: '2023-08-29T21:05:46.282517',
+    },
+    {
+        answerId: 2,
+        type: 'TYPE_ANSWER',
+        account: {
+            name: '시연',
+            email: 'ashley_0726@naver.com',
+        },
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Ullamcorper eget eu non mattis. Adipiscing ut pharetra diam amet parturient tristique aliquet ac vitae. Libero cursus lacus eu venenatis. Integer senectus eu arcu massa vitae quis. Eu diam justo dui viverra at scelerisque amet. Ipsum semper id et imperdiet nisi mattis sit nunc. Congue viverra sed ut dictumst consequat sit dictum. Et egestas dictumst convallis sem fringilla euismod in pellentesque porttitor. Amet integer volutpat id nam. Elementum id elementum scelerisque est. Orci orci tempor in vivamus integer non eget sollicitudin. Purus mauris urna tempor quam nunc egestas.',
+        heartCount: 1,
+        createdAt: '2023-08-29T21:05:46.282517',
+        modifiedAt: '2023-08-29T21:05:46.282517',
+    },
+    {
+        answerId: 3,
+        type: 'TYPE_ANSWER',
+        account: {
+            name: '시연',
+            email: 'ashley_0726@naver.com',
+        },
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Ullamcorper eget eu non mattis. Adipiscing ut pharetra diam amet parturient tristique aliquet ac vitae. Libero cursus lacus eu venenatis. Integer senectus eu arcu massa vitae quis. Eu diam justo dui viverra at scelerisque amet. Ipsum semper id et imperdiet nisi mattis sit nunc. Congue viverra sed ut dictumst consequat sit dictum. Et egestas dictumst convallis sem fringilla euismod in pellentesque porttitor. Amet integer volutpat id nam. Elementum id elementum scelerisque est. Orci orci tempor in vivamus integer non eget sollicitudin. Purus mauris urna tempor quam nunc egestas.',
+        heartCount: 1,
+        createdAt: '2023-08-29T21:05:46.282517',
+        modifiedAt: '2023-08-29T21:05:46.282517',
+    },
+    {
+        answerId: 6,
+        type: 'TYPE_ANSWER',
+        account: {
+            name: '시연',
+            email: 'ashley_0726@naver.com',
+        },
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Ullamcorper eget eu non mattis. Adipiscing ut pharetra diam amet parturient tristique aliquet ac vitae. Libero cursus lacus eu venenatis. Integer senectus eu arcu massa vitae quis. Eu diam justo dui viverra at scelerisque amet. Ipsum semper id et imperdiet nisi mattis sit nunc. Congue viverra sed ut dictumst consequat sit dictum. Et egestas dictumst convallis sem fringilla euismod in pellentesque porttitor. Amet integer volutpat id nam. Elementum id elementum scelerisque est. Orci orci tempor in vivamus integer non eget sollicitudin. Purus mauris urna tempor quam nunc egestas.',
+        heartCount: 1,
+        createdAt: '2023-08-29T21:05:46.282517',
+        modifiedAt: '2023-08-29T21:05:46.282517',
     },
 ];
 
