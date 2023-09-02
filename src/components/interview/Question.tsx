@@ -39,7 +39,7 @@ export default function Question() {
     };
 
     const handlePageResult = () => {
-        let curPage: AnswerType = interviewQuestion[answer - 1];
+        let curPage: AnswerType = interviewQuestion?.[answer - 1];
         getAllInterviewInfo(curPage.id);
 
         if (!curPage) throw new Error('질문 없음');
