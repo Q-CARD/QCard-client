@@ -11,3 +11,9 @@ export interface AnswerType {
     additional_question_2: string;
     additional_question_3: string;
 }
+
+export interface ICategory {
+    id: number;
+    name: string;
+    image: any; // TODO - any
+}
