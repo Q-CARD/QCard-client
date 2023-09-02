@@ -120,3 +120,30 @@ export const ANSWERS_ME = [
         modifiedAt: '2023-08-29T21:05:46.282517',
     },
 ];
+
+export const MAIN_QCARD_QUESTION = [
+    {
+        id: 1,
+        value: 'Network',
+    },
+    {
+        id: 2,
+        value: '네트워크 OSI 7계층에 대해 설명해 주세요.',
+    },
+    {
+        id: 3,
+        value: '네트워크 OSI 7계층에 대해 설명해 주세요.',
+    },
+    {
+        id: 4,
+        value: '네트워크 OSI 7계층에 대해 설명해 주세요.',
+    },
+    {
+        id: 5,
+        value: '네트워크 OSI 7계층에 대해 설명해 주세요.',
+    },
+    {
+        id: 6,
+        value: '네트워크 OSI 7계층에 대해 설명해 주세요.',
+    },
+];

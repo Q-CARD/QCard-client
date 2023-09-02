@@ -14,6 +14,8 @@ const config: Config = {
     theme: {
         extend: {
             backgroundImage: {
+                //'my-checkbox': "url(/icons/icon-check.png')",
+                //'my-checkbox-active': "url('/icons/icon-check-active.png')",
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
                 'gradient-conic':
                     'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
@@ -35,8 +37,13 @@ const config: Config = {
                     '28px',
                     { fontWeight: '700', lineHeight: '38px' },
                 ],
+                specialHeading2: [
+                    '22px',
+                    { fontWeight: '600', lineHeight: '40px' },
+                ],
                 // body - regular
                 bodyLarge: ['22px', { fontWeight: '400', lineHeight: '36px' }],
+                bodyLarger: ['24px', { fontWeight: '400', lineHeight: '46px' }],
                 bodyDefault: [
                     '18px',
                     { fontWeight: '400', lineHeight: '30px' },
