@@ -34,38 +34,38 @@ export const QUESTION_CATEGORY = [
         image: java,
     },
     {
-        name: 'JAVA',
         id: 6,
+        name: 'Python',
         image: python,
     },
     {
-        name: 'Python',
         id: 7,
+        name: 'JavaScript',
         image: javascript,
     },
     {
-        name: 'JavaScript',
         id: 8,
+        name: 'DevOps/Infra',
         image: devops_infra,
     },
     {
-        name: 'Data Engineering',
         id: 9,
+        name: 'Backend',
         image: backend,
     },
     {
-        name: 'BackEnd',
         id: 10,
+        name: 'Frontend',
         image: frontend,
     },
     {
-        name: 'FrontEnd',
         id: 11,
+        name: 'AI',
         image: ai,
     },
     {
-        name: 'AI',
         id: 12,
+        name: '인성 질문',
         image: personal,
     },
     {
@@ -166,5 +166,24 @@ export const MAIN_QCARD_QUESTION = [
     {
         id: 6,
         value: '네트워크 OSI 7계층에 대해 설명해 주세요.',
+    },
+];
+
+// TODO - categoryId 추가 요청
+export const QUESTION_CATEGORY_DETAIL = [
+    {
+        questionId: 21,
+        title: 'Spring DI에 대해 알려주세요',
+        category: '네트워크',
+    },
+    {
+        questionId: 22,
+        title: '네이버에 접속할때 일어나는 모든 과정에 대해 아는만큼 설명해주세요.',
+        category: '네트워크',
+    },
+    {
+        questionId: 23,
+        title: 'TCP 통신의 3-way Handshake 과정에 대해 설명해주세요.',
+        category: '네트워크',
     },
 ];

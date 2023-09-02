@@ -17,3 +17,9 @@ export interface ICategory {
     name: string;
     image: any; // TODO - any
 }
+
+export interface IQuestion {
+    questionId: number;
+    title: string;
+    category: string;
+}
