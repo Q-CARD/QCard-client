@@ -16,8 +16,8 @@ export function QuestionDetailCard({ questionInfo }: QuestionDetailCardProps) {
         const isAnswered = false; // TODO - 답변 여부
 
         const pathname = isAnswered
-            ? `/category/question/${questionInfo.questionId}`
-            : `/category/result/${questionInfo.questionId}`;
+            ? `/category/result/${questionInfo.questionId}`
+            : `/category/question/${questionInfo.questionId}`;
 
         router.push(pathname);
     };
