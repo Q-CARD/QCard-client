@@ -13,7 +13,10 @@ export default function CategoryPage() {
             </div>
             <div className="flex flex-wrap gap-[4.4rem]">
                 {QUESTION_CATEGORY.map((category: ICategory) => (
-                    <CategoryCard categoryInfo={category} />
+                    <CategoryCard
+                        key={`category-card-${category.id}`}
+                        categoryInfo={category}
+                    />
                 ))}
             </div>
         </div>
