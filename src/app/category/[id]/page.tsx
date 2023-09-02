@@ -1,6 +1,7 @@
 import { QuestionDetailCard } from '@/components/card/QuestionDetailCard';
 import { IQuestion } from '@/types';
-import { QUESTION_CATEGORY, QUESTION_CATEGORY_DETAIL } from '@/constants/data';
+import { QUESTION_CATEGORY } from '@/constants/data';
+import { QUESTION_CATEGORY_DETAIL } from '@/constants/dummy';
 
 export default function CategoryDetailPage({
     params,
