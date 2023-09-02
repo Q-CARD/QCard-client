@@ -162,3 +162,71 @@ export const QUESTION_CATEGORY_DETAIL = [
         category: '네트워크',
     },
 ];
+
+export const ANSWERS_ME = [
+    {
+        answerId: 1,
+        type: 'TYPE_ANSWER',
+        account: {
+            name: '시연',
+            email: 'ashley_0726@naver.com',
+        },
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Ullamcorper eget eu non mattis. Adipiscing ut pharetra diam amet parturient tristique aliquet ac vitae. Libero cursus lacus eu venenatis. Integer senectus eu arcu massa vitae quis. Eu diam justo dui viverra at scelerisque amet. Ipsum semper id et imperdiet nisi mattis sit nunc. Congue viverra sed ut dictumst consequat sit dictum. Et egestas dictumst convallis sem fringilla euismod in pellentesque porttitor. Amet integer volutpat id nam. Elementum id elementum scelerisque est. Orci orci tempor in vivamus integer non eget sollicitudin. Purus mauris urna tempor quam nunc egestas.',
+        heartCount: 1,
+        createdAt: '2023-08-29T21:05:36.225424',
+        modifiedAt: '2023-08-29T21:05:36.225424',
+    },
+    {
+        answerId: 1,
+        type: 'TYPE_ANSWER',
+        account: {
+            name: '시연',
+            email: 'ashley_0726@naver.com',
+        },
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Ullamcorper eget eu non mattis. Adipiscing ut pharetra diam amet parturient tristique aliquet ac vitae. Libero cursus lacus eu venenatis. Integer senectus eu arcu massa vitae quis. Eu diam justo dui viverra at scelerisque amet. Ipsum semper id et imperdiet nisi mattis sit nunc. Congue viverra sed ut dictumst consequat sit dictum. Et egestas dictumst convallis sem fringilla euismod in pellentesque porttitor. Amet integer volutpat id nam. Elementum id elementum scelerisque est. Orci orci tempor in vivamus integer non eget sollicitudin. Purus mauris urna tempor quam nunc egestas.',
+        heartCount: 1,
+        createdAt: '2023-08-29T21:05:46.282517',
+        modifiedAt: '2023-08-29T21:05:46.282517',
+    },
+    {
+        answerId: 2,
+        type: 'TYPE_ANSWER',
+        account: {
+            name: '시연',
+            email: 'ashley_0726@naver.com',
+        },
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Ullamcorper eget eu non mattis. Adipiscing ut pharetra diam amet parturient tristique aliquet ac vitae. Libero cursus lacus eu venenatis. Integer senectus eu arcu massa vitae quis. Eu diam justo dui viverra at scelerisque amet. Ipsum semper id et imperdiet nisi mattis sit nunc. Congue viverra sed ut dictumst consequat sit dictum. Et egestas dictumst convallis sem fringilla euismod in pellentesque porttitor. Amet integer volutpat id nam. Elementum id elementum scelerisque est. Orci orci tempor in vivamus integer non eget sollicitudin. Purus mauris urna tempor quam nunc egestas.',
+        heartCount: 1,
+        createdAt: '2023-08-29T21:05:46.282517',
+        modifiedAt: '2023-08-29T21:05:46.282517',
+    },
+    {
+        answerId: 3,
+        type: 'TYPE_ANSWER',
+        account: {
+            name: '시연',
+            email: 'ashley_0726@naver.com',
+        },
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Ullamcorper eget eu non mattis. Adipiscing ut pharetra diam amet parturient tristique aliquet ac vitae. Libero cursus lacus eu venenatis. Integer senectus eu arcu massa vitae quis. Eu diam justo dui viverra at scelerisque amet. Ipsum semper id et imperdiet nisi mattis sit nunc. Congue viverra sed ut dictumst consequat sit dictum. Et egestas dictumst convallis sem fringilla euismod in pellentesque porttitor. Amet integer volutpat id nam. Elementum id elementum scelerisque est. Orci orci tempor in vivamus integer non eget sollicitudin. Purus mauris urna tempor quam nunc egestas.',
+        heartCount: 1,
+        createdAt: '2023-08-29T21:05:46.282517',
+        modifiedAt: '2023-08-29T21:05:46.282517',
+    },
+    {
+        answerId: 6,
+        type: 'TYPE_ANSWER',
+        account: {
+            name: '시연',
+            email: 'ashley_0726@naver.com',
+        },
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Ullamcorper eget eu non mattis. Adipiscing ut pharetra diam amet parturient tristique aliquet ac vitae. Libero cursus lacus eu venenatis. Integer senectus eu arcu massa vitae quis. Eu diam justo dui viverra at scelerisque amet. Ipsum semper id et imperdiet nisi mattis sit nunc. Congue viverra sed ut dictumst consequat sit dictum. Et egestas dictumst convallis sem fringilla euismod in pellentesque porttitor. Amet integer volutpat id nam. Elementum id elementum scelerisque est. Orci orci tempor in vivamus integer non eget sollicitudin. Purus mauris urna tempor quam nunc egestas.',
+        heartCount: 1,
+        createdAt: '2023-08-29T21:05:46.282517',
+        modifiedAt: '2023-08-29T21:05:46.282517',
+    },
+];
