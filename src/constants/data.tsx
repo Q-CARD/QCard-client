@@ -1,51 +1,72 @@
+import network from '@/assets/images/category/network.png';
+import os from '@/assets/images/category/os.png';
+import database from '@/assets/images/category/database.png';
+import dataStructure from '@/assets/images/category/data structure.png';
+import java from '@/assets/images/category/java.png';
+import python from '@/assets/images/category/python.png';
+import javascript from '@/assets/images/category/javascript.png';
+import devops_infra from '@/assets/images/category/devops_infra.png';
+import backend from '@/assets/images/category/backend.png';
+import frontend from '@/assets/images/category/frontend.png';
+import ai from '@/assets/images/category/ai.png';
+import personal from '@/assets/images/category/personal.png';
+
 export const QUESTION_CATEGORY = [
     {
         name: '네트워크',
-        id: 1,
+        image: network,
     },
     {
         name: '운영체제',
-        id: 2,
+        image: os,
     },
     {
         name: '데이터베이스',
-        id: 3,
+        image: database,
     },
     {
         name: '자료구조',
-        id: 4,
+        image: dataStructure,
     },
     {
         name: '컴퓨터구조',
         id: 5,
+        image: java,
     },
     {
         name: 'JAVA',
         id: 6,
+        image: python,
     },
     {
         name: 'Python',
         id: 7,
+        image: javascript,
     },
     {
         name: 'JavaScript',
         id: 8,
+        image: devops_infra,
     },
     {
         name: 'Data Engineering',
         id: 9,
+        image: backend,
     },
     {
         name: 'BackEnd',
         id: 10,
+        image: frontend,
     },
     {
         name: 'FrontEnd',
         id: 11,
+        image: ai,
     },
     {
         name: 'AI',
         id: 12,
+        image: personal,
     },
     {
         name: '인성질문',
