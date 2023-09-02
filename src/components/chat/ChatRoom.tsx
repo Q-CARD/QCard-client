@@ -8,6 +8,7 @@ import { AnswerType } from '@/types/index';
 
 interface ChatRoomProps {
     additionalQuestions: AnswerType | undefined;
+    handleAnswerCnt: (answerCnt: number) => void;
 }
 
 interface ChatMessage {
@@ -18,7 +19,10 @@ interface ChatMessage {
 
 const ERROR_MESSAGE = '질문 Key가 없습니다';
 
-export default function ChatRoom({ additionalQuestions }: ChatRoomProps) {
+export default function ChatRoom({
+    additionalQuestions,
+    handleAnswerCnt,
+}: ChatRoomProps) {
     const [chatMessages, setChatMessages] = React.useState<ChatMessage[]>([]);
     const [questionCnt, setQuestionCnt] = React.useState(1); // 현재 답변할 차례인 질문
     const [answerList, setAnswerList] = React.useState<string[]>([]); // 사용자가 꼬리질문에 작성한 답변 리스트
@@ -82,6 +86,7 @@ export default function ChatRoom({ additionalQuestions }: ChatRoomProps) {
         if (chatRoomRef.current) {
             chatRoomRef.current.scrollTop = chatRoomRef.current.scrollHeight;
         }
+        handleAnswerCnt(answerList.length);
     }, [chatMessages]);
 
     return (

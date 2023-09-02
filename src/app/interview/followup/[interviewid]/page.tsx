@@ -17,6 +17,7 @@ export default function InterviewFollowupPage() {
     const answer = searchParams?.get('answer') ?? 1;
 
     const [curPageQuestion, setCurPageQuestion] = React.useState<AnswerType>();
+    const [answerCnt, setAnswerCnt] = React.useState<number>(0); // 답변 횟수 카운트
 
     // interviewid를 가지고 요청 후, 꼬리질문 state에 저장하는 함수
     const handlePageFollowupQuestion = () => {
@@ -25,6 +26,8 @@ export default function InterviewFollowupPage() {
         );
         setCurPageQuestion(curPageQuestion);
     };
+
+    const handleAnswerCnt = (answerCnt: number) => setAnswerCnt(answerCnt);
 
     React.useEffect(() => {
         handlePageFollowupQuestion();
@@ -39,11 +42,19 @@ export default function InterviewFollowupPage() {
                 <h1 className="text-specialHeading">
                     {curPageQuestion?.question}
                 </h1>
-                <ChatRoom additionalQuestions={curPageQuestion} />
+                <ChatRoom
+                    additionalQuestions={curPageQuestion}
+                    handleAnswerCnt={handleAnswerCnt}
+                />
             </div>
 
             <button
-                className="flex items-baseline gap-[8px] rounded-[4.7rem] border border-grey-4 items-center mt-[9rem] text-grey-4 py-[2rem] px-[5.6rem] text-bodyDefault"
+                disabled={answerCnt < 3 && true}
+                className={`${
+                    answerCnt === 3
+                        ? 'border-blue-primary text-blue-primary'
+                        : 'border-grey-4 text-grey-4'
+                } flex items-baseline gap-[8px] rounded-[4.7rem] border items-center mt-[9rem] py-[2rem] px-[5.6rem] text-bodyDefault`}
                 onClick={() =>
                     router.push(
                         `/interview/result/${interviewId}?answer=${answer}`,
