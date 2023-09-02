@@ -61,3 +61,11 @@ body {
     font-family: 'Inter';
     background-color: var(--background-color);
 }
+
+/* react-icons hover color 적용 위한 class 선언 */
+.mypageMenuIcon {
+    color: 'var(--black)';
+}
+.mypageMenuIcon:hover {
+    color: 'var(--primary-blue)';
+}

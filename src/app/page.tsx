@@ -1,16 +1,18 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
+import { Button } from '@/components/Button';
 import ImgCardDeck3 from '@/assets/images/image-card-deck-3.png';
 import ImgCardDeck2 from '@/assets/images/image-card-deck-2.png';
 import ImgHeading from '@/assets/images/image-main-heading.png';
+import ImgQuestionCard from '@/assets/images/Question Card.png';
 
 export const metadata = {
     title: 'QCard Home',
 };
 
 export default function Home() {
-    // TODO: box-shadow, button/질문 박스 컴포넌트 적용, seperator 커스텀 클래스 적용
+    // TODO: box-shadow,seperator 커스텀 클래스 적용, '>' react-icons 적용
     return (
         <>
             <section className="flex justify-between pt-[9.4rem] pb-[6rem] pr-[6.6rem] pl-[12.6rem] shadow-md">
@@ -25,9 +27,9 @@ export default function Home() {
                         __개의 기술 질문과 GPT의 모범답안,
                         <br /> 내가 쓰고 함께 읽는 탄탄한 기술 면접 준비
                     </div>
-                    <button className="flex itemx-center px-[3.6rem] py-[2.4rem] rounded-[4rem] justify-center mt-[3.4rem] text-white bg-blue-primary text-specialHeading3">
-                        시작하고 성장하기 {'>'}
-                    </button>
+                    <div className="pt-[3.4rem]">
+                        <Button type="round" title="시작하고 성장하기 >" />
+                    </div>
                 </div>
                 <div>
                     <Image
@@ -38,7 +40,7 @@ export default function Home() {
                     />
                 </div>
             </section>
-            <section className="flex px-[15.5rem] py-[17.5rem]">
+            <section className="flex justify-between px-[15.5rem] py-[17.5rem]">
                 <div className="flex-col px-[5rem] py-[6rem]">
                     <h2 className="text-heading2 text-black">오늘의 질문</h2>
                     <p className="pt-[5.8rem] text-grey-6 text-bodyLarger">
@@ -47,7 +49,12 @@ export default function Home() {
                         차근차근 준비해봐요
                     </p>
                 </div>
-                {/* TODO: 질문 박스 컴포넌트 추가 */}
+                <Image
+                    src={ImgQuestionCard}
+                    alt="card-question"
+                    width={860}
+                    height={316}
+                />
             </section>
             <hr className="seperator" />
             <section className="flex justify-between px-[10rem] py-[17.5rem]">
@@ -66,9 +73,9 @@ export default function Home() {
                         <br />
                         경험을 쌓아나가요
                     </p>
-                    <button className="mt-[3.1rem] text-heading5 flex itemx-center justify-center px-[2.4rem] py-[1.8rem] bg-blue-primary text-white rounded-[3rem]">
-                        <Link href="/interview">모의 면접 시작하기 {'>'}</Link>
-                    </button>
+                    <div className="pt-[3.4rem]">
+                        <Button type="round" title="모의 면접 시작하기 >" />
+                    </div>
                 </div>
             </section>
             <hr className="seperator" />

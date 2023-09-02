@@ -33,12 +33,18 @@ const config: Config = {
                 heading4: ['22px', { fontWeight: '700', lineHeight: '28px' }],
                 heading5: ['18px', { fontWeight: '700', lineHeight: '24px' }],
                 heading6: ['16px', { fontWeight: '700', lineHeight: '22px' }],
+                // special heading
                 specialHeading: [
                     '28px',
                     { fontWeight: '700', lineHeight: '38px' },
                 ],
+                specialHeading2: [
+                    '22px',
+                    { fontWeight: '600', lineHeight: '40px' },
+                ],
                 // body - regular
                 bodyLarge: ['22px', { fontWeight: '400', lineHeight: '36px' }],
+                bodyLarger: ['24px', { fontWeight: '400', lineHeight: '46px' }],
                 bodyDefault: [
                     '18px',
                     { fontWeight: '400', lineHeight: '30px' },
@@ -64,51 +70,6 @@ const config: Config = {
                     { fontWeight: '700', lineHeight: '18px' },
                 ],
                 buttonChip: ['12px', { fontWeight: '700', lineHeight: '14px' }],
-            },
-            fontSize: {
-                // heading - bold
-                heading1: ['56px', { fontWeight: '700', lineHeight: '66px' }],
-                heading2: ['36px', { fontWeight: '700', lineHeight: '46px' }],
-                heading3: ['24px', { fontWeight: '700', lineHeight: '34px' }],
-                heading4: ['22px', { fontWeight: '700', lineHeight: '28px' }],
-                heading5: ['18px', { fontWeight: '700', lineHeight: '24px' }],
-                heading6: ['16px', { fontWeight: '700', lineHeight: '22px' }],
-                specialHeading: [
-                    '28px',
-                    { fontWeight: '700', lineHeight: '38px' },
-                ],
-                specialHeading2: [
-                    '22px',
-                    { fontWeight: '600', lineHeight: '40px' },
-                ],
-                specialHeading3: [
-                    '18px',
-                    { fontWeight: '700', lineHeight: '18px' },
-                ],
-                specialHeading4: [
-                    '12px',
-                    { fontWeight: '700', lineHeight: '14px' },
-                ],
-                // body - regular
-                bodyLarge: ['22px', { fontWeight: '400', lineHeight: '36px' }],
-                bodyLarger: ['24px', { fontWeight: '400', lineHeight: '46px' }],
-                bodyDefault: [
-                    '18px',
-                    { fontWeight: '400', lineHeight: '30px' },
-                ],
-                bodySmall: ['16px', { fontWeight: '400', lineHeight: '28px' }],
-                bodySmaller: [
-                    '14px',
-                    { fontWeight: '400', lineHeight: '24px' },
-                ],
-                bodyExtraSmaller: [
-                    '10px',
-                    { fontWeight: '600', lineHeight: '25px' },
-                ],
-                bodyExtraLarge: [
-                    '36x',
-                    { fontWeight: '400', lineHeight: '46px' },
-                ],
             },
             colors: {
                 black: '#444449',
@@ -140,6 +101,9 @@ const config: Config = {
                     1: '#e7fbf1',
                 },
                 red: { 4: '#ff3c5f', 3: '#ffaebd', 2: '#ffe5ec', 1: '#fff4f5' },
+            },
+            boxShadow: {
+                cardShadow: '0px 14px 42px 0px rgba(20, 20, 43, 0.14)',
             },
         },
     },

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from '@/assets/logo.png';
+import { Button } from './Button';
 
 export function Header() {
     // Link: <a>요소 확장 프리페칭 + 클라이언트 사이드 내비게이션
@@ -22,12 +23,13 @@ export function Header() {
                 />
             </Link>
             <div className="flex gap-[2.4rem]">
-                <button className="text-heading6 flex itemx-center justify-center px-[2.4rem] py-[1.8rem] bg-blue-primary text-white rounded-[3rem]">
-                    <Link href="/category">Questions</Link>
-                </button>
-                <button className="text-heading6 flex itemx-center justify-center px-[2.4rem] py-[1.8rem] bg-black text-white rounded-[3rem]">
-                    <Link href="/auth/login">Sign in</Link>
-                </button>
+                <Link href="/category">
+                    <Button type="round" title="Questions" />
+                </Link>
+
+                <Link href="/auth/login">
+                    <Button type="round" title="Sign in" />
+                </Link>
             </div>
         </header>
     );
