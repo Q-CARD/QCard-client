@@ -42,6 +42,14 @@ const config: Config = {
                     '22px',
                     { fontWeight: '600', lineHeight: '40px' },
                 ],
+                specialHeading3: [
+                    '18px',
+                    { fontWeight: '700', lineHeight: '18px' },
+                ],
+                specialHeading4: [
+                    '12px',
+                    { fontWeight: '700', lineHeight: '14px' },
+                ],
                 // body - regular
                 bodyLarge: ['22px', { fontWeight: '400', lineHeight: '36px' }],
                 bodyLarger: ['24px', { fontWeight: '400', lineHeight: '46px' }],
@@ -53,6 +61,10 @@ const config: Config = {
                 bodySmaller: [
                     '14px',
                     { fontWeight: '400', lineHeight: '24px' },
+                ],
+                bodyExtraSmaller: [
+                    '10px',
+                    { fontWeight: '600', lineHeight: '25px' },
                 ],
                 bodyExtraLarge: [
                     '36x',
