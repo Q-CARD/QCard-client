@@ -60,6 +60,10 @@ export default function ChatRoom({ additionalQuestions }: ChatRoomProps) {
         e: React.FormEvent<HTMLFormElement> & { target: HTMLFormElement },
     ) => {
         e.preventDefault();
+        // 답변 없는 경우 종료
+        if (!value) {
+            return;
+        }
         handleAnswerList(value as string);
         setQuestionCnt(questionCnt + 1);
 
@@ -70,6 +74,7 @@ export default function ChatRoom({ additionalQuestions }: ChatRoomProps) {
         };
 
         setChatMessages([...chatMessages, newAnswer]);
+        reset();
         e.target.reset();
     };
 
