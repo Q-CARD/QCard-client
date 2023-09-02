@@ -23,6 +23,6 @@ export const submitRecordFile = async (
 };
 
 // 나의 모의면접 결과 반환
-export const getInterviewResult = async (interviewId: number) => {
-    return await GET(`/interviews/${interviewId}/result`);
+export const submitAdditionalAnswer = async (body: any) => {
+    return await PUT(`/interview/additional`, body);
 };

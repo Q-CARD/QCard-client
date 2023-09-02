@@ -5,14 +5,19 @@ import Timer from '../Timer';
 import Recoder from '../Recoder';
 
 interface QuestionType {
-    interview_question_id: number;
+    category: string; // "CATEGORY_NW"
+    id: number; // question_id
     title: string;
 }
 
 export default function RecordCard({
     question,
+    cnt,
+    interviewQuestionId,
 }: {
+    interviewQuestionId: number;
     question: QuestionType | undefined;
+    cnt: number;
 }) {
     // 타이머 클릭 & 녹음 stop/start 상태 관리
     const [isRecording, setIsRecording] = React.useState<null | boolean>(null);
@@ -36,9 +41,7 @@ export default function RecordCard({
 
     return (
         <div className="flex flex-col items-center rounded-2xl border border-grey-4 py-[3.2rem] px-[2.4rem] gap-[5.4rem] self-stretch">
-            <div className="text-heading3 text-blue-primary">
-                {question?.interview_question_id}
-            </div>
+            <div className="text-heading3 text-blue-primary">{cnt}</div>
             <div className="text-center">
                 <h1 className="text-specialHeading">{question?.title}</h1>
                 <div className="text-bodyDefault text-grey-5">
@@ -50,6 +53,7 @@ export default function RecordCard({
                     isRecording={isRecording}
                     handleRecordStart={handleRecordStart}
                     handleRecordStop={handleRecordStop}
+                    interviewQuestionId={interviewQuestionId}
                 />
                 <Timer
                     handleRecordStart={handleRecordStart}

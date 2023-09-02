@@ -4,16 +4,19 @@ import Image from 'next/image';
 import { FaPause } from 'react-icons/fa';
 import { BsFillPlayFill } from 'react-icons/bs';
 import ImgBgCircle from '@/assets/images/image-yellow-circle.png';
+
 import MicRecorder from 'mic-recorder-to-mp3';
+import { interviewIdAtom } from '@/utils/atom';
+import { submitRecordFile } from '@/api/interview';
+import { useRecoilValue } from 'recoil';
 
 export default function Recoder({
     handleRecordStart,
     handleRecordStop,
     isRecording,
+    interviewQuestionId,
 }) {
     // 녹음 라이브러리: mic-recorder-to-mp3 -> Types 지원 [x]
-
-    console.log('props isRecording', isRecording);
 
     const [state, setState] = useState({
         isRecording: false,
@@ -26,6 +29,8 @@ export default function Recoder({
         new MicRecorder({ bitRate: 128 }),
     );
 
+    const interviewId = useRecoilValue(interviewIdAtom);
+
     useEffect(() => {
         navigator.getUserMedia(
             { audio: true },
@@ -34,20 +39,20 @@ export default function Recoder({
                 setState({ isBlocked: false });
             },
             () => {
-                console.log('Permission Denied');
+                console.log('Permission Denied'); // TODO: permission denied한 경우 예외 처리
                 setState({ isBlocked: true });
             },
         );
     }, []);
 
     const start = async () => {
-        console.log('1. start 실행');
+        //console.log('1. start 실행');
         if (state.isBlocked) {
-            console.log('Permission Denied');
+            //console.log('Permission Denied');
         } else {
             Mp3Recorder.start()
                 .then(() => {
-                    console.log('2. [Mp3Recorder start]');
+                    //console.log('2. [Mp3Recorder start]');
                     setState({ isRecording: true });
                 })
                 .catch((e) => console.error(e));
@@ -58,8 +63,8 @@ export default function Recoder({
         console.log('3. stop 실행');
         Mp3Recorder.stop()
             .getMp3()
-            .then(([buffer, blob]) => {
-                console.log('4. [Mp3Recorder stop]');
+            .then(async ([buffer, blob]) => {
+                //console.log('4. [Mp3Recorder stop]');
                 const blobURL = URL.createObjectURL(blob);
                 setState({ blobURL, isRecording: false });
 
@@ -68,19 +73,34 @@ export default function Recoder({
                     lastModified: Date.now(),
                 });
 
-                // TODO: file 전송
+                // 테스트용 다운로드
+                /*
+                const a = document.createElement('a');
+                a.href = blobURL;
+                a.download = '1_0.mp3'; // 다운로드될 파일 이름
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
+                */
+
+                const formData = new FormData();
+                formData.append('file', file);
+
+                try {
+                    let data = await submitRecordFile(
+                        interviewQuestionId,
+                        formData,
+                    );
+                    if (data) {
+                        console.log(`[${data.id}]번 데이터`, data.message);
+                    }
+                } catch (e) {}
             })
             .catch((e) => console.log(e));
     };
 
     React.useEffect(() => {
-        // isRecording이 true면 stop 실행
-        // 처음에 isRecording이 false이기 때문에 바로 시작됨.
-        //
-        console.log(isRecording, typeof isRecording);
-        if (isRecording === null) {
-            return;
-        }
+        if (isRecording === null) return;
         if (isRecording) {
             start();
         } else {
@@ -92,7 +112,7 @@ export default function Recoder({
         <div
             id="audio-container"
             className="relative w-[6.4rem] h-[6.4rem] cursor-pointer"
-            onClick={isRecording ? handleRecordStop : handleRecordStart} // 1. 클릭하면 isRecording: false -> true로 바뀜
+            onClick={isRecording ? handleRecordStop : handleRecordStart}
         >
             <Image
                 src={ImgBgCircle}
