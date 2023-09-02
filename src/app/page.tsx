@@ -21,7 +21,7 @@ export default function Home() {
                         width={600}
                         height={140}
                     />
-                    <div className="pt-[1.8rem]">
+                    <div className="pt-[1.8rem] text-grey-5 text-specialHeading2">
                         __개의 기술 질문과 GPT의 모범답안,
                         <br /> 내가 쓰고 함께 읽는 탄탄한 기술 면접 준비
                     </div>
@@ -38,8 +38,8 @@ export default function Home() {
             </section>
             <section className="flex px-[15.5rem] py-[17.5rem]">
                 <div className="flex-col px-[5rem] py-[6rem]">
-                    <h2>오늘의 질문</h2>
-                    <p className="pt-[5.8rem]">
+                    <h2 className="text-heading2 text-black">오늘의 질문</h2>
+                    <p className="pt-[5.8rem] text-grey-6 text-bodyLarger">
                         하루에 하나씩,
                         <br />
                         차근차근 준비해봐요
@@ -55,9 +55,11 @@ export default function Home() {
                     width={427}
                     height={409}
                 />
-                <div className="flex-col mt-[5.8rem] mr-[10rem]">
-                    <h3>모의 면접은 어떤가요?</h3>
-                    <p className="mt-[5.8rem]">
+                <div className="flex flex-col items-end mt-[5.8rem] mr-[10rem]">
+                    <h3 className="text-heading2 text-black">
+                        모의 면접은 어떤가요?
+                    </h3>
+                    <p className="flex mt-[5.8rem] text-grey-6 text-bodyLarger">
                         실전같은 연습으로
                         <br />
                         경험을 쌓아나가요
@@ -68,7 +70,16 @@ export default function Home() {
                 </div>
             </section>
             <hr className="seperator" />
-            <section className="py-[17.5rem]">ss</section>
+            <section className="flex py-[17.5rem] mx-[11.6rem]">
+                <div className="flex">
+                    <h3 className="text-heading2 text-black">
+                        질문 모음집 보러가기
+                    </h3>
+                    <p className="ml-[3.7rem] text-grey-6 text-bodyLarger">
+                        다양한 카테고리의 큐카드로 면접에 대비해요
+                    </p>
+                </div>
+            </section>
             <Footer />
         </>
     );
