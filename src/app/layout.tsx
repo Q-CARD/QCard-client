@@ -1,5 +1,6 @@
 // 어플리케이션 공통 레이아웃
 import type { Metadata } from 'next';
+import Favicon from './favicon.ico';
 import { siteConfig } from '@/utils/site';
 
 import Providers from '@/components/Provider';
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
         default: siteConfig.name,
         template: `%s - ${siteConfig.name}`,
     },
+    icons: [{ rel: 'icon', url: Favicon.src }],
     description: siteConfig.description,
     keywords: [
         'Tech Interview',
@@ -47,6 +49,7 @@ export default function RootLayout({
                     rel="stylesheet"
                     href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
                 />
+                <link rel="icon" href="./favicon.ico" />
             </head>
             <body className="min-h-screen">
                 <Providers>
