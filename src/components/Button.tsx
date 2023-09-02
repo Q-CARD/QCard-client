@@ -1,7 +1,7 @@
 interface ButtonProps {
     type: 'block' | 'round' | 'chip';
     title: string;
-    onClick: any;
+    onClick?: any;
     disabled?: boolean;
     isChipClicked?: boolean;
 }
