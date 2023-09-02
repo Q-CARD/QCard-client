@@ -57,6 +57,18 @@ const config: Config = {
                     '36x',
                     { fontWeight: '400', lineHeight: '46px' },
                 ],
+                // input
+                input: ['16px', { fontWeight: '400', lineHeight: '18px' }],
+                // button
+                buttonBlock: [
+                    '18px',
+                    { fontWeight: '700', lineHeight: '18px' },
+                ],
+                buttonRound: [
+                    '16px',
+                    { fontWeight: '700', lineHeight: '18px' },
+                ],
+                buttonChip: ['12px', { fontWeight: '700', lineHeight: '14px' }],
             },
             colors: {
                 black: '#444449',
