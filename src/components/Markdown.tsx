@@ -4,7 +4,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 // 커스텀 설정
 const components = {
     h1: (props: any) => (
-        <h1 {...props} style={{ 'font-size': '25px' }} className="large-text">
+        <h1 {...props} style={{ fontSize: '30px' }} className="large-text">
             {props.children}
         </h1>
     ),
