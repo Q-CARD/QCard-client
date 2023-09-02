@@ -1,9 +1,11 @@
 'use client';
 
-import { Button } from '@/components/Button';
-import { QUESTION_CATEGORY, ANSWERS_ME } from '@/constants/data';
-import { IAnswer } from '@/types/answer';
 import { useState } from 'react';
+
+import { Button } from '@/components/Button';
+import { QUESTION_CATEGORY } from '@/constants/data';
+import { IAnswer } from '@/types/answer';
+import { ANSWERS_ME } from '@/constants/dummy';
 
 export default function MyAnswerPage() {
     const [selectedCategory, setSelectedCategory] = useState<number>(

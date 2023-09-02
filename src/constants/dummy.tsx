@@ -143,3 +143,90 @@ export const INTERVIEW_RESULT = [
         additional_question_3: 'additional_question3',
     },
 ];
+
+// TODO - categoryId 추가 요청
+export const QUESTION_CATEGORY_DETAIL = [
+    {
+        questionId: 21,
+        title: 'Spring DI에 대해 알려주세요',
+        category: '네트워크',
+    },
+    {
+        questionId: 22,
+        title: '네이버에 접속할때 일어나는 모든 과정에 대해 아는만큼 설명해주세요.',
+        category: '네트워크',
+    },
+    {
+        questionId: 23,
+        title: 'TCP 통신의 3-way Handshake 과정에 대해 설명해주세요.',
+        category: '네트워크',
+    },
+];
+
+export const ANSWERS_ME = [
+    {
+        answerId: 1,
+        type: 'TYPE_ANSWER',
+        account: {
+            name: '시연',
+            email: 'ashley_0726@naver.com',
+        },
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Ullamcorper eget eu non mattis. Adipiscing ut pharetra diam amet parturient tristique aliquet ac vitae. Libero cursus lacus eu venenatis. Integer senectus eu arcu massa vitae quis. Eu diam justo dui viverra at scelerisque amet. Ipsum semper id et imperdiet nisi mattis sit nunc. Congue viverra sed ut dictumst consequat sit dictum. Et egestas dictumst convallis sem fringilla euismod in pellentesque porttitor. Amet integer volutpat id nam. Elementum id elementum scelerisque est. Orci orci tempor in vivamus integer non eget sollicitudin. Purus mauris urna tempor quam nunc egestas.',
+        heartCount: 1,
+        createdAt: '2023-08-29T21:05:36.225424',
+        modifiedAt: '2023-08-29T21:05:36.225424',
+    },
+    {
+        answerId: 1,
+        type: 'TYPE_ANSWER',
+        account: {
+            name: '시연',
+            email: 'ashley_0726@naver.com',
+        },
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Ullamcorper eget eu non mattis. Adipiscing ut pharetra diam amet parturient tristique aliquet ac vitae. Libero cursus lacus eu venenatis. Integer senectus eu arcu massa vitae quis. Eu diam justo dui viverra at scelerisque amet. Ipsum semper id et imperdiet nisi mattis sit nunc. Congue viverra sed ut dictumst consequat sit dictum. Et egestas dictumst convallis sem fringilla euismod in pellentesque porttitor. Amet integer volutpat id nam. Elementum id elementum scelerisque est. Orci orci tempor in vivamus integer non eget sollicitudin. Purus mauris urna tempor quam nunc egestas.',
+        heartCount: 1,
+        createdAt: '2023-08-29T21:05:46.282517',
+        modifiedAt: '2023-08-29T21:05:46.282517',
+    },
+    {
+        answerId: 2,
+        type: 'TYPE_ANSWER',
+        account: {
+            name: '시연',
+            email: 'ashley_0726@naver.com',
+        },
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Ullamcorper eget eu non mattis. Adipiscing ut pharetra diam amet parturient tristique aliquet ac vitae. Libero cursus lacus eu venenatis. Integer senectus eu arcu massa vitae quis. Eu diam justo dui viverra at scelerisque amet. Ipsum semper id et imperdiet nisi mattis sit nunc. Congue viverra sed ut dictumst consequat sit dictum. Et egestas dictumst convallis sem fringilla euismod in pellentesque porttitor. Amet integer volutpat id nam. Elementum id elementum scelerisque est. Orci orci tempor in vivamus integer non eget sollicitudin. Purus mauris urna tempor quam nunc egestas.',
+        heartCount: 1,
+        createdAt: '2023-08-29T21:05:46.282517',
+        modifiedAt: '2023-08-29T21:05:46.282517',
+    },
+    {
+        answerId: 3,
+        type: 'TYPE_ANSWER',
+        account: {
+            name: '시연',
+            email: 'ashley_0726@naver.com',
+        },
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Ullamcorper eget eu non mattis. Adipiscing ut pharetra diam amet parturient tristique aliquet ac vitae. Libero cursus lacus eu venenatis. Integer senectus eu arcu massa vitae quis. Eu diam justo dui viverra at scelerisque amet. Ipsum semper id et imperdiet nisi mattis sit nunc. Congue viverra sed ut dictumst consequat sit dictum. Et egestas dictumst convallis sem fringilla euismod in pellentesque porttitor. Amet integer volutpat id nam. Elementum id elementum scelerisque est. Orci orci tempor in vivamus integer non eget sollicitudin. Purus mauris urna tempor quam nunc egestas.',
+        heartCount: 1,
+        createdAt: '2023-08-29T21:05:46.282517',
+        modifiedAt: '2023-08-29T21:05:46.282517',
+    },
+    {
+        answerId: 6,
+        type: 'TYPE_ANSWER',
+        account: {
+            name: '시연',
+            email: 'ashley_0726@naver.com',
+        },
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Ullamcorper eget eu non mattis. Adipiscing ut pharetra diam amet parturient tristique aliquet ac vitae. Libero cursus lacus eu venenatis. Integer senectus eu arcu massa vitae quis. Eu diam justo dui viverra at scelerisque amet. Ipsum semper id et imperdiet nisi mattis sit nunc. Congue viverra sed ut dictumst consequat sit dictum. Et egestas dictumst convallis sem fringilla euismod in pellentesque porttitor. Amet integer volutpat id nam. Elementum id elementum scelerisque est. Orci orci tempor in vivamus integer non eget sollicitudin. Purus mauris urna tempor quam nunc egestas.',
+        heartCount: 1,
+        createdAt: '2023-08-29T21:05:46.282517',
+        modifiedAt: '2023-08-29T21:05:46.282517',
+    },
+];
