@@ -1,3 +1,4 @@
+// 질문 상세 페이지_입력 전
 'use client';
 
 import { useRouter } from 'next/navigation';
@@ -6,7 +7,6 @@ import { Button } from '@/components/Button';
 import { Textarea } from '@/components/Textarea';
 import { QUESTION_CATEGORY_DETAIL } from '@/constants/dummy';
 
-// 질문 상세 페이지_입력전
 export default function CategoryQuestionPage({
     params,
 }: {
