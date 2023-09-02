@@ -18,12 +18,11 @@ import {
 } from '@/utils/atom';
 
 export default function InterviewPage() {
-    // TODO: 질문 유형 데이터 api 호출
     const [categoryList, setCategoryList] = React.useState<string[]>([]);
 
-    React.useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
+    //React.useEffect(() => {
+    //    window.scrollTo(0, 0);
+    //}, []);
 
     const router = useRouter();
 
@@ -55,18 +54,21 @@ export default function InterviewPage() {
                 )?.key,
         );
 
-        // 체크 리스트 Recoil에 저장
-        setCategoryListAtom(body);
+        console.log('body', body);
 
         if (!body || body.length === 0) return;
 
-        let data = await newInterview(body as string[]);
-        if (data) {
-            console.log('data', data);
-            interviewid = data.interview_id;
-            setInterviewListAtom(data.question); // response 저장
-            setInterviewIdAtom(data.id); // interview_question_id 저장
-        }
+        // 체크 리스트 Recoil에 저장
+        setCategoryListAtom(body);
+
+        try {
+            let data = await newInterview(body as string[]);
+            if (data) {
+                console.log('data', data);
+                setInterviewListAtom(data.question); // response 저장
+                setInterviewIdAtom(data.id); // interview_question_id 저장
+            }
+        } catch {}
 
         const pathname = `/interview/${interviewid}?question=1`;
         router.replace(pathname);
