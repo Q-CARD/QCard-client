@@ -13,24 +13,28 @@ import personal from '@/assets/images/category/personal.png';
 
 export const QUESTION_CATEGORY = [
     {
+        id: 1,
         name: '네트워크',
         image: network,
     },
     {
+        id: 2,
         name: '운영체제',
         image: os,
     },
     {
+        id: 3,
         name: '데이터베이스',
         image: database,
     },
     {
+        id: 4,
         name: '자료구조',
         image: dataStructure,
     },
     {
-        name: '컴퓨터구조',
         id: 5,
+        name: '컴퓨터구조',
         image: java,
     },
     {
@@ -67,10 +71,6 @@ export const QUESTION_CATEGORY = [
         id: 12,
         name: '인성 질문',
         image: personal,
-    },
-    {
-        name: '인성질문',
-        id: 13,
     },
 ];
 
