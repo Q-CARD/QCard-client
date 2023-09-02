@@ -1,12 +1,16 @@
+'use client';
 import React from 'react';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
+import MarkdownRenderer from '@/components/Markdown';
+// import MarkdownRemote from './MarkdownRemote';
 
 interface AccordianProps {
-    gptAnswer: string | undefined;
+    //gptAnswer: string | undefined;
     className: string;
+    children: React.ReactNode;
 }
 
-export function Accordian({ gptAnswer, className }: AccordianProps) {
+export function Accordian({ className, children }: AccordianProps) {
     const [isOpen, setIsOpen] = React.useState(false);
 
     const handleAccordianOpen = () => {
@@ -22,7 +26,9 @@ export function Accordian({ gptAnswer, className }: AccordianProps) {
                     isOpen={isOpen}
                     handleAccordianOpen={handleAccordianOpen}
                 />
-                <AccordianContent isOpen={isOpen} value={gptAnswer} />
+                <AccordianContent isOpen={isOpen} value={''}>
+                    {children}
+                </AccordianContent>
             </div>
         </div>
     );
@@ -62,19 +68,24 @@ export function AccordianTrigger({
 interface AccordianContentProps {
     value: string | undefined;
     isOpen: boolean;
+    children: React.ReactNode;
 }
 export function AccordianContent({
     value,
     isOpen,
+    children,
     ...props
 }: AccordianContentProps) {
     return (
-        <p
+        <div
             className={`${
                 isOpen ? 'block' : 'hidden'
             } self-stretch text-grey-6 text-bodyDefault pt-[1.6rem] transition-all ease-in-out 0.3s`}
         >
-            {value}
-        </p>
+            {children}
+            {/*<MarkdownRenderer content={value ?? ''} />
+            {/*{value}*/}
+            {/*<MarkdownRemote value={value ?? ''} />*/}
+        </div>
     );
 }
