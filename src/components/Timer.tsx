@@ -3,7 +3,7 @@ import React from 'react';
 import { useSearchParams } from 'next/navigation';
 
 interface TimerProps {
-    isRecording: boolean;
+    isRecording: boolean | null;
     mm: number; // 종료 분
     ss: number; // 종료 초
     handleRecordStart: () => void;

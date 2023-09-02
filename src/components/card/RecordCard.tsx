@@ -15,15 +15,23 @@ export default function RecordCard({
     question: QuestionType | undefined;
 }) {
     // 타이머 클릭 & 녹음 stop/start 상태 관리
-    const [isRecording, setIsRecording] = React.useState(false);
+    const [isRecording, setIsRecording] = React.useState<null | boolean>(null);
 
+    // 시작
     const handleRecordStart = () => {
-        setIsRecording(!isRecording);
+        console.log('handleRecordStart');
+        setIsRecording(true);
+    };
+
+    // 중단
+    const handleRecordStop = () => {
+        console.log('handleRecordStop');
+        setIsRecording(false);
     };
 
     // 다음 문제로 넘어갈 때마다 타이머 초기화
     React.useEffect(() => {
-        setIsRecording(false);
+        setIsRecording(null);
     }, [question]);
 
     return (
@@ -41,6 +49,7 @@ export default function RecordCard({
                 <Recoder
                     isRecording={isRecording}
                     handleRecordStart={handleRecordStart}
+                    handleRecordStop={handleRecordStop}
                 />
                 <Timer
                     handleRecordStart={handleRecordStart}
