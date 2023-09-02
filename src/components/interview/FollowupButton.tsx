@@ -17,9 +17,12 @@ export default function FollowupButton() {
     const interviewQuestion = useRecoilValue(interviewListAtom);
 
     const handlePageResult = () => {
-        let curPage: any = interviewQuestion[answer - 1];
-        setInterviewQuestionId(curPage.id);
-        if (!curPage) throw new Error('질문 없음');
+        let curPage: any = interviewQuestion?.[answer - 1];
+        if (!curPage) {
+            alert('질문 없음');
+            return;
+        }
+        setInterviewQuestionId(curPage?.id);
     };
 
     useEffect(() => {
