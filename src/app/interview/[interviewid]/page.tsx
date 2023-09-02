@@ -2,7 +2,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import RecordCard from '@/components/card/RecordCard';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { useRecoilValue } from 'recoil';
 import { interviewListAtom } from '@/utils/atom';
@@ -20,30 +20,18 @@ export default function InterviewQuestionPage() {
     // interview question
     const interviewQuestion = useRecoilValue(interviewListAtom);
 
-    console.log('[interviewQuestion]', interviewQuestion);
-
-    // interviewId 얻기
-    const pathname = usePathname();
-    const match = pathname.match(/\/interview\/(\d+)/);
     let interviewId = 1;
-
-    if (match) {
-        interviewId = parseInt(match[1]);
-    }
-    //const interviewId = searchParams?.get('interviewid') ?? 1;
     const question = parseInt(searchParams?.get('question') ?? '1');
 
     const [curPageQuestion, setCurPageQuestion] = useState<QuestionType>();
     const [interviewQuestionId, setInterviewQuestionId] = useState<number>(1);
 
-    console.log('interviewId', interviewId);
-
     const handleCurQuestion = () => {
         // question
         let curQuestion: QuestionType =
-            interviewQuestion[question - 1]['question_model'];
+            interviewQuestion?.[question - 1]?.['question_model'];
 
-        let interviewQuestionId = interviewQuestion[question - 1]['id'];
+        let interviewQuestionId = interviewQuestion?.[question - 1]?.['id'];
         if (curQuestion) setCurPageQuestion(curQuestion);
         if (interviewQuestionId) setInterviewQuestionId(interviewQuestionId);
         else alert('다음 질문이 없습니다');
