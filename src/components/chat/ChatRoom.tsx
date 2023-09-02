@@ -5,6 +5,7 @@ import ChatInput from './ChatInput';
 
 import useInput from '@/hooks/useInput';
 import { AnswerType } from '@/types/index';
+import { submitAdditionalAnswer } from '@/api/interview';
 
 interface ChatRoomProps {
     additionalQuestions: AnswerType | undefined;
@@ -17,7 +18,7 @@ interface ChatMessage {
     cnt: number;
 }
 
-const ERROR_MESSAGE = '질문 Key가 없습니다';
+const ERROR_MESSAGE = '꼬리 질문이 없습니다';
 
 export default function ChatRoom({
     additionalQuestions,
@@ -33,13 +34,14 @@ export default function ChatRoom({
         setAnswerList([...answerList, answer]);
     };
 
+    // 세 개가 되면 전송하기
     const getAdditionalQuestion = () => {
         let regEx = new RegExp(`additional_question_${questionCnt}`);
 
         if (additionalQuestions) {
             let questionKey: keyof AnswerType = Object.keys(
                 additionalQuestions,
-            ).find((el) => regEx.test(el)) as keyof AnswerType; // 타입 단언
+            ).find((el) => regEx.test(el)) as keyof AnswerType;
 
             let newQuestion: ChatMessage = {
                 type: 'question',
@@ -60,7 +62,31 @@ export default function ChatRoom({
 
     const [value, handler, set, reset] = useInput('');
 
-    const handleSubmit = (
+    const submitAnswer = async () => {
+        // 세 번 전송
+        if (answerList.length === 3) {
+            for (let questionCnt = 1; questionCnt <= 3; questionCnt++) {
+                let body = {
+                    sequence: questionCnt,
+                    question_id: additionalQuestions?.question,
+                    answer: answerList[questionCnt - 1],
+                };
+
+                console.log('body', body);
+
+                let data = await submitAdditionalAnswer(body);
+                if (data) {
+                    console.log('data', data);
+                }
+            }
+        }
+    };
+    // 답변이 세개가 되면 전송
+    React.useEffect(() => {
+        submitAnswer();
+    }, [answerList.length]);
+
+    const handleSubmit = async (
         e: React.FormEvent<HTMLFormElement> & { target: HTMLFormElement },
     ) => {
         e.preventDefault();
