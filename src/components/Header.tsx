@@ -22,10 +22,10 @@ export function Header() {
                 />
             </Link>
             <div className="flex gap-[2.4rem]">
-                <button>
+                <button className="text-heading6 flex itemx-center justify-center px-[2.4rem] py-[1.8rem] bg-blue-primary text-white rounded-[3rem]">
                     <Link href="/category">Questions</Link>
                 </button>
-                <button>
+                <button className="text-heading6 flex itemx-center justify-center px-[2.4rem] py-[1.8rem] bg-black text-white rounded-[3rem]">
                     <Link href="/auth/login">Sign in</Link>
                 </button>
             </div>

@@ -72,7 +72,9 @@ export default function InterviewResultPage() {
                 <h1 className="text-specialHeading">
                     {curPageResult?.question}
                 </h1>
-                <div>네트워크</div>
+                <div className="rounded-[2rem] py-[2px] px-[13px] bg-blue-primary text-white text-bodyExtraSmaller">
+                    네트워크
+                </div>
                 <div className="text-bodyDefault text-grey-6 mt-[2.2rem]">
                     {curPageResult?.answer}
                 </div>
@@ -94,8 +96,12 @@ export default function InterviewResultPage() {
             </div>
             {/* TODO: 페이지네이션 */}
             <div className="mt-[3.4rem]">페이지네이션</div>
-            <button onClick={handleNextQuestion} className="mt-[9rem]">
+            <button
+                onClick={handleNextQuestion}
+                className="flex gap-[8px] rounded-[4.7rem] border border-grey-4 items-center mt-[9rem] text-grey-4 py-[2rem] px-[5.6rem] text-bodyDefault"
+            >
                 {NEXT_BUTTON_TEXT}
+                <AiOutlineArrowRight size={15} color="var(--grey-4)" />
             </button>
         </section>
     );

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import RecordCard from '@/components/card/RecordCard';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { INTERVIEW_QUESTION } from '@/constants/dummy';
+import { AiOutlineArrowRight } from 'react-icons/ai';
 
 // TODO: interviewid를 가지고, GET /interviews/:interview_id 요청
 
@@ -45,10 +46,14 @@ export default function InterviewQuestionPage() {
     };
 
     return (
-        <section className="flex flex-col min-w-[82rem] m-auto">
+        <section className="flex items-center flex-col min-w-[82rem] m-auto">
             <RecordCard question={curPageQuestion} />
-            <button onClick={handleNextQuestion} className="mt-[5.7rem]">
+            <button
+                onClick={handleNextQuestion}
+                className="w-fit flex items-center mt-[5.7rem] gap-[8px] py-[2.4rem] px-[3.6rem] bg-blue-primary text-specialHeading3 text-white rounded-[3rem]"
+            >
                 다음 질문으로
+                <AiOutlineArrowRight size={15} color="#fff" />
             </button>
         </section>
     );

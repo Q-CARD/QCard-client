@@ -25,7 +25,9 @@ export default function Home() {
                         __개의 기술 질문과 GPT의 모범답안,
                         <br /> 내가 쓰고 함께 읽는 탄탄한 기술 면접 준비
                     </div>
-                    <button className="pt-[3.4rem]">시작하고 성장하기</button>
+                    <button className="flex itemx-center px-[3.6rem] py-[2.4rem] rounded-[4rem] justify-center mt-[3.4rem] text-white bg-blue-primary text-specialHeading3">
+                        시작하고 성장하기 {'>'}
+                    </button>
                 </div>
                 <div>
                     <Image
@@ -64,7 +66,7 @@ export default function Home() {
                         <br />
                         경험을 쌓아나가요
                     </p>
-                    <button className="mt-[3.1rem]">
+                    <button className="mt-[3.1rem] text-heading5 flex itemx-center justify-center px-[2.4rem] py-[1.8rem] bg-blue-primary text-white rounded-[3rem]">
                         <Link href="/interview">모의 면접 시작하기 {'>'}</Link>
                     </button>
                 </div>

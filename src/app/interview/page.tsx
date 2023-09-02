@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Checkbox from '@/components/Checkbox';
 import ImgCardDeck2 from '@/assets/images/image-card-deck-2.png';
 import { QUESTION_CATEGORY } from '@/constants/data';
+import { AiOutlineArrowRight } from 'react-icons/ai';
 
 export default function InterviewPage() {
     // TODO: 질문 유형 데이터 api 호출
@@ -65,9 +66,13 @@ export default function InterviewPage() {
                         </Checkbox>
                     ))}
                 </div>
-                <button onClick={handleInterviewStart}>
+                <button
+                    onClick={handleInterviewStart}
+                    className="flex items-center mt-[6.4rem] gap-[8px] py-[1.4rem] px-[1.8rem] bg-blue-primary text-specialHeading4 text-white rounded-[3rem]"
+                >
                     {/* TODO: 버튼 클릭 후, interviewId 획득해서 interviewId로 이동 */}
                     면접 시작하기
+                    <AiOutlineArrowRight size={15} color="#fff" />
                 </button>
             </div>
         </section>

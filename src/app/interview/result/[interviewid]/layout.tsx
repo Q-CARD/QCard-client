@@ -13,7 +13,9 @@ export default function InterviewResultLayout({
                     녹음했던 나의 답변과 gpt의 첨삭을 확인해보세요
                 </div>
             </div>
-            <div className="flex flex-col mt-[8rem] m-auto">{children}</div>
+            <div className="flex flex-col mt-[8rem] mb-[5.8rem] m-auto">
+                {children}
+            </div>
         </section>
     );
 }
