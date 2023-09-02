@@ -37,6 +37,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["axios", "npm:1.4.0"],\
             ["eslint", "npm:8.47.0"],\
             ["eslint-config-next", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:13.4.19"],\
+            ["mic-recorder-to-mp3", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:2.2.2"],\
             ["next", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:13.4.19"],\
             ["postcss", "npm:8.4.28"],\
             ["react", "npm:18.2.0"],\
@@ -3087,6 +3088,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["lamejs", [\
+        ["npm:1.2.1", {\
+          "packageLocation": "./.yarn/unplugged/lamejs-npm-1.2.1-f7b4683bc5/node_modules/lamejs/",\
+          "packageDependencies": [\
+            ["lamejs", "npm:1.2.1"],\
+            ["use-strict", "npm:1.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["language-subtag-registry", [\
         ["npm:0.3.22", {\
           "packageLocation": "./.yarn/cache/language-subtag-registry-npm-0.3.22-e9f79fe04e-8ab70a7e0e.zip/node_modules/language-subtag-registry/",\
@@ -3217,6 +3228,29 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/merge2-npm-1.4.1-a2507bd06c-7268db63ed.zip/node_modules/merge2/",\
           "packageDependencies": [\
             ["merge2", "npm:1.4.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["mic-recorder-to-mp3", [\
+        ["npm:2.2.2", {\
+          "packageLocation": "./.yarn/cache/mic-recorder-to-mp3-npm-2.2.2-72c5dc6d5a-bea0ea95c3.zip/node_modules/mic-recorder-to-mp3/",\
+          "packageDependencies": [\
+            ["mic-recorder-to-mp3", "npm:2.2.2"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:2.2.2", {\
+          "packageLocation": "./.yarn/__virtual__/mic-recorder-to-mp3-virtual-9bef2469a8/0/cache/mic-recorder-to-mp3-npm-2.2.2-72c5dc6d5a-bea0ea95c3.zip/node_modules/mic-recorder-to-mp3/",\
+          "packageDependencies": [\
+            ["mic-recorder-to-mp3", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:2.2.2"],\
+            ["@types/webrtc-adapter", null],\
+            ["lamejs", "npm:1.2.1"],\
+            ["webrtc-adapter", null]\
+          ],\
+          "packagePeers": [\
+            "@types/webrtc-adapter",\
+            "webrtc-adapter"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -4022,6 +4056,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["axios", "npm:1.4.0"],\
             ["eslint", "npm:8.47.0"],\
             ["eslint-config-next", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:13.4.19"],\
+            ["mic-recorder-to-mp3", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:2.2.2"],\
             ["next", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:13.4.19"],\
             ["postcss", "npm:8.4.28"],\
             ["react", "npm:18.2.0"],\
@@ -4956,6 +4991,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["uri-js", "npm:4.4.1"],\
             ["punycode", "npm:2.3.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["use-strict", [\
+        ["npm:1.0.1", {\
+          "packageLocation": "./.yarn/cache/use-strict-npm-1.0.1-22c953825b-e2798c587b.zip/node_modules/use-strict/",\
+          "packageDependencies": [\
+            ["use-strict", "npm:1.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
