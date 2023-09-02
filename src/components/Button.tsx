@@ -31,13 +31,21 @@ export function Button({
             break;
     }
 
-    return (
+    return type === 'chip' ? ( // TODO - bugFix로 우선 컴포넌트 분기. 추후 개선
         <button
             className={`${buttonStyle} ${
                 isChipClicked
                     ? 'text-white bg-blue-primary'
                     : 'text-grey-6 bg-grey-2'
             }`}
+            disabled={disabled}
+            onClick={onClick}
+        >
+            {title}
+        </button>
+    ) : (
+        <button
+            className={`${buttonStyle}`}
             disabled={disabled}
             onClick={onClick}
         >
