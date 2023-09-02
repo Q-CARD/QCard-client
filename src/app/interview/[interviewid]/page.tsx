@@ -3,13 +3,13 @@
 import { useState, useEffect } from 'react';
 import RecordCard from '@/components/card/RecordCard';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { INTERVIEW_QUESTION } from '@/constants/dummy';
 import { AiOutlineArrowRight } from 'react-icons/ai';
-
-// TODO: interviewid를 가지고, GET /interviews/:interview_id 요청
+import { useRecoilValue } from 'recoil';
+import { interviewListAtom } from '@/utils/atom';
 
 interface QuestionType {
-    interview_question_id: number;
+    category: string; // "CATEGORY_NW"
+    id: number; // question_id
     title: string;
 }
 
@@ -17,17 +17,35 @@ export default function InterviewQuestionPage() {
     const searchParams = useSearchParams();
     const router = useRouter();
 
-    // Search params
-    const interviewId = searchParams?.get('interviewid') ?? 1;
+    // interview question
+    const interviewQuestion = useRecoilValue(interviewListAtom);
+
+    console.log('[interviewQuestion]', interviewQuestion);
+
+    // interviewId 얻기
+    const pathname = usePathname();
+    const match = pathname.match(/\/interview\/(\d+)/);
+    let interviewId = 1;
+
+    if (match) {
+        interviewId = parseInt(match[1]);
+    }
+    //const interviewId = searchParams?.get('interviewid') ?? 1;
     const question = parseInt(searchParams?.get('question') ?? '1');
 
     const [curPageQuestion, setCurPageQuestion] = useState<QuestionType>();
+    const [interviewQuestionId, setInterviewQuestionId] = useState<number>(1);
+
+    console.log('interviewId', interviewId);
 
     const handleCurQuestion = () => {
-        let curQuestion: QuestionType | undefined = INTERVIEW_QUESTION.find(
-            (_, idx) => idx + 1 === question, // number
-        );
+        // question
+        let curQuestion: QuestionType =
+            interviewQuestion[question - 1]['question_model'];
+
+        let interviewQuestionId = interviewQuestion[question - 1]['id'];
         if (curQuestion) setCurPageQuestion(curQuestion);
+        if (interviewQuestionId) setInterviewQuestionId(interviewQuestionId);
         else alert('다음 질문이 없습니다');
     };
 
@@ -50,7 +68,11 @@ export default function InterviewQuestionPage() {
 
     return (
         <section className="flex items-center flex-col min-w-[82rem] m-auto">
-            <RecordCard question={curPageQuestion} />
+            <RecordCard
+                interviewQuestionId={interviewQuestionId}
+                cnt={question}
+                question={curPageQuestion}
+            />
             <button
                 onClick={handleNextQuestion}
                 className="w-fit flex items-center mt-[5.7rem] gap-[8px] py-[2.4rem] px-[3.6rem] bg-blue-primary text-specialHeading3 text-white rounded-[3rem]"
