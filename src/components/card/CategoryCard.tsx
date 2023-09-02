@@ -13,7 +13,7 @@ export function CategoryCard({ categoryInfo }: CategoryCardProps) {
     const router = useRouter();
 
     const moveToCategoryQuestion = () => {
-        router.push(`/category/question/${id}`);
+        router.push(`/category/${id}`);
     };
 
     return (
