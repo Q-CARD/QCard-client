@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import ChatRoom from '@/components/chat/ChatRoom';
 import { INTERVIEW_RESULT } from '@/constants/dummy';
 import { AnswerType } from '@/types/index';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 export default function InterviewFollowupPage() {
     const searchParams = useSearchParams();
@@ -40,13 +41,16 @@ export default function InterviewFollowupPage() {
                 </h1>
                 <ChatRoom additionalQuestions={curPageQuestion} />
             </div>
+
             <button
+                className="flex items-baseline gap-[8px] rounded-[4.7rem] border border-grey-4 items-center mt-[9rem] text-grey-4 py-[2rem] px-[5.6rem] text-bodyDefault"
                 onClick={() =>
                     router.push(
                         `/interview/result/${interviewId}?answer=${answer}`,
                     )
                 }
             >
+                <AiOutlineArrowLeft size={15} />
                 {answer}번 질문으로 돌아가기
             </button>
         </section>

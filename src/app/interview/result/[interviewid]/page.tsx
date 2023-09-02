@@ -136,7 +136,10 @@ export default function InterviewResultPage() {
                     />
                 ))}
             </Pagination>
-            <button onClick={handleNextQuestion} className="mt-[9rem]">
+            <button
+                onClick={handleNextQuestion}
+                className="flex gap-[8px] rounded-[4.7rem] border border-grey-4 items-center mt-[9rem] text-grey-4 py-[2rem] px-[5.6rem] text-bodyDefault"
+            >
                 {NEXT_BUTTON_TEXT}
                 <AiOutlineArrowRight size={15} color="var(--grey-4)" />
             </button>
