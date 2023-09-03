@@ -1,22 +1,28 @@
 'use client';
 import React from 'react';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
-import MarkdownRenderer from '@/components/Markdown';
-// import MarkdownRemote from './MarkdownRemote';
 
 interface AccordianProps {
-    //gptAnswer: string | undefined;
     className: string;
     children: React.ReactNode;
+    rerenderProps: any;
 }
 
-export function Accordian({ className, children }: AccordianProps) {
+export function Accordian({
+    className,
+    children,
+    rerenderProps,
+}: AccordianProps) {
     const [isOpen, setIsOpen] = React.useState(false);
 
     const handleAccordianOpen = () => {
         setIsOpen(!isOpen);
     };
     // 아코디언 열리는 애니메이션: animate__animated animate__slideInDown
+
+    React.useEffect(() => {
+        setIsOpen(false);
+    }, [rerenderProps]);
     return (
         <div
             className={`${className} flex flex-col justify-center items-center w-full py-[2.4rem] px-[3.6rem] text-bodySmaller border border-grey-4 rounded-3xl bg-white text-grey-5`}
@@ -44,7 +50,7 @@ export function AccordianTrigger({
 }: AccordianTriggerProps) {
     return (
         <button
-            className="flex justify-center items-center w-full  text-bodySmaller bg-white text-grey-5"
+            className="flex justify-center items-center w-full text-bodySmaller bg-white text-grey-5"
             onClick={() => handleAccordianOpen()}
         >
             GPT 첨삭 보기
@@ -80,12 +86,9 @@ export function AccordianContent({
         <div
             className={`${
                 isOpen ? 'block' : 'hidden'
-            } self-stretch text-grey-6 text-bodyDefault pt-[1.6rem] transition-all ease-in-out 0.3s`}
+            } self-stretch text-grey-6 text-left text-bodyDefault pt-[1.6rem] transition-all ease-in-out 0.3s`}
         >
             {children}
-            {/*<MarkdownRenderer content={value ?? ''} />
-            {/*{value}*/}
-            {/*<MarkdownRemote value={value ?? ''} />*/}
         </div>
     );
 }
