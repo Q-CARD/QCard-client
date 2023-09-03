@@ -62,7 +62,7 @@ export default function InterviewQuestionPage() {
     const NEXT_BUTTON_TEXT = question < 10 ? '다음 질문으로' : '결과 보러가기';
 
     const getRecordingStatus = (isRecording: boolean | null) => {
-        console.log('부모', isRecording);
+        
         if (typeof isRecording === 'boolean') {
             setDisabled(isRecording);
         }
