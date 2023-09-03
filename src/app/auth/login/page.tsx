@@ -5,14 +5,45 @@ import { useForm } from 'react-hook-form';
 
 import { Input } from '@/components/Input';
 import { Button } from '@/components/Button';
+import { getAccountsProfile, postSignIn } from '@/api/account';
+import { useRecoilState } from 'recoil';
+import { userAtom } from '@/store/recoil';
 
 export default function LoginPage() {
     const router = useRouter();
 
     const { register, handleSubmit } = useForm();
 
-    const handleSubmitLogin = (e: any) => {
-        // TODO - validation 진행 후, api 연동
+    const [userData, setUserData] = useRecoilState(userAtom);
+
+    const handleSubmitLogin = async ({ email, password }: any) => {
+        // TODO - validation 적용, any 수정
+
+        const payload = {
+            email: email,
+            password: password,
+        };
+
+        try {
+            const data = await postSignIn(payload);
+
+            // TODO - api 성공 응답 code 요청드리기
+            if (data.accessToken) {
+                localStorage.setItem('ACCESS_TOKEN', data.accessToken);
+                localStorage.setItem('REFRESH_TOKEN', data.refreshToken);
+
+                const userdata = await getAccountsProfile();
+
+                if (userdata) {
+                    setUserData({
+                        nickname: userdata.nickname,
+                        email: userdata.email,
+                    });
+                }
+
+                router.push('/');
+            }
+        } catch (e) {}
     };
 
     const moveToSignup = () => {
@@ -21,11 +52,14 @@ export default function LoginPage() {
 
     return (
         <form className="flex flex-col items-center gap-[2.4rem]">
-            <Input placeholder="이메일 주소" register={register('username')} />
+            <Input
+                placeholder="이메일 주소"
+                register={register('email', { required: true })}
+            />
             <Input
                 type="password"
                 placeholder="비밀번호"
-                register={register('password')}
+                register={register('password', { required: true })}
             />
             <Button
                 type="block"
