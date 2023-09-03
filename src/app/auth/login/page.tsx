@@ -36,7 +36,7 @@ export default function LoginPage() {
 
                 if (userdata) {
                     setUserData({
-                        nickname: userdata.nickname,
+                        nickname: userdata.name,
                         email: userdata.email,
                     });
                 }
