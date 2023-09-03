@@ -6,8 +6,8 @@ import { useForm } from 'react-hook-form';
 import { Input } from '@/components/Input';
 import { Button } from '@/components/Button';
 import { getAccountsProfile, postSignIn } from '@/api/account';
-import { useRecoilState } from 'recoil';
-import { userAtom } from '@/store/recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { userAtom, isLoginAtom } from '@/store/recoil';
 
 export default function LoginPage() {
     const router = useRouter();
@@ -15,6 +15,7 @@ export default function LoginPage() {
     const { register, handleSubmit } = useForm();
 
     const [userData, setUserData] = useRecoilState(userAtom);
+    const handleLogin = useSetRecoilState(isLoginAtom);
 
     const handleSubmitLogin = async ({ email, password }: any) => {
         // TODO - validation 적용, any 수정
@@ -39,6 +40,7 @@ export default function LoginPage() {
                         nickname: userdata.name,
                         email: userdata.email,
                     });
+                    handleLogin(true);
                 }
 
                 router.push('/');
