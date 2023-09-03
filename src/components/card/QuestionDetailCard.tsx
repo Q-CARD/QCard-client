@@ -12,8 +12,11 @@ interface QuestionDetailCardProps {
 export function QuestionDetailCard({ questionInfo }: QuestionDetailCardProps) {
     const router = useRouter();
 
+    // TODO - 답변 여부
+    const checkIsAnswered = () => {};
+
     const moveTo = () => {
-        const isAnswered = false; // TODO - 답변 여부
+        const isAnswered = false;
 
         const pathname = isAnswered
             ? `/category/result/${questionInfo.questionId}`
