@@ -17,6 +17,6 @@ export const interviewListAtom = atom<any>({
 
 export const interviewIdAtom = atom<any>({
     key: 'interviewId',
-    default: [],
+    default: null,
     effects_UNSTABLE: [persistAtom],
 });

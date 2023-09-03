@@ -8,10 +8,21 @@ import Image from 'next/image';
 import Checkbox from '@/components/Checkbox';
 import ImgCardDeck2 from '@/assets/images/image-card-deck-2.png';
 import { QUESTION_CATEGORY } from '@/constants/data';
+import { AiOutlineArrowRight } from 'react-icons/ai';
+import { newInterview } from '@/api/interview';
+import { useSetRecoilState } from 'recoil';
+import {
+    categoryListAtom,
+    interviewListAtom,
+    interviewIdAtom,
+} from '@/utils/atom';
 
 export default function InterviewPage() {
-    // TODO: 질문 유형 데이터 api 호출
     const [categoryList, setCategoryList] = React.useState<string[]>([]);
+
+    //React.useEffect(() => {
+    //    window.scrollTo(0, 0);
+    //}, []);
 
     const router = useRouter();
 
@@ -29,14 +40,40 @@ export default function InterviewPage() {
         }
     };
 
-    const handleInterviewStart = () => {
-        // TODO: interviewId 획득
-        const interviewid = 1;
+    const setCategoryListAtom = useSetRecoilState(categoryListAtom);
+    const setInterviewListAtom = useSetRecoilState(interviewListAtom);
+    const setInterviewIdAtom = useSetRecoilState(interviewIdAtom);
+
+    const handleInterviewStart = async () => {
+        let interviewid = 1;
+
+        let body = categoryList.map(
+            (category) =>
+                QUESTION_CATEGORY.find(
+                    (question: any) => question.name === category,
+                )?.key,
+        );
+
+        console.log('body', body);
+
+        if (!body || body.length === 0) return;
+
+        // 체크 리스트 Recoil에 저장
+        setCategoryListAtom(body);
+
+        try {
+            let data = await newInterview(body as string[]);
+            if (data) {
+                console.log('data', data);
+                setInterviewListAtom(data.question); // response 저장
+                setInterviewIdAtom(data.id); // interview_question_id 저장
+            }
+        } catch {}
+
         const pathname = `/interview/${interviewid}?question=1`;
-        router.push(pathname);
+        router.replace(pathname);
     };
 
-    //   <section className="flex justify-center pt-[17rem] min-w-[86rem] mr-[19.3rem] pb-[17.3rem] ml-[14.4rem]">
     return (
         <section className="flex justify-center pt-[17rem] min-w-[86rem] m-auto pb-[17.3rem] ">
             <div>
@@ -65,9 +102,13 @@ export default function InterviewPage() {
                         </Checkbox>
                     ))}
                 </div>
-                <button onClick={handleInterviewStart}>
+                <button
+                    onClick={handleInterviewStart}
+                    className="flex items-center mt-[6.4rem] gap-[8px] py-[1.4rem] px-[1.8rem] bg-blue-primary text-specialHeading4 text-white rounded-[3rem]"
+                >
                     {/* TODO: 버튼 클릭 후, interviewId 획득해서 interviewId로 이동 */}
                     면접 시작하기
+                    <AiOutlineArrowRight size={15} color="#fff" />
                 </button>
             </div>
         </section>

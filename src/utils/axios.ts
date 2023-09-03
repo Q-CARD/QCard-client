@@ -9,8 +9,12 @@ const fetchWrapper = async ({ method, url, body, params }: any) => {
         token = localStorage.getItem(ACCESS_TOKEN); // 로컬스토리지에 토큰 저장
     }
 
+    const test_access_token =
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZG5ubmxAZXdoYWluLm5ldCIsInJvbGUiOiJST0xFX1VTRVIiLCJleHAiOjE2OTM3Nzk5NTZ9.N5hyWYDtkMwpiN1X9zQ0Zhn7AbrGYGLwKVbTSe3o5p4';
+
     // const test_access_token =
     //     'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZG5ubmxAZXdoYWluLm5ldCIsInJvbGUiOiJST0xFX1VTRVIiLCJleHAiOjE2OTM3Nzk5NTZ9.N5hyWYDtkMwpiN1X9zQ0Zhn7AbrGYGLwKVbTSe3o5p4';
+
 
     const config: AxiosRequestConfig = {
         baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -19,7 +23,8 @@ const fetchWrapper = async ({ method, url, body, params }: any) => {
                 params?.type === 'record'
                     ? 'multipart/form-data'
                     : 'application/json',
-            Authorization: token,
+            Authorization: `Bearer ${test_access_token}`, // TODO: token 수정
+            // Authorization: token,
         },
         ...params,
     };
