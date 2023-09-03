@@ -28,6 +28,10 @@ export default async function Home() {
 
     const questionsMain = await fetchData();
 
+    const questionsMainCategoryName = QUESTION_CATEGORY.find((category) => {
+        return category.key === questionsMain.category;
+    })?.name;
+
     return (
         <>
             <section className="flex justify-between pt-[9.4rem] pb-[6rem] pr-[6.6rem] pl-[12.6rem] shadow-md">
@@ -108,7 +112,7 @@ export default async function Home() {
                 <div className="flex flex-wrap gap-[5.2rem]">
                     <div className="w-[36.8rem] h-[36.8rem] p-[4.85rem] bg-blue-primary shadow-3 rounded-[1.8rem] flex justify-center">
                         <span className="text-[4.4rem] font-bold text-white text-center my-auto">
-                            {questionsMain.category}
+                            {questionsMainCategoryName}
                         </span>
                     </div>
                     {questionsMain.questions.map((question: any) => {
