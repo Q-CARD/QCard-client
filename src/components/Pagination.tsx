@@ -1,36 +1,74 @@
+'use client';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { AiOutlineArrowRight } from 'react-icons/ai';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface PaginatinProps {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     className: string;
-    handlePrev: () => any; // 이전버튼 눌렀을 때 작동할 함수
-    handleNext: () => any; // 다음버튼 눌렀을 때 작동할 함수
+    //handlePrev: () => any; // 이전버튼 눌렀을 때 작동할 함수
+    //handleNext: () => any; // 다음버튼 눌렀을 때 작동할 함수
 }
 
 // 가운데 버튼들 눌렀을 때 해당 번호 url로 이동
 // - url: /interview/result/{interviewId}?answer={children}
-export function Pagination({
-    children,
-    className,
-    handlePrev,
-    handleNext,
-}: PaginatinProps) {
+export function Pagination({ children, className }: PaginatinProps) {
+    const searchParams = useSearchParams();
+    const router = useRouter();
+
+    const interviewId = searchParams?.get('interviewid') ?? 1;
+    const answer = parseInt(searchParams?.get('answer') ?? '1');
+
+    const handlePrev = () => {
+        if (answer > 1) {
+            const pathname = `/interview/result/${interviewId}?answer=${
+                answer - 1
+            }`;
+            router.push(pathname);
+        }
+    };
+
+    const handleNext = () => {
+        if (answer < 10) {
+            const pathname = `/interview/result/${interviewId}?answer=${
+                answer + 1
+            }`;
+            router.push(pathname);
+        }
+    };
+
+    const handlePageMove = (answer: number) => {
+        const pathname = `/interview/result/${interviewId}?answer=${answer}`;
+        router.push(pathname);
+    };
+
     return (
         <div className={`flex items-center gap-[1.4rem] ${className}`}>
             <AiOutlineArrowLeft
                 onClick={handlePrev}
                 size="18"
                 color="var(--grey-6)"
+                className="cursor-pointer"
             >
                 이전
             </AiOutlineArrowLeft>
 
-            <div className={`flex gap-[1.4rem]`}>{children}</div>
+            <div className={`flex gap-[1.4rem]`}>
+                {' '}
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_, idx) => (
+                    <PageItem
+                        key={`page-item-${idx}`}
+                        handlePageMove={handlePageMove}
+                        pageIndex={idx + 1}
+                        activeIdx={answer}
+                    />
+                ))}
+            </div>
             <AiOutlineArrowRight
                 onClick={handleNext}
                 size="18"
                 color="var(--grey-6)"
+                className="cursor-pointer"
             >
                 다음
             </AiOutlineArrowRight>

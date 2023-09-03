@@ -33,6 +33,7 @@ const config: Config = {
                 heading4: ['22px', { fontWeight: '700', lineHeight: '28px' }],
                 heading5: ['18px', { fontWeight: '700', lineHeight: '24px' }],
                 heading6: ['16px', { fontWeight: '700', lineHeight: '22px' }],
+                // special heading
                 specialHeading: [
                     '28px',
                     { fontWeight: '700', lineHeight: '38px' },
@@ -40,6 +41,14 @@ const config: Config = {
                 specialHeading2: [
                     '22px',
                     { fontWeight: '600', lineHeight: '40px' },
+                ],
+                specialHeading3: [
+                    '18px',
+                    { fontWeight: '700', lineHeight: '18px' },
+                ],
+                specialHeading4: [
+                    '12px',
+                    { fontWeight: '700', lineHeight: '14px' },
                 ],
                 // body - regular
                 bodyLarge: ['22px', { fontWeight: '400', lineHeight: '36px' }],
@@ -52,6 +61,10 @@ const config: Config = {
                 bodySmaller: [
                     '14px',
                     { fontWeight: '400', lineHeight: '24px' },
+                ],
+                bodyExtraSmaller: [
+                    '10px',
+                    { fontWeight: '600', lineHeight: '25px' },
                 ],
                 bodyExtraLarge: [
                     '36x',

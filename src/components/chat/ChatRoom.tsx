@@ -5,9 +5,11 @@ import ChatInput from './ChatInput';
 
 import useInput from '@/hooks/useInput';
 import { AnswerType } from '@/types/index';
+import { submitAdditionalAnswer } from '@/api/interview';
 
 interface ChatRoomProps {
     additionalQuestions: AnswerType | undefined;
+    handleAnswerCnt: (answerCnt: number) => void;
 }
 
 interface ChatMessage {
@@ -16,9 +18,12 @@ interface ChatMessage {
     cnt: number;
 }
 
-const ERROR_MESSAGE = '질문 Key가 없습니다';
+const ERROR_MESSAGE = '꼬리 질문이 없습니다';
 
-export default function ChatRoom({ additionalQuestions }: ChatRoomProps) {
+export default function ChatRoom({
+    additionalQuestions,
+    handleAnswerCnt,
+}: ChatRoomProps) {
     const [chatMessages, setChatMessages] = React.useState<ChatMessage[]>([]);
     const [questionCnt, setQuestionCnt] = React.useState(1); // 현재 답변할 차례인 질문
     const [answerList, setAnswerList] = React.useState<string[]>([]); // 사용자가 꼬리질문에 작성한 답변 리스트
@@ -29,13 +34,14 @@ export default function ChatRoom({ additionalQuestions }: ChatRoomProps) {
         setAnswerList([...answerList, answer]);
     };
 
+    // 세 개가 되면 전송하기
     const getAdditionalQuestion = () => {
         let regEx = new RegExp(`additional_question_${questionCnt}`);
 
         if (additionalQuestions) {
             let questionKey: keyof AnswerType = Object.keys(
                 additionalQuestions,
-            ).find((el) => regEx.test(el)) as keyof AnswerType; // 타입 단언
+            ).find((el) => regEx.test(el)) as keyof AnswerType;
 
             let newQuestion: ChatMessage = {
                 type: 'question',
@@ -56,10 +62,38 @@ export default function ChatRoom({ additionalQuestions }: ChatRoomProps) {
 
     const [value, handler, set, reset] = useInput('');
 
-    const handleSubmit = (
+    const submitAnswer = async () => {
+        // 세 번 전송
+        if (answerList.length === 3) {
+            for (let questionCnt = 1; questionCnt <= 3; questionCnt++) {
+                let body = {
+                    sequence: questionCnt,
+                    question_id: additionalQuestions?.question,
+                    answer: answerList[questionCnt - 1],
+                };
+
+                console.log('body', body);
+
+                let data = await submitAdditionalAnswer(body);
+                if (data) {
+                    console.log('data', data);
+                }
+            }
+        }
+    };
+    // 답변이 세개가 되면 전송
+    React.useEffect(() => {
+        submitAnswer();
+    }, [answerList.length]);
+
+    const handleSubmit = async (
         e: React.FormEvent<HTMLFormElement> & { target: HTMLFormElement },
     ) => {
         e.preventDefault();
+        // 답변 없는 경우 종료
+        if (!value) {
+            return;
+        }
         handleAnswerList(value as string);
         setQuestionCnt(questionCnt + 1);
 
@@ -70,6 +104,7 @@ export default function ChatRoom({ additionalQuestions }: ChatRoomProps) {
         };
 
         setChatMessages([...chatMessages, newAnswer]);
+        reset();
         e.target.reset();
     };
 
@@ -77,6 +112,7 @@ export default function ChatRoom({ additionalQuestions }: ChatRoomProps) {
         if (chatRoomRef.current) {
             chatRoomRef.current.scrollTop = chatRoomRef.current.scrollHeight;
         }
+        handleAnswerCnt(answerList.length);
     }, [chatMessages]);
 
     return (

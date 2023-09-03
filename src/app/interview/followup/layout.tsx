@@ -13,7 +13,9 @@ export default function InterviewFollowUpLayout({
                     나의 답변을 기반으로 꼬리질문을 받아보세요
                 </div>
             </div>
-            <div className="flex flex-col mt-[8rem] m-auto">{children}</div>
+            <div className="flex flex-col mt-[8rem] mb-[21rem] m-auto">
+                {children}
+            </div>
         </section>
     );
 }

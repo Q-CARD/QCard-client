@@ -6,16 +6,32 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import ChatRoom from '@/components/chat/ChatRoom';
 import { INTERVIEW_RESULT } from '@/constants/dummy';
 import { AnswerType } from '@/types/index';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { getInterviewAll } from '@/api/interview';
+
+// import usePreventBackward from '@/hooks/useBeforePopState';
 
 export default function InterviewFollowupPage() {
     const searchParams = useSearchParams();
     const router = useRouter();
 
     // Search Params
-    const interviewId = searchParams?.get('interviewid') ?? 1;
+    const interviewId = searchParams?.get('id') ?? '1';
     const answer = searchParams?.get('answer') ?? 1;
 
-    const [curPageQuestion, setCurPageQuestion] = React.useState<AnswerType>();
+    const [curPageQuestion, setCurPageQuestion] = React.useState<any>();
+    const [answerCnt, setAnswerCnt] = React.useState<number>(0); // 답변 횟수 카운트
+
+    // usePreventBackward(); // 꼬리질문 페이지에서 뒤로가기 금지
+
+    //console.log('interviewQuestion', interviewQuestion);
+    const getAllInterviewInfo = async () => {
+        let data = await getInterviewAll(parseInt(interviewId));
+        if (data) {
+            console.log('인터뷰 가져온 data', data);
+            setCurPageQuestion(data);
+        }
+    };
 
     // interviewid를 가지고 요청 후, 꼬리질문 state에 저장하는 함수
     const handlePageFollowupQuestion = () => {
@@ -25,8 +41,11 @@ export default function InterviewFollowupPage() {
         setCurPageQuestion(curPageQuestion);
     };
 
+    const handleAnswerCnt = (answerCnt: number) => setAnswerCnt(answerCnt);
+
     React.useEffect(() => {
-        handlePageFollowupQuestion();
+        // handlePageFollowupQuestion();
+        getAllInterviewInfo();
     }, []);
 
     return (
@@ -36,17 +55,28 @@ export default function InterviewFollowupPage() {
                     {curPageQuestion?.question_id} - 꼬리질문
                 </div>
                 <h1 className="text-specialHeading">
-                    {curPageQuestion?.question}
+                    {curPageQuestion?.question_model.title}
                 </h1>
-                <ChatRoom additionalQuestions={curPageQuestion} />
+                <ChatRoom
+                    additionalQuestions={curPageQuestion}
+                    handleAnswerCnt={handleAnswerCnt}
+                />
             </div>
+
             <button
+                disabled={answerCnt < 3 && true}
+                className={`${
+                    answerCnt === 3
+                        ? 'border-blue-primary text-blue-primary'
+                        : 'border-grey-4 text-grey-4'
+                } flex items-baseline gap-[8px] rounded-[4.7rem] border items-center mt-[9rem] py-[2rem] px-[5.6rem] text-bodyDefault`}
                 onClick={() =>
                     router.push(
                         `/interview/result/${interviewId}?answer=${answer}`,
                     )
                 }
             >
+                <AiOutlineArrowLeft size={15} />
                 {answer}번 질문으로 돌아가기
             </button>
         </section>

@@ -74,7 +74,9 @@ export default function Home() {
                         경험을 쌓아나가요
                     </p>
                     <div className="pt-[3.4rem]">
-                        <Button type="round" title="모의 면접 시작하기 >" />
+                        <Link href="/interview">
+                            <Button type="round" title="모의 면접 시작하기 >" />
+                        </Link>
                     </div>
                 </div>
             </section>
