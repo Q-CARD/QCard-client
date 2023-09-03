@@ -82,6 +82,7 @@ export const QUESTION_CATEGORY = [
         id: 12,
         name: '인성 질문',
         image: personal,
+        key: '',
     },
 ];
 
