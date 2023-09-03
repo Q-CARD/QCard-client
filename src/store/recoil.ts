@@ -10,3 +10,9 @@ export const userAtom = atom<any>({
     default: { nickname: '', email: '' },
     effects_UNSTABLE: [persistAtom],
 });
+
+export const isLoginAtom = atom<any>({
+    key: 'isLogin',
+    default: false,
+    effects_UNSTABLE: [persistAtom],
+});

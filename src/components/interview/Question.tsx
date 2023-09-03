@@ -55,13 +55,13 @@ export default function Question() {
     return (
         <>
             <div className="text-heading3 text-blue-primary">{answer}</div>
-            <h1 className="text-specialHeading h-[3.8rem] w-3/5 break-keep">
+            <h1 className="flex flex-wrap text-specialHeading  w-3/5 break-keep">
                 {curPageResult?.question_model?.title}
             </h1>
-            <div className="rounded-[2rem] mt-[2rem] py-[2px] px-[13px] bg-blue-primary text-white text-bodyExtraSmaller">
+            <div className="rounded-[2rem] mt-[1rem] py-[2px] px-[13px] bg-blue-primary text-white text-bodyExtraSmaller">
                 {categoryKeyToName(curPageResult?.question_model?.category)}
             </div>
-            <div className="text-bodyDefault h-[3rem] text-grey-6 mt-[2.2rem]">
+            <div className="text-bodyDefault min-h-[3rem] text-grey-6 mt-[2.2rem]">
                 {curPageResult?.answer ?? '내가 녹음한 답변이 없습니다'}
             </div>
         </>

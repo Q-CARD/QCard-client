@@ -59,9 +59,9 @@ export default async function Home() {
                     />
                 </div>
             </section>
-            <section className="flex justify-between px-[15.5rem] py-[17.5rem]">
+            <section className="flex justify-between m-auto px-[10rem] py-[17.5rem]">
                 <div className="flex-col px-[5rem] py-[6rem]">
-                    <h2 className="text-heading2 text-black">오늘의 질문</h2>
+                    <h2 className="text-heading2 text-black w-[20rem]">오늘의 질문</h2>
                     <p className="pt-[5.8rem] text-grey-6 text-bodyLarger">
                         하루에 하나씩,
                         <br />
@@ -71,6 +71,7 @@ export default async function Home() {
                 <Image
                     src={ImgQuestionCard}
                     alt="card-question"
+                    
                     width={860}
                     height={316}
                 />
