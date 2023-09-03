@@ -3,6 +3,7 @@
 
 import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+
 import ChatRoom from '@/components/chat/ChatRoom';
 import { INTERVIEW_RESULT } from '@/constants/dummy';
 import { AnswerType } from '@/types/index';
@@ -14,9 +15,6 @@ export default function InterviewFollowupPage() {
     const searchParams = useSearchParams();
     const router = useRouter();
 
-    // Search Params
-
-    //const [curPageQuestion, setCurPageQuestion] = React.useState<AnswerType>();
     const interviewId = searchParams?.get('id') ?? '1';
     const answer = parseInt(searchParams?.get('answer') ?? '1');
 
@@ -24,29 +22,18 @@ export default function InterviewFollowupPage() {
     const [answerCnt, setAnswerCnt] = React.useState<number>(0); // 답변 횟수 카운트
 
     const obj = useRecoilValue(interviewIdAtom);
-    // usePreventBackward(); // 꼬리질문 페이지에서 뒤로가기 금지
 
-    //console.log('interviewQuestion', interviewQuestion);
     const getAllInterviewInfo = async () => {
         let data = await getInterviewAll(parseInt(interviewId));
         if (data) {
-            console.log('인터뷰 가져온 data', data);
+            // console.log('인터뷰 가져온 data', data);
             setCurPageQuestion(data);
         }
-    };
-
-    // interviewid를 가지고 요청 후, 꼬리질문 state에 저장하는 함수
-    const handlePageFollowupQuestion = () => {
-        let curPageQuestion = INTERVIEW_RESULT.find(
-            (el) => el.question_id == answer,
-        );
-        setCurPageQuestion(curPageQuestion);
     };
 
     const handleAnswerCnt = (answerCnt: number) => setAnswerCnt(answerCnt);
 
     React.useEffect(() => {
-        // handlePageFollowupQuestion();
         getAllInterviewInfo();
     }, []);
 
@@ -74,7 +61,7 @@ export default function InterviewFollowupPage() {
                 } flex items-baseline gap-[8px] rounded-[4.7rem] border items-center mt-[9rem] py-[2rem] px-[5.6rem] text-bodyDefault`}
                 onClick={() =>
                     router.push(
-                        `/interview/result/${interviewId}?id=${obj[answer]}&answer=${answer}`,
+                        `/interview/result/${interviewId}?id=${obj?.[answer]}&answer=${answer}`,
                     )
                 }
             >

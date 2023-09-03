@@ -44,7 +44,6 @@ export default function InterviewQuestionPage() {
 
     const obj = useRecoilValue(interviewIdAtom);
     console.log('[obj]', obj); // [ empty, 22 ,23, 24, ...]
-    //return obj[num];
 
     const handleNextQuestion = () => {
         if (question < 10) {
