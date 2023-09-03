@@ -14,14 +14,19 @@ export default function RecordCard({
     question,
     cnt,
     interviewQuestionId,
+    getRecordingStatus,
 }: {
     interviewQuestionId: number;
     question: QuestionType | undefined;
     cnt: number;
+    getRecordingStatus: (isRecording: boolean | null) => void;
 }) {
     // 타이머 클릭 & 녹음 stop/start 상태 관리
     const [isRecording, setIsRecording] = React.useState<null | boolean>(null);
 
+    React.useEffect(() => {
+        getRecordingStatus(isRecording);
+    }, [isRecording]);
     // 시작
     const handleRecordStart = () => {
         console.log('handleRecordStart');
@@ -30,6 +35,8 @@ export default function RecordCard({
 
     // 중단
     const handleRecordStop = () => {
+        if (isRecording) {
+        }
         console.log('handleRecordStop');
         setIsRecording(false);
     };
@@ -57,6 +64,7 @@ export default function RecordCard({
                 />
                 <Timer
                     handleRecordStart={handleRecordStart}
+                    handleRecordStop={handleRecordStop}
                     isRecording={isRecording}
                     mm={1}
                     ss={0}

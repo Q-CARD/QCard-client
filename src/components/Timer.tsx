@@ -7,11 +7,13 @@ interface TimerProps {
     mm: number; // 종료 분
     ss: number; // 종료 초
     handleRecordStart: () => void;
+    handleRecordStop: () => void;
 }
 
 export default function Timer({
     isRecording,
     handleRecordStart,
+    handleRecordStop,
     mm,
     ss,
 }: TimerProps) {
@@ -53,11 +55,12 @@ export default function Timer({
         }
     }, [isRecording]);
 
+    // 1분이 지나면 isRecording 상태를 true로 바꿈
     const changeRecordingState = React.useCallback(() => {
         if (count.current >= finish) {
-            alert('1분이 지났으므로 녹음이 완료되었습니다');
+            alert(`${finish}초가 지났으므로 녹음이 완료되었습니다`);
             if (isRecording) {
-                handleRecordStart();
+                handleRecordStop();
             }
         }
     }, [isRecording]);

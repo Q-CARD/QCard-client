@@ -131,11 +131,11 @@ export default function Recoder({
             id="audio-container"
             className="relative w-[6.4rem] h-[6.4rem] cursor-pointer"
             onClick={
-                isRecordFinish
-                    ? recordLimit
-                    : isRecording
-                    ? handleRecordStop
-                    : handleRecordStart
+                // 이미 한번 녹음했으면 recordLimit을 호출해서 재녹음 방지
+                isRecordFinish ? recordLimit : handleRecordStart
+                // : isRecording
+                // ? handleRecordStop
+                // : handleRecordStart
             }
         >
             <Image

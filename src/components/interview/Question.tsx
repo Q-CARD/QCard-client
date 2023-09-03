@@ -40,7 +40,13 @@ export default function Question() {
     };
 
     const handlePageResult = () => {
-        let curPage: AnswerType = interviewQuestion?.[answer - 1];
+        let curPage: AnswerType = interviewQuestion?.[answer];
+
+        console.log(
+            'curPage',
+            curPage,
+            curPageResult?.question_model?.category,
+        );
         if (!curPage) {
             alert('질문 없음');
             return;

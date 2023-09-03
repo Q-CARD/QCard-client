@@ -1,5 +1,5 @@
 // 모의 면접 모드 결과 페이지
-
+import { Suspense } from 'react';
 import { headers } from 'next/headers';
 
 import { Accordian } from '@/components/Accordian'; // gpt 답변 Props로 넘기기
@@ -25,19 +25,26 @@ export default async function InterviewResultPage() {
     let data = await getInterviewAll(parseInt(interview_question_id));
 
     return (
-        <section className="flex flex-col items-center min-w-[82rem] m-auto">
+        <>
             <div className="flex text-center flex-col w-[85rem] items-center rounded-2xl border border-grey-4 py-[4rem] px-[4.8rem] gap-[3.2rem] self-stretch">
                 <Question />
-                <Accordian className="w-full">
-                    <MarkdownRenderer
-                        //Sample: {'# Hello world \n\n <pre>Hello world</pre>'}
-                        content={data.gpt_answer}
-                    />
-                </Accordian>
+                <Suspense fallback={<p>Loading feed...</p>}>
+                    <Accordian
+                        rerenderProps={interview_question_id}
+                        className="w-full"
+                    >
+                        <MarkdownRenderer
+                            content={
+                                data.gpt_answer ??
+                                'gpt 답변이 없습니다 다시 한번 녹음해주세요 :)'
+                            }
+                        />
+                    </Accordian>
+                </Suspense>
                 <FollowupButton />
             </div>
             <Pagination className="mt-[3.4rem]" />
             <NextButton />
-        </section>
+        </>
     );
 }

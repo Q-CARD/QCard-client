@@ -14,7 +14,9 @@ export default function InterviewResultLayout({
                 </div>
             </div>
             <div className="flex flex-col mt-[8rem] mb-[5.8rem] m-auto">
-                {children}
+                <section className="flex flex-col items-center min-w-[82rem] m-auto">
+                    {children}
+                </section>
             </div>
         </section>
     );

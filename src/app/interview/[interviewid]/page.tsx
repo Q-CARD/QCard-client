@@ -37,13 +37,14 @@ export default function InterviewQuestionPage() {
         else alert('다음 질문이 없습니다');
     };
 
+    const [disabled, setDisabled] = useState(false);
+
     //question이 바뀔 때마다 현재 질문 세팅하기
     useEffect(() => {
         handleCurQuestion();
     }, [question]);
 
     const obj = useRecoilValue(interviewIdAtom);
-    console.log('[obj]', obj); // [ empty, 22 ,23, 24, ...]
 
     const handleNextQuestion = () => {
         if (question < 10) {
@@ -60,19 +61,35 @@ export default function InterviewQuestionPage() {
 
     const NEXT_BUTTON_TEXT = question < 10 ? '다음 질문으로' : '결과 보러가기';
 
+    const getRecordingStatus = (isRecording: boolean | null) => {
+        console.log('부모', isRecording);
+        if (typeof isRecording === 'boolean') {
+            setDisabled(isRecording);
+        }
+    };
+
     return (
         <section className="flex items-center flex-col min-w-[82rem] m-auto">
             <RecordCard
+                getRecordingStatus={getRecordingStatus}
                 interviewQuestionId={interviewQuestionId}
                 cnt={question}
                 question={curPageQuestion}
             />
             <button
+                disabled={disabled}
                 onClick={handleNextQuestion}
-                className="w-fit flex items-center mt-[5.7rem] gap-[8px] py-[2.4rem] px-[3.6rem] bg-blue-primary text-specialHeading3 text-white rounded-[3rem]"
+                className={`${
+                    disabled
+                        ? 'bg-white border border-grey-4 border-1 text-grey-4'
+                        : 'bg-blue-primary text-white'
+                } w-fit flex items-center mt-[5.7rem] gap-[8px] py-[2.4rem] px-[3.6rem] text-specialHeading3 rounded-[3rem]`}
             >
                 {NEXT_BUTTON_TEXT}
-                <AiOutlineArrowRight size={15} color="#fff" />
+                <AiOutlineArrowRight
+                    size={15}
+                    color={`${disabled ? 'var(--grey-4)' : '#fff'}`}
+                />
             </button>
         </section>
     );
