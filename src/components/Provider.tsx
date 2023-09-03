@@ -11,6 +11,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         <RecoilRoot>
             <QueryClientProvider client={queryClient}>
                 <MDXProvider>{children}</MDXProvider>
+                {children}
             </QueryClientProvider>
         </RecoilRoot>
     );

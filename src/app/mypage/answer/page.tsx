@@ -25,6 +25,7 @@ export default function MyAnswerPage() {
             <div className="mx-[10.3rem] my-[2rem] flex justify-center flex-wrap gap-[2.8rem]">
                 {QUESTION_CATEGORY.map((category) => (
                     <Button
+                        key={`button-question-category-${category.id}`}
                         type="chip"
                         title={category.name}
                         onClick={() => selectCategory(category.id)}
@@ -33,7 +34,10 @@ export default function MyAnswerPage() {
                 ))}
             </div>
             {filteredAnswers.map((answer: IAnswer) => (
-                <AnswerCard data={answer} />
+                <AnswerCard
+                    key={`answer-card-${answer.answerId}`}
+                    data={answer}
+                />
             ))}
         </div>
     );
