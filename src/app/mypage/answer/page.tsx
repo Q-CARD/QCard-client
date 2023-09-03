@@ -1,24 +1,53 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/Button';
-import { QUESTION_CATEGORY } from '@/constants/data';
+import { getAnswersMe } from '@/api/answer';
 import { IAnswer } from '@/types/answer';
-import { ANSWERS_ME } from '@/constants/dummy';
+import { QUESTION_CATEGORY } from '@/constants/data';
 
 export default function MyAnswerPage() {
-    const [selectedCategory, setSelectedCategory] = useState<number>(
-        QUESTION_CATEGORY[0].id,
-    );
+    const [myAnswerList, setMyAnswerList] = useState<any>([]); // TODO - any
 
-    const selectCategory = (categoryId: number) => {
-        setSelectedCategory(categoryId);
+    const [selectedCategory, setSelectedCategory] = useState<any>({
+        id: QUESTION_CATEGORY[0].id,
+        key: QUESTION_CATEGORY[0].key,
+    });
+    const [selectedCategoryList, setSelectedCategoryList] = useState<any>([]);
+
+    useEffect(() => {
+        loadAnswersMe();
+
+        // setSelectedCategoryList(
+        //     myAnswerList.filter((item: any) => {
+        //         return item.question.category === 'CATEGORY_NW';
+        //     }),
+        // );
+    }, []);
+
+    useEffect(() => {
+        setSelectedCategoryList(filteredDataByCategory);
+    }, [selectedCategory]);
+
+    const selectCategory = (category: any) => {
+        setSelectedCategory({
+            id: category.id,
+            key: category.key,
+        });
     };
 
-    const filteredAnswers = ANSWERS_ME.filter(
-        (answer) => answer.answerId === selectedCategory,
-    );
+    const filteredDataByCategory = myAnswerList.filter(({ question }: any) => {
+        return question.category === selectedCategory.key;
+    });
+
+    const loadAnswersMe = async () => {
+        try {
+            const data = await getAnswersMe();
+
+            setMyAnswerList(data);
+        } catch (e) {}
+    };
 
     return (
         <div className="w-full h-full flex flex-col items-center gap-[3.4rem] mb-[3.4rem]">
@@ -28,12 +57,12 @@ export default function MyAnswerPage() {
                         key={`button-question-category-${category.id}`}
                         type="chip"
                         title={category.name}
-                        onClick={() => selectCategory(category.id)}
-                        isChipClicked={selectedCategory === category.id}
+                        onClick={() => selectCategory(category)}
+                        isChipClicked={selectedCategory.id === category.id}
                     />
                 ))}
             </div>
-            {filteredAnswers.map((answer: IAnswer) => (
+            {selectedCategoryList.map((answer: IAnswer) => (
                 <AnswerCard
                     key={`answer-card-${answer.answerId}`}
                     data={answer}
@@ -44,7 +73,6 @@ export default function MyAnswerPage() {
 }
 
 const AnswerCard = ({ data }: { data: IAnswer }) => {
-    // TODO - title , category 추가 요청
     const {
         answerId,
         type,
@@ -53,15 +81,18 @@ const AnswerCard = ({ data }: { data: IAnswer }) => {
         heartCount,
         createdAt,
         modifiedAt,
+        question,
     } = data;
+
+    const categoryName = QUESTION_CATEGORY.find(({ key }) => {
+        return key === question.category;
+    })?.name;
 
     return (
         <div className="w-[68rem] px-[5rem] py-[3.14rem] rounded-[1.5702rem] border-[0.0785rem] border-grey-4 flex flex-col items-center">
-            <div className="text-heading4 mb-[1.57rem]">
-                {'네트워크 OSI 7계층에 대해 설명해주세요.'}
-            </div>
+            <div className="text-heading4 mb-[1.57rem]">{question.title}</div>
             <div className="text-[0.785rem] font-semibold text-white px-[1.1rem] py-[0.2rem] mb-[4.24rem] bg-blue-primary rounded-[1.57rem]">
-                {'네트워크'}
+                {categoryName}
             </div>
             <div className="text-bodySmaller text-grey-6">{content}</div>
         </div>
