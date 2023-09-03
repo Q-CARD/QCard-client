@@ -71,9 +71,9 @@ export default function Recoder({
         }
     };
 
-    console.log('isRecordFinish', isRecordFinish);
+    
     const stop = async () => {
-        console.log('3. stop 실행');
+        //console.log('3. stop 실행');
         setIsRecordFinish(true); // 녹음 완료, 한번만 가능
         Mp3Recorder.stop()
             .getMp3()
@@ -158,11 +158,13 @@ export default function Recoder({
                     className="absolute top-[1.8rem] left-[1.8rem]"
                 />
             )}
+            {/* audio control 
             <audio
                 style={{ marginTop: '100px' }}
                 src={state.blobURL}
                 controls="controls"
             />
+            */}
         </div>
     );
 }

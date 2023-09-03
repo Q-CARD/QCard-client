@@ -40,13 +40,7 @@ export default function Question() {
     };
 
     const handlePageResult = () => {
-        let curPage: AnswerType = interviewQuestion?.[answer];
-
-        console.log(
-            'curPage',
-            curPage,
-            curPageResult?.question_model?.category,
-        );
+        let curPage: AnswerType = interviewQuestion?.[answer - 1];
         if (!curPage) {
             alert('질문 없음');
             return;
@@ -61,14 +55,14 @@ export default function Question() {
     return (
         <>
             <div className="text-heading3 text-blue-primary">{answer}</div>
-            <h1 className="text-specialHeading">
+            <h1 className="text-specialHeading h-[3.8rem] w-3/5 break-keep">
                 {curPageResult?.question_model?.title}
             </h1>
-            <div className="rounded-[2rem] py-[2px] px-[13px] bg-blue-primary text-white text-bodyExtraSmaller">
+            <div className="rounded-[2rem] mt-[2rem] py-[2px] px-[13px] bg-blue-primary text-white text-bodyExtraSmaller">
                 {categoryKeyToName(curPageResult?.question_model?.category)}
             </div>
-            <div className="text-bodyDefault text-grey-6 mt-[2.2rem]">
-                {curPageResult?.answer}
+            <div className="text-bodyDefault h-[3rem] text-grey-6 mt-[2.2rem]">
+                {curPageResult?.answer ?? '내가 녹음한 답변이 없습니다'}
             </div>
         </>
     );

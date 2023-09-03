@@ -29,7 +29,7 @@ export default function RecordCard({
     }, [isRecording]);
     // 시작
     const handleRecordStart = () => {
-        console.log('handleRecordStart');
+        //console.log('handleRecordStart');
         setIsRecording(true);
     };
 
@@ -37,7 +37,7 @@ export default function RecordCard({
     const handleRecordStop = () => {
         if (isRecording) {
         }
-        console.log('handleRecordStop');
+        //console.log('handleRecordStop');
         setIsRecording(false);
     };
 
@@ -49,10 +49,11 @@ export default function RecordCard({
     return (
         <div className="flex flex-col items-center rounded-2xl border border-grey-4 py-[3.2rem] px-[2.4rem] gap-[5.4rem] self-stretch">
             <div className="text-heading3 text-blue-primary">{cnt}</div>
-            <div className="text-center">
-                <h1 className="text-specialHeading">{question?.title}</h1>
-                <div className="text-bodyDefault text-grey-5">
-                    녹음한 대답을 기반으로 꼬리질문을 드립니다
+            <div className="text-center flex items-center flex-col m-auto">
+                <h1 className="flex text-specialHeading w-3/5 break-keep text-center">{question?.title}</h1>
+                <div className="text-bodyDefault text-grey-5 mt-[2rem]">
+                    녹음한 대답을 기반으로 꼬리질문을 드립니다<br/>
+                    답변 시간은 1분입니다
                 </div>
             </div>
             <div className="flex flex-col items-center text-center">

@@ -25,7 +25,7 @@ export function Accordian({
     }, [rerenderProps]);
     return (
         <div
-            className={`${className} flex flex-col justify-center items-center w-full py-[2.4rem] px-[3.6rem] text-bodySmaller border border-grey-4 rounded-3xl bg-white text-grey-5`}
+            className={`${className} flex flex-col justify-center items-center w-full py-[2.4rem] px-[3.6rem] text-bodySmaller border border-grey-4 min-h-[7.9rem] rounded-3xl bg-white text-grey-5`}
         >
             <div>
                 <AccordianTrigger
