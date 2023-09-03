@@ -2,17 +2,36 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/Button';
+import { QuestionCard } from '@/components/card/QuestionCard';
 import ImgCardDeck3 from '@/assets/images/image-card-deck-3.png';
 import ImgCardDeck2 from '@/assets/images/image-card-deck-2.png';
 import ImgHeading from '@/assets/images/image-main-heading.png';
 import ImgQuestionCard from '@/assets/images/Question Card.png';
+import { QUESTION_CATEGORY } from '@/constants/data';
 
 export const metadata = {
     title: 'QCard Home',
 };
 
-export default function Home() {
+async function fetchData() {
+    const dynamicData = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/questions/main`,
+        { cache: 'no-store' },
+    );
+
+    const data = await dynamicData.json();
+    return data;
+}
+
+export default async function Home() {
     // TODO: box-shadow,seperator 커스텀 클래스 적용, '>' react-icons 적용
+
+    const questionsMain = await fetchData();
+
+    const questionsMainCategoryName = QUESTION_CATEGORY.find((category) => {
+        return category.key === questionsMain.category;
+    })?.name;
+
     return (
         <>
             <section className="flex justify-between pt-[9.4rem] pb-[6rem] pr-[6.6rem] pl-[12.6rem] shadow-md">
@@ -82,7 +101,7 @@ export default function Home() {
                 </div>
             </section>
             <hr className="seperator" />
-            <section className="flex py-[17.5rem] mx-[11.6rem]">
+            <section className="flex flex-col gap-[5.6rem] py-[17.5rem] mx-[11.6rem]">
                 <div className="flex">
                     <h3 className="text-heading2 text-black">
                         질문 모음집 보러가기
@@ -90,6 +109,16 @@ export default function Home() {
                     <p className="ml-[3.7rem] text-grey-6 text-bodyLarger">
                         다양한 카테고리의 큐카드로 면접에 대비해요
                     </p>
+                </div>
+                <div className="flex flex-wrap gap-[5.2rem]">
+                    <div className="w-[36.8rem] h-[36.8rem] p-[4.85rem] bg-blue-primary shadow-3 rounded-[1.8rem] flex justify-center">
+                        <span className="text-[4.4rem] font-bold text-white text-center my-auto">
+                            {questionsMainCategoryName}
+                        </span>
+                    </div>
+                    {questionsMain.questions.map((question: any) => {
+                        return <QuestionCard question={question} />;
+                    })}
                 </div>
             </section>
             <Footer />
