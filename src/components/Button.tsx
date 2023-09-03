@@ -1,5 +1,5 @@
 interface ButtonProps {
-    type: 'block' | 'round' | 'chip';
+    type: 'block' | 'round' | 'chip' | 'black';
     title: string;
     onClick?: any;
     disabled?: boolean;
@@ -17,6 +17,7 @@ export function Button({
     const blockConfig = `w-[41.9rem] h-fit px-[3.6rem] py-[2.4rem] rounded-[2rem] text-buttonBlock text-white bg-blue-primary`;
     const roundConfig = `w-fit h-fit px-[2.4rem] py-[1.8rem] rounded-[3rem] text-buttonRound text-white bg-blue-primary`;
     const chipConfig = `w-fit h-fit px-[1.8rem] py-[1.4rem] rounded-[3rem] text-buttonChip hover:text-white hover:bg-blue-primary`;
+    const blackConfig = `w-fit h-fit px-[2.4rem] py-[1.8rem] rounded-[3rem] text-buttonRound text-white bg-black`;
 
     let buttonStyle = '';
     switch (type) {
@@ -29,6 +30,8 @@ export function Button({
         case 'chip':
             buttonStyle = chipConfig;
             break;
+        case 'black':
+            buttonStyle = blackConfig;
     }
 
     return type === 'chip' ? ( // TODO - bugFix로 우선 컴포넌트 분기. 추후 개선
