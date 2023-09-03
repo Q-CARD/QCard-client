@@ -55,7 +55,7 @@ export default function CategoryQuestionPage({
         <div className="my-[12.8rem] flex flex-col items-center gap-[3.2rem]">
             <div className="text-specialHeading mb-[0.8rem]">
                 <span className="text-blue-primary">Q. </span>
-                <span>{questionDetail.title}</span>
+                <span>{questionDetail.question?.title}</span>
             </div>
             <Textarea
                 placeholder="자세히 입력할 수록 좋아요"
