@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { IQuestion } from '@/types';
 import { GrNext } from 'react-icons/gr';
+import { getQuestion } from '@/api/question';
 
 interface QuestionDetailCardProps {
     questionInfo: IQuestion;
@@ -12,15 +13,23 @@ interface QuestionDetailCardProps {
 export function QuestionDetailCard({ questionInfo }: QuestionDetailCardProps) {
     const router = useRouter();
 
-    // TODO - 답변 여부
-    const checkIsAnswered = () => {};
+    // TODO - 함수명 변경 검토
+    const checkIsAnswered = async () => {
+        try {
+            const data = await getQuestion(questionInfo.questionId);
 
-    const moveTo = () => {
-        const isAnswered = false;
+            return data.answers.length > 0;
+        } catch (e) {}
+    };
 
-        const pathname = isAnswered
-            ? `/category/result/${questionInfo.questionId}`
-            : `/category/question/${questionInfo.questionId}`;
+    // TODO - 추후 api 요청
+    const moveTo = async () => {
+        const isAnswered = await checkIsAnswered();
+
+        const pathname =
+            isAnswered === true
+                ? `/category/result/${questionInfo.questionId}`
+                : `/category/question/${questionInfo.questionId}`;
 
         router.push(pathname);
     };
