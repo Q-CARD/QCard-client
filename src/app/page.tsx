@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/Button';
+import { QuestionCard } from '@/components/card/QuestionCard';
 import ImgCardDeck3 from '@/assets/images/image-card-deck-3.png';
 import ImgCardDeck2 from '@/assets/images/image-card-deck-2.png';
 import ImgHeading from '@/assets/images/image-main-heading.png';
@@ -81,7 +82,7 @@ export default function Home() {
                 </div>
             </section>
             <hr className="seperator" />
-            <section className="flex py-[17.5rem] mx-[11.6rem]">
+            <section className="flex flex-col gap-[5.6rem] py-[17.5rem] mx-[11.6rem]">
                 <div className="flex">
                     <h3 className="text-heading2 text-black">
                         질문 모음집 보러가기
@@ -89,6 +90,18 @@ export default function Home() {
                     <p className="ml-[3.7rem] text-grey-6 text-bodyLarger">
                         다양한 카테고리의 큐카드로 면접에 대비해요
                     </p>
+                </div>
+                <div className="flex flex-wrap gap-[5.2rem]">
+                    <div className="w-[36.8rem] h-[36.8rem] p-[4.85rem] bg-blue-primary shadow-3 rounded-[1.8rem] flex justify-center cursor-pointer">
+                        <span className="text-[4.4rem] font-bold text-white text-center my-auto">
+                            {'네트워크'}
+                        </span>
+                    </div>
+                    <QuestionCard />
+                    <QuestionCard />
+                    <QuestionCard />
+                    <QuestionCard />
+                    <QuestionCard />
                 </div>
             </section>
             <Footer />

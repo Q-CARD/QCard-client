@@ -18,7 +18,7 @@ export function CategoryCard({ categoryInfo }: CategoryCardProps) {
 
     return (
         <div
-            className="w-fit h-fit px-[4.8rem] py-[6.6rem] rounded-[2rem] shadow-cardShadow cursor-pointer flex flex-col items-center gap-[3.7rem]"
+            className="w-fit h-fit px-[4.8rem] py-[6.6rem] rounded-[2rem] shadow-4 cursor-pointer flex flex-col items-center gap-[3.7rem]"
             onClick={moveToCategoryQuestion}
         >
             <Image
