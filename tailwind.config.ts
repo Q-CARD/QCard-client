@@ -115,7 +115,8 @@ const config: Config = {
                 red: { 4: '#ff3c5f', 3: '#ffaebd', 2: '#ffe5ec', 1: '#fff4f5' },
             },
             boxShadow: {
-                cardShadow: '0px 14px 42px 0px rgba(20, 20, 43, 0.14)',
+                4: '0px 14px 42px 0px rgba(20, 20, 43, 0.14)',
+                3: '0px 8px 28px 0px rgba(20, 20, 43, 0.10)',
             },
         },
     },
