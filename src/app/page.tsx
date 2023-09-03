@@ -7,13 +7,27 @@ import ImgCardDeck3 from '@/assets/images/image-card-deck-3.png';
 import ImgCardDeck2 from '@/assets/images/image-card-deck-2.png';
 import ImgHeading from '@/assets/images/image-main-heading.png';
 import ImgQuestionCard from '@/assets/images/Question Card.png';
+import { QUESTION_CATEGORY } from '@/constants/data';
 
 export const metadata = {
     title: 'QCard Home',
 };
 
-export default function Home() {
+async function fetchData() {
+    const dynamicData = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/questions/main`,
+        { cache: 'no-store' },
+    );
+
+    const data = await dynamicData.json();
+    return data;
+}
+
+export default async function Home() {
     // TODO: box-shadow,seperator 커스텀 클래스 적용, '>' react-icons 적용
+
+    const questionsMain = await fetchData();
+
     return (
         <>
             <section className="flex justify-between pt-[9.4rem] pb-[6rem] pr-[6.6rem] pl-[12.6rem] shadow-md">
@@ -92,16 +106,14 @@ export default function Home() {
                     </p>
                 </div>
                 <div className="flex flex-wrap gap-[5.2rem]">
-                    <div className="w-[36.8rem] h-[36.8rem] p-[4.85rem] bg-blue-primary shadow-3 rounded-[1.8rem] flex justify-center cursor-pointer">
+                    <div className="w-[36.8rem] h-[36.8rem] p-[4.85rem] bg-blue-primary shadow-3 rounded-[1.8rem] flex justify-center">
                         <span className="text-[4.4rem] font-bold text-white text-center my-auto">
-                            {'네트워크'}
+                            {questionsMain.category}
                         </span>
                     </div>
-                    <QuestionCard />
-                    <QuestionCard />
-                    <QuestionCard />
-                    <QuestionCard />
-                    <QuestionCard />
+                    {questionsMain.questions.map((question: any) => {
+                        return <QuestionCard question={question} />;
+                    })}
                 </div>
             </section>
             <Footer />
