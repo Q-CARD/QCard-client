@@ -17,12 +17,13 @@ const fetchWrapper = async ({ method, url, body, params }: any) => {
 
     const config: AxiosRequestConfig = {
         baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+        timeout: 100000, // 20000ms
         headers: {
             'Content-Type':
                 params?.type === 'record'
                     ? 'multipart/form-data'
                     : 'application/json',
-            Authorization: `Bearer ${test_access_token}`, // TODO: token 수정
+            Authorization: `Bearer ${test_access_token}`,
             // Authorization: token,
         },
         ...params,
