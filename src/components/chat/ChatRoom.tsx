@@ -69,15 +69,10 @@ export default function ChatRoom({
                 let body = {
                     sequence: questionCnt,
                     question_id: additionalQuestions?.question,
-                    answer: answerList[questionCnt - 1],
+                    answer: answerList?.[questionCnt - 1],
                 };
 
-                console.log('body', body);
-
-                let data = await submitAdditionalAnswer(body);
-                if (data) {
-                    console.log('data', data);
-                }
+                await submitAdditionalAnswer(body);
             }
         }
     };
@@ -91,9 +86,8 @@ export default function ChatRoom({
     ) => {
         e.preventDefault();
         // 답변 없는 경우 종료
-        if (!value) {
-            return;
-        }
+        if (!value) return;
+
         handleAnswerList(value as string);
         setQuestionCnt(questionCnt + 1);
 

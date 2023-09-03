@@ -10,6 +10,7 @@ import { AnswerType } from '@/types/index';
 import { interviewIdAtom } from '@/utils/atom';
 import { getInterviewAll } from '@/api/interview';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { useRecoilValue } from 'recoil';
 
 export default function InterviewFollowupPage() {
     const searchParams = useSearchParams();
@@ -70,7 +71,4 @@ export default function InterviewFollowupPage() {
             </button>
         </section>
     );
-}
-function useRecoilValue(interviewIdAtom: any) {
-    throw new Error('Function not implemented.');
 }
