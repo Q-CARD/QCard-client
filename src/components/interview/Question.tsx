@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import { useRecoilValue } from 'recoil';
 import { interviewListAtom } from '@/utils/atom';
 import { getInterviewAll } from '@/api/interview';
+import { categoryKeyToName } from '@/utils/utils';
 
 interface AnswerType {
     question_id: number;
@@ -58,7 +59,7 @@ export default function Question() {
                 {curPageResult?.question_model?.title}
             </h1>
             <div className="rounded-[2rem] py-[2px] px-[13px] bg-blue-primary text-white text-bodyExtraSmaller">
-                {curPageResult?.question_model?.category}
+                {categoryKeyToName(curPageResult?.question_model?.category)}
             </div>
             <div className="text-bodyDefault text-grey-6 mt-[2.2rem]">
                 {curPageResult?.answer}

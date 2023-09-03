@@ -11,7 +11,6 @@ export const getInterviewAll = async (interviewQuestionId: number) => {
 };
 
 // 특정 모의면접에서 한가지 질문에 대한 답변 Mp3 파일 전송
-// TODO: form data header
 export const submitRecordFile = async (
     interview_question_id: number,
     body: any,
@@ -22,8 +21,6 @@ export const submitRecordFile = async (
     });
 };
 
-
 export const submitAdditionalAnswer = async (body: any) => {
     return await PUT(`/interview/additional`, body);
-
 };

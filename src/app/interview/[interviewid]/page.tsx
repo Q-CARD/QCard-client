@@ -5,7 +5,7 @@ import RecordCard from '@/components/card/RecordCard';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { useRecoilValue } from 'recoil';
-import { interviewListAtom } from '@/utils/atom';
+import { interviewIdAtom, interviewListAtom } from '@/utils/atom';
 
 interface QuestionType {
     category: string; // "CATEGORY_NW"
@@ -42,6 +42,9 @@ export default function InterviewQuestionPage() {
         handleCurQuestion();
     }, [question]);
 
+    const obj = useRecoilValue(interviewIdAtom);
+    console.log('[obj]', obj); // [ empty, 22 ,23, 24, ...]
+
     const handleNextQuestion = () => {
         if (question < 10) {
             const pathname = `/interview/${interviewId}?question=${
@@ -49,7 +52,10 @@ export default function InterviewQuestionPage() {
             }`;
             router.replace(pathname);
             // 뒤로가기 누르면 홈으로 이동
-        } else router.replace(`/interview/result/${interviewId}?result=1`);
+        } else
+            router.replace(
+                `/interview/result/${interviewId}?id=${obj[1]}&answer=1`,
+            );
     };
 
     const NEXT_BUTTON_TEXT = question < 10 ? '다음 질문으로' : '결과 보러가기';

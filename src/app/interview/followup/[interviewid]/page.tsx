@@ -3,48 +3,37 @@
 
 import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+
 import ChatRoom from '@/components/chat/ChatRoom';
 import { INTERVIEW_RESULT } from '@/constants/dummy';
 import { AnswerType } from '@/types/index';
-import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { interviewIdAtom } from '@/utils/atom';
 import { getInterviewAll } from '@/api/interview';
-
-// import usePreventBackward from '@/hooks/useBeforePopState';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 export default function InterviewFollowupPage() {
     const searchParams = useSearchParams();
     const router = useRouter();
 
-    // Search Params
     const interviewId = searchParams?.get('id') ?? '1';
-    const answer = searchParams?.get('answer') ?? 1;
+    const answer = parseInt(searchParams?.get('answer') ?? '1');
 
     const [curPageQuestion, setCurPageQuestion] = React.useState<any>();
     const [answerCnt, setAnswerCnt] = React.useState<number>(0); // 답변 횟수 카운트
 
-    // usePreventBackward(); // 꼬리질문 페이지에서 뒤로가기 금지
+    const obj = useRecoilValue(interviewIdAtom);
 
-    //console.log('interviewQuestion', interviewQuestion);
     const getAllInterviewInfo = async () => {
         let data = await getInterviewAll(parseInt(interviewId));
         if (data) {
-            console.log('인터뷰 가져온 data', data);
+            // console.log('인터뷰 가져온 data', data);
             setCurPageQuestion(data);
         }
-    };
-
-    // interviewid를 가지고 요청 후, 꼬리질문 state에 저장하는 함수
-    const handlePageFollowupQuestion = () => {
-        let curPageQuestion = INTERVIEW_RESULT.find(
-            (el) => el.question_id == answer,
-        );
-        setCurPageQuestion(curPageQuestion);
     };
 
     const handleAnswerCnt = (answerCnt: number) => setAnswerCnt(answerCnt);
 
     React.useEffect(() => {
-        // handlePageFollowupQuestion();
         getAllInterviewInfo();
     }, []);
 
@@ -52,7 +41,7 @@ export default function InterviewFollowupPage() {
         <section className="flex flex-col items-center min-w-[82rem] m-auto">
             <div className="flex flex-col items-center rounded-2xl border border-grey-4 py-[4rem] px-[4.8rem] gap-[3.2rem] self-stretch">
                 <div className="text-heading3 text-blue-primary">
-                    {curPageQuestion?.question_id} - 꼬리질문
+                    {answer} - 꼬리질문
                 </div>
                 <h1 className="text-specialHeading">
                     {curPageQuestion?.question_model.title}
@@ -72,7 +61,7 @@ export default function InterviewFollowupPage() {
                 } flex items-baseline gap-[8px] rounded-[4.7rem] border items-center mt-[9rem] py-[2rem] px-[5.6rem] text-bodyDefault`}
                 onClick={() =>
                     router.push(
-                        `/interview/result/${interviewId}?answer=${answer}`,
+                        `/interview/result/${interviewId}?id=${obj?.[answer]}&answer=${answer}`,
                     )
                 }
             >
@@ -81,4 +70,7 @@ export default function InterviewFollowupPage() {
             </button>
         </section>
     );
+}
+function useRecoilValue(interviewIdAtom: any) {
+    throw new Error('Function not implemented.');
 }

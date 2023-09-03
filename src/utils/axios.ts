@@ -15,7 +15,6 @@ const fetchWrapper = async ({ method, url, body, params }: any) => {
     // const test_access_token =
     //     'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZG5ubmxAZXdoYWluLm5ldCIsInJvbGUiOiJST0xFX1VTRVIiLCJleHAiOjE2OTM3Nzk5NTZ9.N5hyWYDtkMwpiN1X9zQ0Zhn7AbrGYGLwKVbTSe3o5p4';
 
-
     const config: AxiosRequestConfig = {
         baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
         headers: {

@@ -1,6 +1,9 @@
 'use client';
+import { interviewIdAtom } from '@/utils/atom';
+
 import { useRouter, useSearchParams } from 'next/navigation';
 import { AiOutlineArrowRight } from 'react-icons/ai';
+import { useRecoilValue } from 'recoil';
 
 export default function NextButton() {
     const searchParams = useSearchParams();
@@ -8,12 +11,13 @@ export default function NextButton() {
 
     const interviewId = searchParams?.get('interviewid') ?? 1;
     const answer = parseInt(searchParams?.get('answer') ?? '1');
+    const obj = useRecoilValue(interviewIdAtom);
 
     const handleNextQuestion = () => {
         if (answer < 10) {
-            const pathname = `/interview/result/${interviewId}?answer=${
-                Number(answer) + 1
-            }`;
+            const pathname = `/interview/result/${interviewId}?id=${
+                obj[answer]
+            }&answer=${Number(answer) + 1}`;
             router.push(pathname);
         } else router.push(`/interview/finish`);
     };

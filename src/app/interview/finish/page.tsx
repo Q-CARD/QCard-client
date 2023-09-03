@@ -26,7 +26,6 @@ export default function InterviewFinishPage() {
                 height={498}
                 loading="lazy"
             />
-
             <button className="w-fit mt-[5.7rem] py-[2.4rem] px-[3.6rem] bg-blue-primary text-specialHeading3 text-white rounded-[4.7rem]">
                 <Link href="/" className="flex items-center gap-[8px]">
                     메인으로 <AiOutlineArrowRight size={15} color="#fff" />

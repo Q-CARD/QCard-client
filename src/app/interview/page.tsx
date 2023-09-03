@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Checkbox from '@/components/Checkbox';
 import ImgCardDeck2 from '@/assets/images/image-card-deck-2.png';
 import { QUESTION_CATEGORY } from '@/constants/data';
+
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { newInterview } from '@/api/interview';
 import { useSetRecoilState } from 'recoil';
@@ -19,10 +20,6 @@ import {
 
 export default function InterviewPage() {
     const [categoryList, setCategoryList] = React.useState<string[]>([]);
-
-    //React.useEffect(() => {
-    //    window.scrollTo(0, 0);
-    //}, []);
 
     const router = useRouter();
 
@@ -44,6 +41,16 @@ export default function InterviewPage() {
     const setInterviewListAtom = useSetRecoilState(interviewListAtom);
     const setInterviewIdAtom = useSetRecoilState(interviewIdAtom);
 
+    const getQuestionIdObject = (arr: any) => {
+        const data = [{ idx: 1, id: 641 }];
+        let obj: any = [];
+        arr.forEach(
+            (question: any, idx: number) => (obj[idx + 1] = question?.id),
+        );
+
+        setInterviewIdAtom(obj);
+    };
+
     const handleInterviewStart = async () => {
         let interviewid = 1;
 
@@ -54,8 +61,6 @@ export default function InterviewPage() {
                 )?.key,
         );
 
-        console.log('body', body);
-
         if (!body || body.length === 0) return;
 
         // 체크 리스트 Recoil에 저장
@@ -64,9 +69,9 @@ export default function InterviewPage() {
         try {
             let data = await newInterview(body as string[]);
             if (data) {
-                console.log('data', data);
-                setInterviewListAtom(data.question); // response 저장
-                setInterviewIdAtom(data.id); // interview_question_id 저장
+                // console.log('data', data);
+                setInterviewListAtom(data.question);
+                getQuestionIdObject(data.question);
             }
         } catch {}
 
@@ -106,7 +111,6 @@ export default function InterviewPage() {
                     onClick={handleInterviewStart}
                     className="flex items-center mt-[6.4rem] gap-[8px] py-[1.4rem] px-[1.8rem] bg-blue-primary text-specialHeading4 text-white rounded-[3rem]"
                 >
-                    {/* TODO: 버튼 클릭 후, interviewId 획득해서 interviewId로 이동 */}
                     면접 시작하기
                     <AiOutlineArrowRight size={15} color="#fff" />
                 </button>

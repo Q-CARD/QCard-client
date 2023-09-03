@@ -5,6 +5,7 @@ import { FaPause } from 'react-icons/fa';
 import { BsFillPlayFill } from 'react-icons/bs';
 import ImgBgCircle from '@/assets/images/image-yellow-circle.png';
 
+import { useSearchParams } from 'next/navigation';
 import MicRecorder from 'mic-recorder-to-mp3';
 import { interviewIdAtom } from '@/utils/atom';
 import { submitRecordFile } from '@/api/interview';
@@ -24,12 +25,16 @@ export default function Recoder({
         isBlocked: false,
     });
 
+    const [isRecordFinish, setIsRecordFinish] = useState(false);
+
     // New instance
     const [Mp3Recorder, setMp3Recorder] = useState(
         new MicRecorder({ bitRate: 128 }),
     );
 
+    const searchParams = useSearchParams();
     const interviewId = useRecoilValue(interviewIdAtom);
+    const answer = searchParams?.get('question') ?? 1;
 
     useEffect(() => {
         navigator.getUserMedia(
@@ -45,6 +50,13 @@ export default function Recoder({
         );
     }, []);
 
+    const recordLimit = () => {
+        if (isRecordFinish) {
+            alert('녹음은 한번만 할 수 있습니다. 다음 문제로 넘어가주세요.');
+            return;
+        }
+    };
+
     const start = async () => {
         //console.log('1. start 실행');
         if (state.isBlocked) {
@@ -59,8 +71,10 @@ export default function Recoder({
         }
     };
 
+    console.log('isRecordFinish', isRecordFinish);
     const stop = async () => {
         console.log('3. stop 실행');
+        setIsRecordFinish(true); // 녹음 완료, 한번만 가능
         Mp3Recorder.stop()
             .getMp3()
             .then(async ([buffer, blob]) => {
@@ -100,6 +114,10 @@ export default function Recoder({
     };
 
     React.useEffect(() => {
+        setIsRecordFinish(false);
+    }, [answer]);
+
+    React.useEffect(() => {
         if (isRecording === null) return;
         if (isRecording) {
             start();
@@ -112,7 +130,13 @@ export default function Recoder({
         <div
             id="audio-container"
             className="relative w-[6.4rem] h-[6.4rem] cursor-pointer"
-            onClick={isRecording ? handleRecordStop : handleRecordStart}
+            onClick={
+                isRecordFinish
+                    ? recordLimit
+                    : isRecording
+                    ? handleRecordStop
+                    : handleRecordStart
+            }
         >
             <Image
                 src={ImgBgCircle}
