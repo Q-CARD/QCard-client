@@ -6608,7 +6608,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["zwitch", "npm:2.0.4"]\
           ],\
-          "linkType": "HARD"\
+          "linkType": "HAR"\
         }]\
       ]]\
     ]\

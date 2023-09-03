@@ -6,22 +6,24 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import ChatRoom from '@/components/chat/ChatRoom';
 import { INTERVIEW_RESULT } from '@/constants/dummy';
 import { AnswerType } from '@/types/index';
-import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { interviewIdAtom } from '@/utils/atom';
 import { getInterviewAll } from '@/api/interview';
-
-// import usePreventBackward from '@/hooks/useBeforePopState';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 export default function InterviewFollowupPage() {
     const searchParams = useSearchParams();
     const router = useRouter();
 
     // Search Params
+
+    //const [curPageQuestion, setCurPageQuestion] = React.useState<AnswerType>();
     const interviewId = searchParams?.get('id') ?? '1';
-    const answer = searchParams?.get('answer') ?? 1;
+    const answer = parseInt(searchParams?.get('answer') ?? '1');
 
     const [curPageQuestion, setCurPageQuestion] = React.useState<any>();
     const [answerCnt, setAnswerCnt] = React.useState<number>(0); // 답변 횟수 카운트
 
+    const obj = useRecoilValue(interviewIdAtom);
     // usePreventBackward(); // 꼬리질문 페이지에서 뒤로가기 금지
 
     //console.log('interviewQuestion', interviewQuestion);
@@ -52,7 +54,7 @@ export default function InterviewFollowupPage() {
         <section className="flex flex-col items-center min-w-[82rem] m-auto">
             <div className="flex flex-col items-center rounded-2xl border border-grey-4 py-[4rem] px-[4.8rem] gap-[3.2rem] self-stretch">
                 <div className="text-heading3 text-blue-primary">
-                    {curPageQuestion?.question_id} - 꼬리질문
+                    {answer} - 꼬리질문
                 </div>
                 <h1 className="text-specialHeading">
                     {curPageQuestion?.question_model.title}
@@ -72,7 +74,7 @@ export default function InterviewFollowupPage() {
                 } flex items-baseline gap-[8px] rounded-[4.7rem] border items-center mt-[9rem] py-[2rem] px-[5.6rem] text-bodyDefault`}
                 onClick={() =>
                     router.push(
-                        `/interview/result/${interviewId}?answer=${answer}`,
+                        `/interview/result/${interviewId}?id=${obj[answer]}&answer=${answer}`,
                     )
                 }
             >
@@ -81,4 +83,7 @@ export default function InterviewFollowupPage() {
             </button>
         </section>
     );
+}
+function useRecoilValue(interviewIdAtom: any) {
+    throw new Error('Function not implemented.');
 }

@@ -5,9 +5,11 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
+import { useEffect } from 'react';
 import Checkbox from '@/components/Checkbox';
 import ImgCardDeck2 from '@/assets/images/image-card-deck-2.png';
 import { QUESTION_CATEGORY } from '@/constants/data';
+
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { newInterview } from '@/api/interview';
 import { useSetRecoilState } from 'recoil';
@@ -16,13 +18,10 @@ import {
     interviewListAtom,
     interviewIdAtom,
 } from '@/utils/atom';
+import { getQuestion, getQuestionMain } from '@/api/questions';
 
 export default function InterviewPage() {
     const [categoryList, setCategoryList] = React.useState<string[]>([]);
-
-    //React.useEffect(() => {
-    //    window.scrollTo(0, 0);
-    //}, []);
 
     const router = useRouter();
 
@@ -43,6 +42,16 @@ export default function InterviewPage() {
     const setCategoryListAtom = useSetRecoilState(categoryListAtom);
     const setInterviewListAtom = useSetRecoilState(interviewListAtom);
     const setInterviewIdAtom = useSetRecoilState(interviewIdAtom);
+
+    const getQuestionIdObject = (arr: any) => {
+        const data = [{ idx: 1, id: 641 }];
+        let obj: any = [];
+        arr.forEach(
+            (question: any, idx: number) => (obj[idx + 1] = question?.id),
+        );
+        console.log('obj', obj);
+        setInterviewIdAtom(obj);
+    };
 
     const handleInterviewStart = async () => {
         let interviewid = 1;
@@ -66,7 +75,10 @@ export default function InterviewPage() {
             if (data) {
                 console.log('data', data);
                 setInterviewListAtom(data.question); // response 저장
-                setInterviewIdAtom(data.id); // interview_question_id 저장
+
+                getQuestionIdObject(data.question);
+
+                //setInterviewIdAtom(data.id); // interview_question_id 저장
             }
         } catch {}
 

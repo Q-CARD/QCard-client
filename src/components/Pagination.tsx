@@ -1,7 +1,11 @@
 'use client';
+
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { getIdByNum } from '@/utils/utils';
+import { interviewIdAtom } from '@/utils/atom';
+import { useRecoilValue } from 'recoil';
 
 interface PaginatinProps {
     children?: React.ReactNode;
@@ -12,33 +16,35 @@ interface PaginatinProps {
 
 // 가운데 버튼들 눌렀을 때 해당 번호 url로 이동
 // - url: /interview/result/{interviewId}?answer={children}
+
 export function Pagination({ children, className }: PaginatinProps) {
     const searchParams = useSearchParams();
     const router = useRouter();
 
     const interviewId = searchParams?.get('interviewid') ?? 1;
     const answer = parseInt(searchParams?.get('answer') ?? '1');
+    const obj = useRecoilValue(interviewIdAtom);
 
     const handlePrev = () => {
         if (answer > 1) {
-            const pathname = `/interview/result/${interviewId}?answer=${
-                answer - 1
-            }`;
+            const pathname = `/interview/result/${interviewId}?id=${
+                obj[answer]
+            }&answer=${answer - 1}`;
             router.push(pathname);
         }
     };
 
     const handleNext = () => {
         if (answer < 10) {
-            const pathname = `/interview/result/${interviewId}?answer=${
-                answer + 1
-            }`;
+            const pathname = `/interview/result/${interviewId}?id=${
+                obj[answer]
+            }&answer=${answer + 1}`;
             router.push(pathname);
         }
     };
 
     const handlePageMove = (answer: number) => {
-        const pathname = `/interview/result/${interviewId}?answer=${answer}`;
+        const pathname = `/interview/result/${interviewId}?id=${obj[answer]}&answer=${answer}`;
         router.push(pathname);
     };
 
