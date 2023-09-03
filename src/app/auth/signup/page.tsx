@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
@@ -30,9 +29,7 @@ export default function SignUpPage() {
 
                 router.push('/auth/login');
             }
-        } catch (e) {
-            // console.log(e);
-        }
+        } catch (e) {}
     };
 
     // TODO - PW validation
