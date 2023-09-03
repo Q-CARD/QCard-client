@@ -9,4 +9,9 @@ export interface IAnswer {
     heartCount: number;
     createdAt: string; // string / Date
     modifiedAt: string;
+    question: {
+        id: number;
+        category: string;
+        title: string;
+    };
 }
