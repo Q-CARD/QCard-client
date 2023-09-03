@@ -1,5 +1,6 @@
 import { GET, POST, PUT } from '@/utils/axios';
 
+// 답변 기록
 export const postAnswers = async (payload: any) => {
     return await POST(`/answers`, payload);
 };
