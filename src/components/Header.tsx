@@ -1,12 +1,11 @@
-'use client'
-import React, { useState } from 'react'
+'use client';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from '@/assets/logo.png';
 import { Button } from './Button';
-import {useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil'
-import { userAtom } from '@/store/recoil';
-
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { isLoginAtom, userAtom } from '@/store/recoil';
 
 export function Header() {
     // Link: <a>요소 확장 프리페칭 + 클라이언트 사이드 내비게이션
@@ -15,25 +14,31 @@ export function Header() {
     // TODO: box-shadow: 0px 2px 12px 0px rgba(20, 20, 43, 0.08);
     // TODO: header: z-index: 50 상수화
 
-    const [user, setUser] = useRecoilState(userAtom)
-    const [isLogin, setIsLogin ]= useState(false)
+    const [user, setUser] = useRecoilState(userAtom);
+    const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
+    const [title, setTitle] = useState({});
 
-    
-    let islogin = false
+    //const handleLogin = useSetRecoilState(isLogin)
+
+    // React.useEffect(() => set, [])
 
     React.useEffect(() => {
-        if(user.email && user.email.length > 0){
-            setIsLogin(true)
-            //islogin = true
+        if (user.email && user.email.length > 0) {
+            setIsLogin(true);
+            setTitle({
+                link: '/mypage/answer',
+                title: 'My Page',
+            });
+        } else {
+            setIsLogin(false);
+            setTitle({
+                link: '/auth/login',
+                title: 'Sign in',
+            });
         }
-        else {
-            //islogin = false
-            setIsLogin(false)
-        }
-    }, [islogin])
+    }, [isLogin]);
 
-    console.log('islogin', islogin)
-    
+    console.log('isLogin', isLogin);
 
     return (
         <header className="fixed top-0 flex z-50 bg-white justify-between items-center w-full h-[11.2rem] pt-[3.2rem] pb-[2.6rem] px-[10rem] shadow-md">
@@ -53,9 +58,15 @@ export function Header() {
                     <Button type="round" title="Questions" />
                 </Link>
 
-                <Link href= {isLogin ? "/mypage/answer" : "/auth/login" }>
-                    <Button type={isLogin ? "black" : "round"} title={isLogin ? "My Page" : "Sign in"} />
-                </Link>
+                {isLogin ? (
+                    <Link href={'/mypage/answer'}>
+                        <Button type={'black'} title={'My Page'} />
+                    </Link>
+                ) : (
+                    <Link href={'/auth/login'}>
+                        <Button type={'round'} title={'Sign in'} />
+                    </Link>
+                )}
             </div>
         </header>
     );
