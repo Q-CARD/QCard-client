@@ -26,11 +26,11 @@ async function fetchData() {
 export default async function Home() {
     // TODO: box-shadow,seperator 커스텀 클래스 적용, '>' react-icons 적용
 
-    const questionsMain = await fetchData();
-
-    const questionsMainCategoryName = QUESTION_CATEGORY.find((category) => {
-        return category.key === questionsMain.category;
-    })?.name;
+    //const questionsMain = await fetchData();
+    let questionsMainCategoryName = 'Network';
+    //const questionsMainCategoryName = QUESTION_CATEGORY.find((category) => {
+    //    return category.key === questionsMain.category;
+    //})?.name;
 
     return (
         <>
@@ -61,7 +61,9 @@ export default async function Home() {
             </section>
             <section className="flex justify-between m-auto px-[10rem] py-[17.5rem]">
                 <div className="flex-col px-[5rem] py-[6rem]">
-                    <h2 className="text-heading2 text-black w-[20rem]">오늘의 질문</h2>
+                    <h2 className="text-heading2 text-black w-[20rem]">
+                        오늘의 질문
+                    </h2>
                     <p className="pt-[5.8rem] text-grey-6 text-bodyLarger">
                         하루에 하나씩,
                         <br />
@@ -71,7 +73,6 @@ export default async function Home() {
                 <Image
                     src={ImgQuestionCard}
                     alt="card-question"
-                    
                     width={860}
                     height={316}
                 />
@@ -116,9 +117,10 @@ export default async function Home() {
                             {questionsMainCategoryName}
                         </span>
                     </div>
-                    {questionsMain.questions.map((question: any) => {
+                    {/*  {questionsMain.questions.map((question: any) => {
                         return <QuestionCard question={question} />;
                     })}
+                */}
                 </div>
             </section>
             <Footer />
