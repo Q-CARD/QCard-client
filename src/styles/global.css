@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 400;
+    font-style: normal;
+    src: url('/fonts/Inter-Regular.ttf') format('ttf');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 700;
+    font-style: normal;
+    src: url('/fonts/Inter-Bold.ttf') format('ttf');
+}
+
+/* custom scroll bar */
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--grey-5);
+    border-radius: 5px;
+}
+
+:root {
+    --background-color: #ffffff;
+    --primary-blue: #4282ff;
+    --sub-yellow: #ffd363;
+    --black: #444449;
+    --grey-6: #72717a;
+    --grey-5: #a9a8b7;
+    --grey-4: #cbcad7;
+    --grey-3: #deddeb;
+    --grey-2: #ecebf3;
+    --grey-1: #f4f3f6;
+    --white: #ffffff;
+    --blue-3: #a9c6ff;
+    --blue-2: #d7e5ff;
+    --blue-1: #f2f7ff;
+    --green-4: #38dc8d;
+    --green-3: #7ff0ba;
+    --green-2: #ccf5e1;
+    --green-1: #e7fbf1;
+    --yellow-3: #ffe49d;
+    --yellow-2: #fff2cf;
+    --yellow-1: #fffbf0;
+    --red-4: #ff3c5f;
+    --red-3: #ffaebd;
+    --red-2: #ffe5ec;
+    --red-1: #fff4f5;
+
+    font-size: 10px;
+}
+
+body {
+    color: #000000;
+    font-family: 'Inter';
+    background-color: var(--background-color);
+}
+
+/* react-icons hover color 적용 위한 class 선언 */
+.mypageMenuIcon {
+    color: 'var(--black)';
+}
+.mypageMenuIcon:hover {
+    color: 'var(--primary-blue)';
+}
