@@ -15,7 +15,6 @@ export const submitRecordFile = async (
     interview_question_id: number,
     body: any,
 ) => {
-    console.log('녹음 파일 전송');
     return await PUT(`/interview/answer/${interview_question_id}`, body, {
         type: 'record',
     });

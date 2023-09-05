@@ -22,7 +22,6 @@ export default function Timer({
 
     const question = searchParams?.get('question') ?? 1;
 
-    // padStart 함수를 이용해서 10보다 작은 경우 0을 붙인다
     const intToString = (num: number) => String(num).padStart(2, '0');
 
     // 다음 문제로 넘어갈 때마다 타이머 초기화
