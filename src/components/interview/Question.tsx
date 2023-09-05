@@ -7,6 +7,7 @@ import { useRecoilValue } from 'recoil';
 import { interviewListAtom } from '@/utils/atom';
 import { getInterviewAll } from '@/api/interview';
 import { categoryKeyToName } from '@/utils/utils';
+import { Accordian } from '../Accordian';
 
 interface AnswerType {
     question_id: number;
@@ -55,7 +56,7 @@ export default function Question() {
     return (
         <>
             <div className="text-heading3 text-blue-primary">{answer}</div>
-            <h1 className="flex flex-wrap text-specialHeading  w-3/5 break-keep">
+            <h1 className="flex justify-center text-center text-specialHeading  w-3/5 break-keep">
                 {curPageResult?.question_model?.title}
             </h1>
             <div className="rounded-[2rem] mt-[1rem] py-[2px] px-[13px] bg-blue-primary text-white text-bodyExtraSmaller">
@@ -64,6 +65,10 @@ export default function Question() {
             <div className="text-bodyDefault min-h-[3rem] text-grey-6 mt-[2.2rem]">
                 {curPageResult?.answer ?? '내가 녹음한 답변이 없습니다'}
             </div>
+            <Accordian rerenderProps={answer} className="w-full">
+                {curPageResult?.gpt_answer ??
+                    'gpt 답변이 없습니다 다시 한번 녹음해주세요 :)'}
+            </Accordian>
         </>
     );
 }
