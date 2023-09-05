@@ -38,7 +38,7 @@ export function Header() {
         }
     }, [isLogin]);
 
-    console.log('isLogin', isLogin);
+    // console.log('isLogin', isLogin);
 
     return (
         <header className="fixed top-0 flex z-50 bg-white justify-between items-center w-full h-[11.2rem] pt-[3.2rem] pb-[2.6rem] px-[10rem] shadow-md">
