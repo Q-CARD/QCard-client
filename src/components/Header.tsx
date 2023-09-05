@@ -16,11 +16,17 @@ export function Header() {
 
     const [user, setUser] = useRecoilState(userAtom);
     const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
-    const [title, setTitle] = useState({});
 
-    //const handleLogin = useSetRecoilState(isLogin)
-
-    // React.useEffect(() => set, [])
+    interface TitleType {
+        link: string;
+        title: 'Sign in' | 'My Page';
+        type: 'round' | 'black';
+    }
+    const [title, setTitle] = useState<TitleType>({
+        link: '/auth/login',
+        title: 'Sign in',
+        type: 'round',
+    });
 
     React.useEffect(() => {
         if (user.email && user.email.length > 0) {
@@ -28,20 +34,23 @@ export function Header() {
             setTitle({
                 link: '/mypage/answer',
                 title: 'My Page',
+                type: 'black',
             });
         } else {
             setIsLogin(false);
             setTitle({
                 link: '/auth/login',
                 title: 'Sign in',
+                type: 'round',
             });
         }
     }, [isLogin]);
 
-    console.log('isLogin', isLogin);
-
     return (
-        <header className="fixed top-0 flex z-50 bg-white justify-between items-center w-full h-[11.2rem] pt-[3.2rem] pb-[2.6rem] px-[10rem] shadow-md">
+        <header
+            className="fixed top-0 flex z-50 bg-white justify-between items-center w-full 
+        h-[11.2rem] pt-[3.2rem] pb-[2.6rem] px-[10rem] shadow-md"
+        >
             <Link aria-label="Home" href="/">
                 <Image
                     src={Logo}
@@ -57,16 +66,9 @@ export function Header() {
                 <Link href="/category">
                     <Button type="round" title="Questions" />
                 </Link>
-
-                {isLogin ? (
-                    <Link href={'/mypage/answer'}>
-                        <Button type={'black'} title={'My Page'} />
-                    </Link>
-                ) : (
-                    <Link href={'/auth/login'}>
-                        <Button type={'round'} title={'Sign in'} />
-                    </Link>
-                )}
+                <Link href={title.link}>
+                    <Button type={title.type} title={title.title} />
+                </Link>
             </div>
         </header>
     );
