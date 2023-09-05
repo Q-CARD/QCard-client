@@ -46,6 +46,9 @@ export function Header() {
         }
     }, [isLogin]);
 
+
+    // console.log('isLogin', isLogin);
+
     return (
         <header
             className="fixed top-0 flex z-50 bg-white justify-between items-center w-full 
