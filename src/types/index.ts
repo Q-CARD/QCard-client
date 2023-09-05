@@ -7,6 +7,7 @@ export interface AnswerType {
     question: string;
     answer: string;
     gpt_answer: string;
+    id: number;
     additional_question_1: string;
     additional_question_2: string;
     additional_question_3: string;
