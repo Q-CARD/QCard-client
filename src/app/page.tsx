@@ -13,24 +13,28 @@ export const metadata = {
     title: 'QCard Home',
 };
 
-async function fetchData() {
-    const dynamicData = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/questions/main`,
-        { cache: 'no-store' },
-    );
+async function fetchQuestionsMain() {
+    try {
+        const dynamicData = await fetch(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/questions/main`,
+            { cache: 'no-store' },
+        );
 
-    const data = await dynamicData.json();
-    return data;
+        const data = await dynamicData.json();
+        return data;
+    } catch (e) {
+        return;
+    }
 }
 
 export default async function Home() {
     // TODO: box-shadow,seperator 커스텀 클래스 적용, '>' react-icons 적용
 
-    //const questionsMain = await fetchData();
-    let questionsMainCategoryName = 'Network';
-    //const questionsMainCategoryName = QUESTION_CATEGORY.find((category) => {
-    //    return category.key === questionsMain.category;
-    //})?.name;
+    const questionsMain = await fetchQuestionsMain();
+
+    const questionsMainCategoryName = QUESTION_CATEGORY.find((category) => {
+        return category.key === questionsMain?.category;
+    })?.name;
 
     return (
         <>
@@ -117,10 +121,9 @@ export default async function Home() {
                             {questionsMainCategoryName}
                         </span>
                     </div>
-                    {/*  {questionsMain.questions.map((question: any) => {
+                    {questionsMain?.questions.map((question: any) => {
                         return <QuestionCard question={question} />;
                     })}
-                */}
                 </div>
             </section>
             <Footer />
