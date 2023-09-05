@@ -71,7 +71,7 @@ export default function Timer({
             clearInterval(interval.current);
         }
         changeRecordingState();
-    }, [second, isRecording]);
+    }, [second]);
 
     return (
         <div className="mt-[1rem]">
