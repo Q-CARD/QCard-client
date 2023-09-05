@@ -69,7 +69,6 @@ export default function InterviewPage() {
         try {
             let data = await newInterview(body as string[]);
             if (data) {
-                // console.log('data', data);
                 setInterviewListAtom(data.question);
                 getQuestionIdObject(data.question);
             }
