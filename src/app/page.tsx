@@ -3,7 +3,8 @@ import Link from 'next/link';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/Button';
 import ImgCardDeck3 from '@/assets/images/image-card-deck-3.png';
-import ImgCardDeck2 from '@/assets/images/image-card-deck-2.png';
+
+import MockInterview from '@/components/main/MockInterview';
 import ImgHeading from '@/assets/images/image-main-heading.png';
 import ImgQuestionCard from '@/assets/images/Question Card.png';
 
@@ -57,29 +58,7 @@ export default function Home() {
                 />
             </section>
             <hr className="seperator" />
-            <section className="flex justify-between px-[10rem] py-[17.5rem]">
-                <Image
-                    src={ImgCardDeck2}
-                    alt="card-deck2"
-                    width={427}
-                    height={409}
-                />
-                <div className="flex flex-col items-end mt-[5.8rem] mr-[10rem]">
-                    <h3 className="text-heading2 text-black">
-                        모의 면접은 어떤가요?
-                    </h3>
-                    <p className="flex mt-[5.8rem] text-grey-6 text-bodyLarger">
-                        실전같은 연습으로
-                        <br />
-                        경험을 쌓아나가요
-                    </p>
-                    <div className="pt-[3.4rem]">
-                        <Link href="/interview">
-                            <Button type="round" title="모의 면접 시작하기 >" />
-                        </Link>
-                    </div>
-                </div>
-            </section>
+            <MockInterview />
             <hr className="seperator" />
             <section className="flex py-[17.5rem] mx-[11.6rem]">
                 <div className="flex">
