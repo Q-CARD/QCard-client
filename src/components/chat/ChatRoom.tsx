@@ -68,7 +68,7 @@ export default function ChatRoom({
             for (let questionCnt = 1; questionCnt <= 3; questionCnt++) {
                 let body = {
                     sequence: questionCnt,
-                    question_id: additionalQuestions?.question,
+                    question_id: additionalQuestions?.id,
                     answer: answerList?.[questionCnt - 1],
                 };
 

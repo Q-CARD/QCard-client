@@ -27,7 +27,6 @@ export default function InterviewFollowupPage() {
     const getAllInterviewInfo = async () => {
         let data = await getInterviewAll(parseInt(interviewId));
         if (data) {
-            // console.log('인터뷰 가져온 data', data);
             setCurPageQuestion(data);
         }
     };
@@ -44,7 +43,7 @@ export default function InterviewFollowupPage() {
                 <div className="text-heading3 text-blue-primary">
                     {answer} - 꼬리질문
                 </div>
-                <h1 className="text-specialHeading">
+                <h1 className="text-specialHeading w-3/5 break-keep text-center">
                     {curPageQuestion?.question_model.title}
                 </h1>
                 <ChatRoom
