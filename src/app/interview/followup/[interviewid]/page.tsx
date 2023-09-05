@@ -27,7 +27,6 @@ export default function InterviewFollowupPage() {
     const getAllInterviewInfo = async () => {
         let data = await getInterviewAll(parseInt(interviewId));
         if (data) {
-            // console.log('인터뷰 가져온 data', data);
             setCurPageQuestion(data);
         }
     };
