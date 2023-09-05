@@ -52,7 +52,9 @@ export default async function Home() {
                         <br /> 내가 쓰고 함께 읽는 탄탄한 기술 면접 준비
                     </div>
                     <div className="pt-[3.4rem]">
-                        <Button type="round" title="시작하고 성장하기 >" />
+                        <Link href="/category">
+                            <Button type="round" title="시작하고 성장하기 >" />
+                        </Link>
                     </div>
                 </div>
                 <div>
