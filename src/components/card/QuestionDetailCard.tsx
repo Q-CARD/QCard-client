@@ -18,7 +18,12 @@ export function QuestionDetailCard({ questionInfo }: QuestionDetailCardProps) {
         try {
             const data = await getQuestion(questionInfo.questionId);
 
-            return data.answers.length > 0;
+            const isMine =
+                data.answers.filter((answer: any) => {
+                    return answer.isMine;
+                }).length > 0;
+
+            return isMine;
         } catch (e) {}
     };
 
@@ -26,10 +31,9 @@ export function QuestionDetailCard({ questionInfo }: QuestionDetailCardProps) {
     const moveTo = async () => {
         const isAnswered = await checkIsAnswered();
 
-        const pathname =
-            isAnswered === true
-                ? `/category/result/${questionInfo.questionId}`
-                : `/category/question/${questionInfo.questionId}`;
+        const pathname = isAnswered
+            ? `/category/result/${questionInfo.questionId}`
+            : `/category/question/${questionInfo.questionId}`;
 
         router.push(pathname);
     };
