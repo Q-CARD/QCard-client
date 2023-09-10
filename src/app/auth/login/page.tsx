@@ -5,22 +5,31 @@ import { useForm } from 'react-hook-form';
 
 import { Input } from '@/components/Input';
 import { Button } from '@/components/Button';
+import ValidationMessage from '@/components/ValidationMessage';
 import { getAccountsProfile, postSignIn } from '@/api/account';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { userAtom, isLoginAtom } from '@/store/recoil';
 import { ACCESS_TOKEN } from '@/constants/constants';
+import { REGEX } from '@/constants/regex';
+
+interface LoginFormValues {
+    email: string;
+    password: string;
+}
 
 export default function LoginPage() {
     const router = useRouter();
 
-    const { register, handleSubmit } = useForm();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<LoginFormValues>();
 
     const [userData, setUserData] = useRecoilState(userAtom);
     const handleLogin = useSetRecoilState(isLoginAtom);
 
-    const handleSubmitLogin = async ({ email, password }: any) => {
-        // TODO - validation 적용, any 수정
-
+    const handleSubmitLogin = async ({ email, password }: LoginFormValues) => {
         const payload = {
             email: email,
             password: password,
@@ -57,8 +66,17 @@ export default function LoginPage() {
         <form className="flex flex-col items-center gap-[2.4rem]">
             <Input
                 placeholder="이메일 주소"
-                register={register('email', { required: true })}
+                register={register('email', {
+                    required: true,
+                    pattern: {
+                        value: REGEX.EMAIL,
+                        message: '이메일 형식을 입력해주세요.',
+                    },
+                })}
             />
+            {errors.email?.message && (
+                <ValidationMessage message={errors.email.message} />
+            )}
             <Input
                 type="password"
                 placeholder="비밀번호"
