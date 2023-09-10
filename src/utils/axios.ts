@@ -5,7 +5,7 @@ const fetchWrapper = async ({ method, url, body, params }: any) => {
     let token = null;
     if (typeof window !== 'undefined') {
         // execute only client side
-        token = localStorage.getItem('ACCESS_TOKEN'); // 로컬스토리지에 토큰 저장
+        token = localStorage.getItem(ACCESS_TOKEN); // 로컬스토리지에 토큰 저장
     }
 
     const config: AxiosRequestConfig = {

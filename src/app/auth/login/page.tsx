@@ -8,6 +8,7 @@ import { Button } from '@/components/Button';
 import { getAccountsProfile, postSignIn } from '@/api/account';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { userAtom, isLoginAtom } from '@/store/recoil';
+import { ACCESS_TOKEN } from '@/constants/constants';
 
 export default function LoginPage() {
     const router = useRouter();
@@ -30,8 +31,8 @@ export default function LoginPage() {
 
             // TODO - api 성공 응답 code 요청드리기
             if (data.accessToken) {
-                localStorage.setItem('ACCESS_TOKEN', data.accessToken);
-                localStorage.setItem('REFRESH_TOKEN', data.refreshToken);
+                localStorage.setItem(ACCESS_TOKEN, data.accessToken);
+                // localStorage.setItem('REFRESH_TOKEN', data.refreshToken);
 
                 const userdata = await getAccountsProfile();
 
