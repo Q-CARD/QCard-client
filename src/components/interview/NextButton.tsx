@@ -15,9 +15,9 @@ export default function NextButton() {
 
     const handleNextQuestion = () => {
         if (answer < 10) {
-            const pathname = `/interview/result/${interviewId}?id=${
-                obj[answer]
-            }&answer=${Number(answer) + 1}`;
+            const pathname = `/interview/result?id=${obj[answer] + 1}&answer=${
+                Number(answer) + 1
+            }`;
             router.push(pathname);
         } else router.push(`/interview/finish`);
     };
