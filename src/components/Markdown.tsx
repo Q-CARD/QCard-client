@@ -1,27 +1,36 @@
+'use client';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { getInterviewAll } from '@/api/interview';
-import { MDXRemote } from 'next-mdx-remote/rsc';
 
-// 커스텀 설정
-const components = {
-    h1: (props: any) => (
-        <h1 {...props} style={{ fontSize: '30px' }} className="large-text">
-            {props.children}
-        </h1>
-    ),
-};
+export default function MarkdownRenderer() {
+    const [gptAnswer, setAnswer] = useState<string>('');
 
-export default async function MarkdownRenderer({
-    content,
-}: {
-    content: string;
-}) {
-    const source = 'Some **mdx** text, with a component';
+    const searchParams = useSearchParams();
+    const paramsId = searchParams.get('id') ?? '1';
 
-    const data = await getInterviewAll(5);
-    //console.log('data', data);
-    if (data) {
-        //  console.log('mdx', data);
-    }
+    const getInterview = async (paramsId: string) => {
+        const data = await getInterviewAll(Number(paramsId));
+        if (data) {
+            setAnswer(data.gpt_answer);
+        }
+    };
 
-    return <MDXRemote components={{ ...components }} source={content} />;
+    useEffect(() => {
+        getInterview(paramsId);
+    }, [paramsId]);
+
+    return (
+        <div>
+            <ReactMarkdown
+                children={
+                    gptAnswer ?? 'gpt 답변이 없습니다 다시 한번 녹음해주세요 :)'
+                }
+                remarkPlugins={[remarkGfm]}
+            />
+        </div>
+    );
 }
