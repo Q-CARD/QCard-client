@@ -18,35 +18,38 @@ export default function MyAnswerPage() {
 
     useEffect(() => {
         loadAnswersMe();
-
-        // setSelectedCategoryList(
-        //     myAnswerList.filter((item: any) => {
-        //         return item.question.category === 'CATEGORY_NW';
-        //     }),
-        // );
     }, []);
 
     useEffect(() => {
-        setSelectedCategoryList(filteredDataByCategory);
+        setSelectedCategoryList(filteredDataBySelectedCategory);
     }, [selectedCategory]);
-
-    const selectCategory = (category: any) => {
-        setSelectedCategory({
-            id: category.id,
-            key: category.key,
-        });
-    };
-
-    const filteredDataByCategory = myAnswerList.filter(({ question }: any) => {
-        return question.category === selectedCategory.key;
-    });
 
     const loadAnswersMe = async () => {
         try {
             const data = await getAnswersMe();
 
             setMyAnswerList(data);
+
+            // TODO - 함수 위치 고민해보기. loadAnswersMe 함수는 두 가지 역할을 하는 중이지 않을까?
+            setSelectedCategoryList(
+                data.filter((item: any) => {
+                    return item.question.category === QUESTION_CATEGORY[0].key;
+                }),
+            );
         } catch (e) {}
+    };
+
+    const filteredDataBySelectedCategory = myAnswerList.filter(
+        ({ question }: any) => {
+            return question.category === selectedCategory.key;
+        },
+    );
+
+    const selectCategory = (category: any) => {
+        setSelectedCategory({
+            id: category.id,
+            key: category.key,
+        });
     };
 
     return (

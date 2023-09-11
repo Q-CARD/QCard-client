@@ -1,5 +1,5 @@
 const USER_LOCALSTORAGE_KEY = 'user';
-const ACCESS_TOKEN = 'access_token';
-const REFRESH_TOKEN = 'refresh_token';
+const ACCESS_TOKEN = 'ACCESS_TOKEN';
+const REFRESH_TOKEN = 'REFRESH_TOKEN';
 
 export { USER_LOCALSTORAGE_KEY, ACCESS_TOKEN, REFRESH_TOKEN };

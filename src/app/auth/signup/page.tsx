@@ -5,15 +5,33 @@ import { useForm } from 'react-hook-form';
 
 import { Input } from '@/components/Input';
 import { Button } from '@/components/Button';
+import ValidationMessage from '@/components/ValidationMessage';
 import { postSignUp } from '@/api/account';
+import { REGEX } from '@/constants/regex';
+
+interface SignupFormValues {
+    nickname: string;
+    email: string;
+    password: string;
+    passwordConfirm: string;
+}
 
 export default function SignUpPage() {
     const router = useRouter();
 
-    const { register, handleSubmit, setError } = useForm();
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm<SignupFormValues>();
 
-    // TODO - any
-    const handleSubmitSignup = async ({ nickname, email, password }: any) => {
+    const handleSubmitSignup = async ({
+        nickname,
+        email,
+        password,
+        passwordConfirm,
+    }: SignupFormValues) => {
         const payload = {
             name: nickname,
             email: email,
@@ -32,17 +50,6 @@ export default function SignUpPage() {
         } catch (e) {}
     };
 
-    // TODO - PW validation
-    const handlePWConfirm = (data: any) => {
-        if (data.password !== data.passwordCheck) {
-            setError(
-                'passwordCheck',
-                { message: '비밀번호가 일치하지 않습니다.' },
-                { shouldFocus: true },
-            );
-        }
-    };
-
     return (
         <form className="flex flex-col items-center gap-[2.4rem]">
             <Input
@@ -51,8 +58,17 @@ export default function SignUpPage() {
             />
             <Input
                 placeholder="이메일 주소"
-                register={register('email', { required: true })}
+                register={register('email', {
+                    required: true,
+                    pattern: {
+                        value: REGEX.EMAIL,
+                        message: '이메일 형식을 입력해주세요.',
+                    },
+                })}
             />
+            {errors.email?.message && (
+                <ValidationMessage message={errors.email.message} />
+            )}
             <Input
                 type="password"
                 placeholder="비밀번호"
@@ -61,8 +77,20 @@ export default function SignUpPage() {
             <Input
                 type="password"
                 placeholder="비밀번호 확인"
-                register={register('passwordCheck', { required: true })}
+                register={register('passwordConfirm', {
+                    required: true,
+                    validate: (passwordConfirm: string) => {
+                        if (!watch('password')) return;
+                        return (
+                            passwordConfirm === watch('password') ||
+                            '비밀번호가 일치하지 않습니다.'
+                        );
+                    },
+                })}
             />
+            {errors.passwordConfirm?.message && (
+                <ValidationMessage message={errors.passwordConfirm.message} />
+            )}
             <Button
                 type="block"
                 title="회원가입"
