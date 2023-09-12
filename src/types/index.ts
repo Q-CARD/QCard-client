@@ -13,6 +13,25 @@ export interface AnswerType {
     additional_question_3: string;
 }
 
+export interface IAnswer {
+    question: IQuestion;
+    answerId: number;
+    type: string;
+    account: {
+        name: string;
+        email: string;
+    };
+    content: string;
+    heartCount: number;
+    createdAt: string; // string / Date
+    modifiedAt: string; // string / Date
+}
+
+export interface IAnswerHearted extends IAnswer {
+    isHearted: boolean;
+    isMine: boolean;
+}
+
 export interface ICategory {
     id: number;
     name: string;
@@ -31,4 +50,10 @@ export interface IQuestionMain {
         questions: IQuestion[];
     };
     questionDaily: IQuestion;
+}
+
+export interface IQuestionDetail {
+    question: IQuestion;
+    gpt: IAnswerHearted;
+    answers: IAnswerHearted[];
 }
