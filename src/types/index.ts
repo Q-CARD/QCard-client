@@ -24,3 +24,11 @@ export interface IQuestion {
     title: string;
     category: string;
 }
+
+export interface IQuestionMain {
+    questionZip: {
+        category: string;
+        questions: IQuestion[];
+    };
+    questionDaily: IQuestion;
+}
