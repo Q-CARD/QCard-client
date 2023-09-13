@@ -1,41 +1,42 @@
 import Image from 'next/image';
 import Link from 'next/link';
+
 import Footer from '@/components/Footer';
 import { Button } from '@/components/Button';
 import { QuestionCard } from '@/components/card/QuestionCard';
-import ImgCardDeck3 from '@/assets/images/image-card-deck-3.png';
-
 import MockInterview from '@/components/main/MockInterview';
+import { DailyQuestionCard } from '@/components/card/DailyQuestionCard';
+import { getQuestionsMain } from '@/api/question';
+import { parseCategoryName } from '@/utils/parseData';
+import { IQuestionMain } from '@/types';
 import ImgHeading from '@/assets/images/image-main-heading.png';
-import ImgQuestionCard from '@/assets/images/Question Card.png';
-import { QUESTION_CATEGORY } from '@/constants/data';
+import ImgCardDeck3 from '@/assets/images/image-card-deck-3.png';
 
 export const metadata = {
     title: 'QCard Home',
 };
 
-async function fetchQuestionsMain() {
-    try {
-        const dynamicData = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/questions/main`,
-            { cache: 'no-store' },
-        );
+// async function fetchQuestionsMain() {
+//     try {
+//         const dynamicData = await fetch(
+//             `${process.env.NEXT_PUBLIC_API_BASE_URL}/questions/main`,
+//             { cache: 'no-store' },
+//         );
 
-        const data = await dynamicData.json();
-        return data;
-    } catch (e) {
-        return;
-    }
-}
+//         const data = await dynamicData.json();
+//         return data;
+//     } catch (e) {
+//         return;
+//     }
+// }
 
 export default async function Home() {
     // TODO: box-shadow,seperator 커스텀 클래스 적용, '>' react-icons 적용
 
-    const questionsMain = await fetchQuestionsMain();
+    const questionsMain: IQuestionMain = await getQuestionsMain();
 
-    const questionsMainCategoryName = QUESTION_CATEGORY.find((category) => {
-        return category.key === questionsMain?.category;
-    })?.name;
+    const questionZip = questionsMain.questionZip;
+    const questionDaily = questionsMain.questionDaily;
 
     return (
         <>
@@ -77,12 +78,7 @@ export default async function Home() {
                         차근차근 준비해봐요
                     </p>
                 </div>
-                <Image
-                    src={ImgQuestionCard}
-                    alt="card-question"
-                    width={860}
-                    height={316}
-                />
+                <DailyQuestionCard question={questionDaily} />
             </section>
             <hr className="seperator" />
             <MockInterview />
@@ -99,10 +95,10 @@ export default async function Home() {
                 <div className="flex flex-wrap gap-[5.2rem]">
                     <div className="w-[36.8rem] h-[36.8rem] p-[4.85rem] bg-blue-primary shadow-3 rounded-[1.8rem] flex justify-center">
                         <span className="text-[4.4rem] font-bold text-white text-center my-auto">
-                            {questionsMainCategoryName}
+                            {parseCategoryName(questionZip.category)}
                         </span>
                     </div>
-                    {questionsMain?.questions.map((question: any) => {
+                    {questionZip.questions.map((question: any) => {
                         return <QuestionCard question={question} />;
                     })}
                 </div>

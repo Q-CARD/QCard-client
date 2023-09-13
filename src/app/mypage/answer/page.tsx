@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/Button';
 import { getAnswersMe } from '@/api/answer';
-import { IAnswer } from '@/types/answer';
+import { IAnswer } from '@/types/index';
 import { QUESTION_CATEGORY } from '@/constants/data';
 
 export default function MyAnswerPage() {
