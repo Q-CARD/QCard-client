@@ -1,8 +1,10 @@
 'use client';
 
+import { UseFormRegisterReturn } from 'react-hook-form';
+
 interface TextareaProps {
     placeholder: string;
-    register: any; // TODO - any
+    register: UseFormRegisterReturn<any>;
 }
 
 export function Textarea({ placeholder, register }: TextareaProps) {

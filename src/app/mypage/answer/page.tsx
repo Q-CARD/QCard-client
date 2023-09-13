@@ -4,17 +4,22 @@ import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/Button';
 import { getAnswersMe } from '@/api/answer';
-import { IAnswer } from '@/types/index';
+import { IAnswer, IAnswerHearted } from '@/types/index';
 import { QUESTION_CATEGORY } from '@/constants/data';
 
 export default function MyAnswerPage() {
-    const [myAnswerList, setMyAnswerList] = useState<any>([]); // TODO - any
+    const [myAnswerList, setMyAnswerList] = useState<IAnswerHearted[]>([]);
 
-    const [selectedCategory, setSelectedCategory] = useState<any>({
+    const [selectedCategory, setSelectedCategory] = useState<{
+        id: Number;
+        key: string;
+    }>({
         id: QUESTION_CATEGORY[0].id,
         key: QUESTION_CATEGORY[0].key,
     });
-    const [selectedCategoryList, setSelectedCategoryList] = useState<any>([]);
+    const [selectedCategoryList, setSelectedCategoryList] = useState<
+        IAnswerHearted[]
+    >([]);
 
     useEffect(() => {
         loadAnswersMe();
@@ -32,7 +37,7 @@ export default function MyAnswerPage() {
 
             // TODO - 함수 위치 고민해보기. loadAnswersMe 함수는 두 가지 역할을 하는 중이지 않을까?
             setSelectedCategoryList(
-                data.filter((item: any) => {
+                data.filter((item: IAnswerHearted) => {
                     return item.question.category === QUESTION_CATEGORY[0].key;
                 }),
             );
@@ -40,7 +45,7 @@ export default function MyAnswerPage() {
     };
 
     const filteredDataBySelectedCategory = myAnswerList.filter(
-        ({ question }: any) => {
+        ({ question }: IAnswerHearted) => {
             return question.category === selectedCategory.key;
         },
     );

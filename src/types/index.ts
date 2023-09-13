@@ -1,3 +1,4 @@
+import { StaticImageData } from 'next/image';
 export interface Test {
     id: number;
 }
@@ -35,7 +36,7 @@ export interface IAnswerHearted extends IAnswer {
 export interface ICategory {
     id: number;
     name: string;
-    image: any; // TODO - any
+    image: StaticImageData;
 }
 
 export interface IQuestion {

@@ -1,4 +1,5 @@
 import { getQuestion } from '@/api/question';
+import { IAnswerHearted } from '@/types';
 
 /**
  * @description user가 답변한 질문이 아니면 입력 페이지로, 이미 답변한 질문이면 답변 결과 페이지로 이동
@@ -23,7 +24,7 @@ const checkIsAnswered = async (questionId: number) => {
         const data = await getQuestion(questionId);
 
         const isMine =
-            data.answers.filter((answer: any) => {
+            data.answers.filter((answer: IAnswerHearted) => {
                 return answer.isMine;
             }).length > 0;
 

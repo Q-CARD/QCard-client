@@ -9,6 +9,7 @@ import { getAnswersMe } from '@/api/answer';
 import { userAtom } from '@/store/recoil';
 import { useRecoilValue } from 'recoil';
 import { Profile } from '@/components/Profile';
+import { IAnswerHearted, IQuestionDetail } from '@/types';
 
 export default function CategoryResultPage({
     params,
@@ -17,11 +18,15 @@ export default function CategoryResultPage({
 }) {
     const user = useRecoilValue(userAtom);
 
-    const [questionDetail, setQuestionDetail] = useState<any>(''); // TODO - any
+    const [questionDetail, setQuestionDetail] = useState<
+        IQuestionDetail | undefined
+    >();
 
-    const [myAnswer, setMyAnswer] = useState<any>({}); // TODO - any
-    const [gptAnswer, setGptAnswer] = useState<any>({});
-    const [otherAnswersList, setOtherAnswersList] = useState([]);
+    const [myAnswer, setMyAnswer] = useState<IAnswerHearted | undefined>();
+    const [gptAnswer, setGptAnswer] = useState<IAnswerHearted | undefined>();
+    const [otherAnswersList, setOtherAnswersList] = useState<IAnswerHearted[]>(
+        [],
+    );
 
     useEffect(() => {
         loadQuestionDetail();
@@ -32,17 +37,19 @@ export default function CategoryResultPage({
         try {
             const data = await getQuestion(Number(params.id));
 
-            const myAnswer = data.answers.find((answer: any) => {
+            const myAnswer = data.answers.find((answer: IAnswerHearted) => {
                 return answer.account.email == user.email;
             });
 
-            const gptAnswer = data.answers.find((answer: any) => {
+            const gptAnswer = data.answers.find((answer: IAnswerHearted) => {
                 return answer.type == 'TYPE_GPT';
             });
 
-            const otherAnswers = data.answers.filter((answer: any) => {
-                return answer.account.email !== user.email;
-            });
+            const otherAnswers = data.answers.filter(
+                (answer: IAnswerHearted) => {
+                    return answer.account.email !== user.email;
+                },
+            );
 
             setQuestionDetail(data);
             setMyAnswer(myAnswer);
@@ -55,9 +62,9 @@ export default function CategoryResultPage({
         <div className="my-[12.8rem] flex flex-col items-center gap-[3.2rem]">
             <div className="text-specialHeading mb-[0.8rem]">
                 <span className="text-blue-primary">Q. </span>
-                <span>{questionDetail.question?.title}</span>
+                <span>{questionDetail?.question?.title}</span>
             </div>
-            <TextBox text={myAnswer?.content} />
+            <TextBox text={myAnswer?.content ?? ''} />
 
             <div className="text-specialHeading mb-[0.8rem]">
                 <span className="text-yellow-sub">A. </span>
@@ -69,7 +76,7 @@ export default function CategoryResultPage({
                 <span className="text-yellow-sub">A. </span>
                 <span>다른 사람들의 답변도 살펴볼까요?</span>
             </div>
-            {otherAnswersList.map((answer: any) => {
+            {otherAnswersList.map((answer: IAnswerHearted) => {
                 return (
                     <div
                         key={`other-answer-${answer.answerId}`}
