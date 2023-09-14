@@ -31,7 +31,7 @@ export default function FollowupButton() {
 
     // 꼬리질문으로 이동
     const handleFollowupQuestion = () => {
-        const pathname = `/interview/followup/${interviewId}?id=${interviewQuestionId}&answer=${answer}`;
+        const pathname = `/interview/followup?id=${interviewQuestionId}&answer=${answer}`;
         router.replace(pathname);
     };
 
