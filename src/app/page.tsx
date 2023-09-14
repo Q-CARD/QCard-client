@@ -102,7 +102,7 @@ export default async function Home() {
                             {questionsMainCategoryName}
                         </span>
                     </div>
-                    {questionsMain?.questions.map((question: any) => {
+                    {questionsMain?.questions?.map((question: any) => {
                         return <QuestionCard question={question} />;
                     })}
                 </div>
