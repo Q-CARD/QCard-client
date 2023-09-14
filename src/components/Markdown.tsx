@@ -7,7 +7,7 @@ import remarkGfm from 'remark-gfm';
 import { getInterviewAll } from '@/api/interview';
 
 export default function MarkdownRenderer() {
-    const [gptAnswer, setAnswer] = useState<string>('');
+    const [gptAnswer, setGptAnswer] = useState<string>('');
 
     const searchParams = useSearchParams();
     const paramsId = searchParams.get('id') ?? '1';
@@ -15,7 +15,7 @@ export default function MarkdownRenderer() {
     const getInterview = async (paramsId: string) => {
         const data = await getInterviewAll(Number(paramsId));
         if (data) {
-            setAnswer(data.gpt_answer);
+            setGptAnswer(data.gpt_answer);
         }
     };
 
