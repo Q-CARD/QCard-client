@@ -2,25 +2,20 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
-import { TextBox } from '@/components/TextBox';
-import { getQuestion } from '@/api/question';
-import { getAnswersMe } from '@/api/answer';
-import { userAtom } from '@/store/recoil';
-import { useRecoilValue } from 'recoil';
+import { TextBoxWrapper } from '@/components/TextBoxWrapper';
 import { Profile } from '@/components/Profile';
-import { IAnswerHearted, IQuestionDetail } from '@/types';
+import { getQuestion } from '@/api/question';
+import { IAnswerHearted, IQuestion } from '@/types';
 
 export default function CategoryResultPage({
     params,
 }: {
     params: { id: number };
 }) {
-    const user = useRecoilValue(userAtom);
-
-    const [questionDetail, setQuestionDetail] = useState<
-        IQuestionDetail | undefined
-    >();
+    const [questionInfo, setQuestionInfo] = useState<IQuestion | undefined>();
 
     const [myAnswer, setMyAnswer] = useState<IAnswerHearted | undefined>();
     const [gptAnswer, setGptAnswer] = useState<IAnswerHearted | undefined>();
@@ -38,22 +33,18 @@ export default function CategoryResultPage({
             const data = await getQuestion(Number(params.id));
 
             const myAnswer = data.answers.find((answer: IAnswerHearted) => {
-                return answer.account.email == user.email;
-            });
-
-            const gptAnswer = data.answers.find((answer: IAnswerHearted) => {
-                return answer.type == 'TYPE_GPT';
+                return answer.isMine;
             });
 
             const otherAnswers = data.answers.filter(
                 (answer: IAnswerHearted) => {
-                    return answer.account.email !== user.email;
+                    return !answer.isMine;
                 },
             );
 
-            setQuestionDetail(data);
+            setQuestionInfo(data.question);
             setMyAnswer(myAnswer);
-            setGptAnswer(gptAnswer);
+            setGptAnswer(data.gpt);
             setOtherAnswersList(otherAnswers);
         } catch (e) {}
     };
@@ -62,15 +53,20 @@ export default function CategoryResultPage({
         <div className="my-[12.8rem] flex flex-col items-center gap-[3.2rem]">
             <div className="text-specialHeading mb-[0.8rem]">
                 <span className="text-blue-primary">Q. </span>
-                <span>{questionDetail?.question?.title}</span>
+                <span>{questionInfo?.title}</span>
             </div>
-            <TextBox text={myAnswer?.content ?? ''} />
+            <TextBoxWrapper>{myAnswer?.content ?? ''}</TextBoxWrapper>
 
             <div className="text-specialHeading mb-[0.8rem]">
                 <span className="text-yellow-sub">A. </span>
                 <span>GPT의 답변이에요</span>
             </div>
-            <TextBox text={gptAnswer?.content ?? '아직 답변이 없습니다.'} />
+            <TextBoxWrapper>
+                <ReactMarkdown
+                    children={gptAnswer?.content ?? 'gpt 답변이 없습니다.'}
+                    remarkPlugins={[remarkGfm]}
+                />
+            </TextBoxWrapper>
 
             <div className="text-specialHeading mb-[0.8rem]">
                 <span className="text-yellow-sub">A. </span>
@@ -83,7 +79,7 @@ export default function CategoryResultPage({
                         className="flex flex-col gap-[1.6rem]"
                     >
                         <Profile account={answer.account} />
-                        <TextBox text={answer.content} />
+                        <TextBoxWrapper>{answer.content}</TextBoxWrapper>
                     </div>
                 );
             })}
