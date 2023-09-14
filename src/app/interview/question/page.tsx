@@ -20,7 +20,6 @@ export default function InterviewQuestionPage() {
     // interview question
     const interviewQuestion = useRecoilValue(interviewListAtom);
 
-    let interviewId = 1;
     const question = parseInt(searchParams?.get('question') ?? '1');
 
     const [curPageQuestion, setCurPageQuestion] = useState<QuestionType>();
@@ -39,7 +38,7 @@ export default function InterviewQuestionPage() {
 
     const [disabled, setDisabled] = useState(false);
 
-    //question이 바뀔 때마다 현재 질문 세팅하기
+    // question이 바뀔 때마다 현재 질문 세팅하기
     useEffect(() => {
         handleCurQuestion();
     }, [question]);
@@ -48,21 +47,17 @@ export default function InterviewQuestionPage() {
 
     const handleNextQuestion = () => {
         if (question < 10) {
-            const pathname = `/interview/${interviewId}?question=${
+            const pathname = `/interview/question?question=${
                 Number(question) + 1
             }`;
             router.replace(pathname);
             // 뒤로가기 누르면 홈으로 이동
-        } else
-            router.replace(
-                `/interview/result/${interviewId}?id=${obj[1]}&answer=1`,
-            );
+        } else router.replace(`/interview/result?id=${obj[1]}&answer=1`);
     };
 
     const NEXT_BUTTON_TEXT = question < 10 ? '다음 질문으로' : '결과 보러가기';
 
     const getRecordingStatus = (isRecording: boolean | null) => {
-        
         if (typeof isRecording === 'boolean') {
             setDisabled(isRecording);
         }
