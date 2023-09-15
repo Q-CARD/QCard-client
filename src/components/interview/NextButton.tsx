@@ -1,9 +1,9 @@
 'use client';
-import { interviewIdAtom } from '@/utils/atom';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { useRecoilValue } from 'recoil';
+import { interviewIdAtom } from '@/store/recoil';
 
 export default function NextButton() {
     const searchParams = useSearchParams();

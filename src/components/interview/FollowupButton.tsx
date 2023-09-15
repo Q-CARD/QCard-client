@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { useRecoilValue } from 'recoil';
-import { interviewListAtom } from '@/utils/atom';
+import { interviewListAtom } from '@/store/recoil';
 
 export default function FollowupButton() {
     const searchParams = useSearchParams();
