@@ -16,10 +16,14 @@ import {
     categoryListAtom,
     interviewListAtom,
     interviewIdAtom,
-} from '@/utils/atom';
+} from '@/store/recoil';
+import { IAnswerInterview, IUserInterview } from '@/types';
 
 export default function InterviewPage() {
     const [categoryList, setCategoryList] = React.useState<string[]>([]);
+    const setCategoryListAtom = useSetRecoilState(categoryListAtom);
+    const setInterviewListAtom = useSetRecoilState(interviewListAtom);
+    const setInterviewIdAtom = useSetRecoilState(interviewIdAtom);
 
     const router = useRouter();
 
@@ -34,35 +38,29 @@ export default function InterviewPage() {
             setCategoryList([...categoryList, category]);
         }
     };
-
-    const setCategoryListAtom = useSetRecoilState(categoryListAtom);
-    const setInterviewListAtom = useSetRecoilState(interviewListAtom);
-    const setInterviewIdAtom = useSetRecoilState(interviewIdAtom);
-
-    const getQuestionIdObject = (arr: any) => {
-        let obj: any = [];
-        arr.forEach(
-            (question: any, idx: number) => (obj[idx + 1] = question?.id),
+    const getQuestionIdObject = (interviewArr: IAnswerInterview[]) => {
+        let idArr: number[] = [];
+        interviewArr.forEach(
+            (question: IAnswerInterview, idx: number) =>
+                (idArr[idx + 1] = question?.id),
         );
-
-        setInterviewIdAtom(obj);
+        setInterviewIdAtom(idArr);
     };
 
     const handleInterviewStart = async () => {
         let body = categoryList.map(
             (category) =>
-                QUESTION_CATEGORY.find(
-                    (question: any) => question.name === category,
-                )?.key,
+                QUESTION_CATEGORY.find((question) => question.name === category)
+                    ?.key,
         );
 
         if (!body || body.length === 0) return;
 
         // 체크 리스트 Recoil에 저장
-        setCategoryListAtom(body);
+        setCategoryListAtom(body as string[]);
 
         try {
-            let data = await newInterview(body as string[]);
+            let data: IUserInterview = await newInterview(body as string[]);
             if (data) {
                 setInterviewListAtom(data.question);
                 getQuestionIdObject(data.question);

@@ -1,33 +1,28 @@
 // 모의 면접 질문 페이지
 'use client';
 import { useState, useEffect } from 'react';
-import RecordCard from '@/components/card/RecordCard';
 import { useRouter, useSearchParams } from 'next/navigation';
+
+import RecordCard from '@/components/card/RecordCard';
+import { IQuestionInterview } from '@/types';
+
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { useRecoilValue } from 'recoil';
-import { interviewIdAtom, interviewListAtom } from '@/utils/atom';
-
-interface QuestionType {
-    category: string; // "CATEGORY_NW"
-    id: number; // question_id
-    title: string;
-}
+import { interviewIdAtom, interviewListAtom } from '@/store/recoil';
 
 export default function InterviewQuestionPage() {
     const searchParams = useSearchParams();
     const router = useRouter();
-
-    // interview question
-    const interviewQuestion = useRecoilValue(interviewListAtom);
-
     const question = parseInt(searchParams?.get('question') ?? '1');
 
-    const [curPageQuestion, setCurPageQuestion] = useState<QuestionType>();
+    const interviewQuestion = useRecoilValue(interviewListAtom);
+
+    const [curPageQuestion, setCurPageQuestion] =
+        useState<IQuestionInterview>();
     const [interviewQuestionId, setInterviewQuestionId] = useState<number>(1);
 
     const handleCurQuestion = () => {
-        // question
-        let curQuestion: QuestionType =
+        let curQuestion: IQuestionInterview =
             interviewQuestion?.[question - 1]?.['question_model'];
 
         let interviewQuestionId = interviewQuestion?.[question - 1]?.['id'];
@@ -43,7 +38,7 @@ export default function InterviewQuestionPage() {
         handleCurQuestion();
     }, [question]);
 
-    const obj = useRecoilValue(interviewIdAtom);
+    const firstInterviewId = useRecoilValue(interviewIdAtom);
 
     const handleNextQuestion = () => {
         if (question < 10) {
@@ -52,7 +47,10 @@ export default function InterviewQuestionPage() {
             }`;
             router.replace(pathname);
             // 뒤로가기 누르면 홈으로 이동
-        } else router.replace(`/interview/result?id=${obj[1]}&answer=1`);
+        } else
+            router.replace(
+                `/interview/result?id=${firstInterviewId[1]}&answer=1`,
+            );
     };
 
     const NEXT_BUTTON_TEXT = question < 10 ? '다음 질문으로' : '결과 보러가기';
