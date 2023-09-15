@@ -9,6 +9,7 @@ import { Button } from '@/components/Button';
 import { Textarea } from '@/components/Textarea';
 import { getQuestion } from '@/api/question';
 import { postAnswers } from '@/api/answer';
+import { IQuestionDetail } from '@/types';
 
 export default function CategoryQuestionPage({
     params,
@@ -19,7 +20,9 @@ export default function CategoryQuestionPage({
 
     const { register, handleSubmit } = useForm();
 
-    const [questionDetail, setQuestionDetail] = useState<any>(''); // TODO - any
+    const [questionDetail, setQuestionDetail] = useState<
+        IQuestionDetail | undefined
+    >();
 
     useEffect(() => {
         loadQuestionDetail();
@@ -55,7 +58,7 @@ export default function CategoryQuestionPage({
         <div className="my-[12.8rem] flex flex-col items-center gap-[3.2rem]">
             <div className="text-specialHeading mb-[0.8rem]">
                 <span className="text-blue-primary">Q. </span>
-                <span>{questionDetail.question?.title}</span>
+                <span>{questionDetail?.question?.title}</span>
             </div>
             <Textarea
                 placeholder="자세히 입력할 수록 좋아요"

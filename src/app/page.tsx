@@ -8,27 +8,13 @@ import MockInterview from '@/components/main/MockInterview';
 import { DailyQuestionCard } from '@/components/card/DailyQuestionCard';
 import { getQuestionsMain } from '@/api/question';
 import { parseCategoryName } from '@/utils/parseData';
-import { IQuestionMain } from '@/types';
+import { IQuestion, IQuestionMain } from '@/types';
 import ImgHeading from '@/assets/images/image-main-heading.png';
 import ImgCardDeck3 from '@/assets/images/image-card-deck-3.png';
 
 export const metadata = {
     title: 'QCard Home',
 };
-
-// async function fetchQuestionsMain() {
-//     try {
-//         const dynamicData = await fetch(
-//             `${process.env.NEXT_PUBLIC_API_BASE_URL}/questions/main`,
-//             { cache: 'no-store' },
-//         );
-
-//         const data = await dynamicData.json();
-//         return data;
-//     } catch (e) {
-//         return;
-//     }
-// }
 
 export default async function Home() {
     // TODO: box-shadow,seperator 커스텀 클래스 적용, '>' react-icons 적용
@@ -98,7 +84,7 @@ export default async function Home() {
                             {parseCategoryName(questionZip.category)}
                         </span>
                     </div>
-                    {questionZip.questions.map((question: any) => {
+                    {questionZip.questions.map((question: IQuestion) => {
                         return <QuestionCard question={question} />;
                     })}
                 </div>

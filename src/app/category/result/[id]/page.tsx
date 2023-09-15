@@ -2,26 +2,26 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
-import { TextBox } from '@/components/TextBox';
-import { getQuestion } from '@/api/question';
-import { getAnswersMe } from '@/api/answer';
-import { userAtom } from '@/store/recoil';
-import { useRecoilValue } from 'recoil';
+import { TextBoxWrapper } from '@/components/TextBoxWrapper';
 import { Profile } from '@/components/Profile';
+import { getQuestion } from '@/api/question';
+import { IAnswerHearted, IQuestion } from '@/types';
 
 export default function CategoryResultPage({
     params,
 }: {
     params: { id: number };
 }) {
-    const user = useRecoilValue(userAtom);
+    const [questionInfo, setQuestionInfo] = useState<IQuestion | undefined>();
 
-    const [questionDetail, setQuestionDetail] = useState<any>(''); // TODO - any
-
-    const [myAnswer, setMyAnswer] = useState<any>({}); // TODO - any
-    const [gptAnswer, setGptAnswer] = useState<any>({});
-    const [otherAnswersList, setOtherAnswersList] = useState([]);
+    const [myAnswer, setMyAnswer] = useState<IAnswerHearted | undefined>();
+    const [gptAnswer, setGptAnswer] = useState<IAnswerHearted | undefined>();
+    const [otherAnswersList, setOtherAnswersList] = useState<IAnswerHearted[]>(
+        [],
+    );
 
     useEffect(() => {
         loadQuestionDetail();
@@ -32,21 +32,19 @@ export default function CategoryResultPage({
         try {
             const data = await getQuestion(Number(params.id));
 
-            const myAnswer = data.answers.find((answer: any) => {
-                return answer.account.email == user.email;
+            const myAnswer = data.answers.find((answer: IAnswerHearted) => {
+                return answer.isMine;
             });
 
-            const gptAnswer = data.answers.find((answer: any) => {
-                return answer.type == 'TYPE_GPT';
-            });
+            const otherAnswers = data.answers.filter(
+                (answer: IAnswerHearted) => {
+                    return !answer.isMine;
+                },
+            );
 
-            const otherAnswers = data.answers.filter((answer: any) => {
-                return answer.account.email !== user.email;
-            });
-
-            setQuestionDetail(data);
+            setQuestionInfo(data.question);
             setMyAnswer(myAnswer);
-            setGptAnswer(gptAnswer);
+            setGptAnswer(data.gpt);
             setOtherAnswersList(otherAnswers);
         } catch (e) {}
     };
@@ -55,28 +53,33 @@ export default function CategoryResultPage({
         <div className="my-[12.8rem] flex flex-col items-center gap-[3.2rem]">
             <div className="text-specialHeading mb-[0.8rem]">
                 <span className="text-blue-primary">Q. </span>
-                <span>{questionDetail.question?.title}</span>
+                <span>{questionInfo?.title}</span>
             </div>
-            <TextBox text={myAnswer?.content} />
+            <TextBoxWrapper>{myAnswer?.content ?? ''}</TextBoxWrapper>
 
             <div className="text-specialHeading mb-[0.8rem]">
                 <span className="text-yellow-sub">A. </span>
                 <span>GPT의 답변이에요</span>
             </div>
-            <TextBox text={gptAnswer?.content ?? '아직 답변이 없습니다.'} />
+            <TextBoxWrapper>
+                <ReactMarkdown
+                    children={gptAnswer?.content ?? 'gpt 답변이 없습니다.'}
+                    remarkPlugins={[remarkGfm]}
+                />
+            </TextBoxWrapper>
 
             <div className="text-specialHeading mb-[0.8rem]">
                 <span className="text-yellow-sub">A. </span>
                 <span>다른 사람들의 답변도 살펴볼까요?</span>
             </div>
-            {otherAnswersList.map((answer: any) => {
+            {otherAnswersList.map((answer: IAnswerHearted) => {
                 return (
                     <div
                         key={`other-answer-${answer.answerId}`}
                         className="flex flex-col gap-[1.6rem]"
                     >
                         <Profile account={answer.account} />
-                        <TextBox text={answer.content} />
+                        <TextBoxWrapper>{answer.content}</TextBoxWrapper>
                     </div>
                 );
             })}

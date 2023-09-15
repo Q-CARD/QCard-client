@@ -1,3 +1,4 @@
+import { StaticImageData } from 'next/image';
 export interface Test {
     id: number;
 }
@@ -32,10 +33,22 @@ export interface IAnswerHearted extends IAnswer {
     isMine: boolean;
 }
 
+export interface IGptAnswer {
+    answerId: number;
+    type: string;
+    account: null;
+    content: string;
+    heartCount: null;
+    createdAt: null;
+    modifiedAt: null;
+    isHearted: null;
+    isMine: null;
+}
+
 export interface ICategory {
     id: number;
     name: string;
-    image: any; // TODO - any
+    image: StaticImageData;
 }
 
 export interface IQuestion {
@@ -54,6 +67,6 @@ export interface IQuestionMain {
 
 export interface IQuestionDetail {
     question: IQuestion;
-    gpt: IAnswerHearted;
+    gpt: IGptAnswer;
     answers: IAnswerHearted[];
 }
