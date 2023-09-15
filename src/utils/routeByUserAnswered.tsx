@@ -23,10 +23,9 @@ const checkIsAnswered = async (questionId: number) => {
     try {
         const data = await getQuestion(questionId);
 
-        const isMine =
-            data.answers.filter((answer: IAnswerHearted) => {
-                return answer.isMine;
-            }).length > 0;
+        const isMine = data.answers.some((answer: IAnswerHearted) => {
+            return answer.isMine;
+        });
 
         return isMine;
     } catch (e) {}
