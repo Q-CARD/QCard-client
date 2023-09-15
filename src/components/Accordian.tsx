@@ -5,7 +5,7 @@ import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 interface AccordianProps {
     className: string;
     children: React.ReactNode;
-    rerenderProps: any;
+    rerenderProps: string;
 }
 
 export function Accordian({

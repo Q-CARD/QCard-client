@@ -6,16 +6,11 @@ import ChatInput from './ChatInput';
 import useInput from '@/hooks/useInput';
 import { IAnswerInterview } from '@/types/index';
 import { submitAdditionalAnswer } from '@/api/interview';
+import { IAnswerFollwupQuestion, ChatMessage } from '@/types';
 
 interface ChatRoomProps {
     additionalQuestions: IAnswerInterview | undefined;
     handleAnswerCnt: (answerCnt: number) => void;
-}
-
-interface ChatMessage {
-    type: 'question' | 'answer';
-    text: string;
-    cnt: number;
 }
 
 const ERROR_MESSAGE = '꼬리 질문이 없습니다';
@@ -66,7 +61,7 @@ export default function ChatRoom({
         // 세 번 전송
         if (answerList.length === 3) {
             for (let questionCnt = 1; questionCnt <= 3; questionCnt++) {
-                let body = {
+                let body: IAnswerFollwupQuestion = {
                     sequence: questionCnt,
                     question_id: additionalQuestions?.id,
                     answer: answerList?.[questionCnt - 1],

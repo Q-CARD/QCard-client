@@ -10,12 +10,7 @@ import { useRecoilValue } from 'recoil';
 interface PaginatinProps {
     children?: React.ReactNode;
     className: string;
-    //handlePrev: () => any; // 이전버튼 눌렀을 때 작동할 함수
-    //handleNext: () => any; // 다음버튼 눌렀을 때 작동할 함수
 }
-
-// 가운데 버튼들 눌렀을 때 해당 번호 url로 이동
-// - url: /interview/result/{interviewId}?answer={children}
 
 export function Pagination({ children, className }: PaginatinProps) {
     const searchParams = useSearchParams();
@@ -84,7 +79,7 @@ export function Pagination({ children, className }: PaginatinProps) {
 
 interface PageItemProps {
     pageIndex: number;
-    handlePageMove: (answer: number) => any;
+    handlePageMove: (answer: number) => void;
     activeIdx: number; // 현재 활성화된 페이지 인덱스
 }
 

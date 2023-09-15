@@ -29,6 +29,12 @@ export interface IAnswerInterview {
     question_model: IQuestionInterview;
 }
 
+export interface IAnswerFollwupQuestion {
+    sequence: number;
+    question_id: number | undefined;
+    answer: string | null;
+}
+
 export interface IAnswer {
     question: IQuestion;
     answerId: number;
@@ -90,4 +96,10 @@ export interface IQuestionInterview {
     category: string;
     id: number;
     title: string;
+}
+
+export interface ChatMessage {
+    type: 'question' | 'answer';
+    text: string;
+    cnt: number;
 }

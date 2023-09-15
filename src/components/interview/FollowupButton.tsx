@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { useRecoilValue } from 'recoil';
 import { interviewListAtom } from '@/store/recoil';
+import { IAnswerInterview } from '@/types';
 
 export default function FollowupButton() {
     const searchParams = useSearchParams();
@@ -17,7 +18,7 @@ export default function FollowupButton() {
     const interviewQuestion = useRecoilValue(interviewListAtom);
 
     const handlePageResult = () => {
-        let curPage: any = interviewQuestion?.[answer - 1];
+        let curPage: IAnswerInterview = interviewQuestion?.[answer - 1];
         if (!curPage) {
             alert('질문 없음');
             return;
