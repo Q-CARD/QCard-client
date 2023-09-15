@@ -4,49 +4,57 @@ import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/Button';
 import { getAnswersMe } from '@/api/answer';
-import { IAnswer } from '@/types/answer';
+import { IAnswer, IAnswerHearted } from '@/types/index';
 import { QUESTION_CATEGORY } from '@/constants/data';
 
 export default function MyAnswerPage() {
-    const [myAnswerList, setMyAnswerList] = useState<any>([]); // TODO - any
+    const [myAnswerList, setMyAnswerList] = useState<IAnswerHearted[]>([]);
 
-    const [selectedCategory, setSelectedCategory] = useState<any>({
+    const [selectedCategory, setSelectedCategory] = useState<{
+        id: Number;
+        key: string;
+    }>({
         id: QUESTION_CATEGORY[0].id,
         key: QUESTION_CATEGORY[0].key,
     });
-    const [selectedCategoryList, setSelectedCategoryList] = useState<any>([]);
+    const [selectedCategoryList, setSelectedCategoryList] = useState<
+        IAnswerHearted[]
+    >([]);
 
     useEffect(() => {
         loadAnswersMe();
-
-        // setSelectedCategoryList(
-        //     myAnswerList.filter((item: any) => {
-        //         return item.question.category === 'CATEGORY_NW';
-        //     }),
-        // );
     }, []);
 
     useEffect(() => {
-        setSelectedCategoryList(filteredDataByCategory);
+        setSelectedCategoryList(filteredDataBySelectedCategory);
     }, [selectedCategory]);
-
-    const selectCategory = (category: any) => {
-        setSelectedCategory({
-            id: category.id,
-            key: category.key,
-        });
-    };
-
-    const filteredDataByCategory = myAnswerList.filter(({ question }: any) => {
-        return question.category === selectedCategory.key;
-    });
 
     const loadAnswersMe = async () => {
         try {
             const data = await getAnswersMe();
 
             setMyAnswerList(data);
+
+            // TODO - 함수 위치 고민해보기. loadAnswersMe 함수는 두 가지 역할을 하는 중이지 않을까?
+            setSelectedCategoryList(
+                data.filter((item: IAnswerHearted) => {
+                    return item.question.category === QUESTION_CATEGORY[0].key;
+                }),
+            );
         } catch (e) {}
+    };
+
+    const filteredDataBySelectedCategory = myAnswerList.filter(
+        ({ question }: IAnswerHearted) => {
+            return question.category === selectedCategory.key;
+        },
+    );
+
+    const selectCategory = (category: any) => {
+        setSelectedCategory({
+            id: category.id,
+            key: category.key,
+        });
     };
 
     return (

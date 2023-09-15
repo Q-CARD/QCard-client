@@ -3,7 +3,10 @@ import Image from 'next/image';
 import defaultImage from '@/assets/images/image-default-profile.png';
 
 interface ProfileProps {
-    account: any;
+    account: {
+        name: string;
+        email: string;
+    };
 }
 
 export function Profile({ account }: ProfileProps): React.JSX.Element {

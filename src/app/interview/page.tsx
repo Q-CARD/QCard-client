@@ -24,13 +24,11 @@ export default function InterviewPage() {
     const router = useRouter();
 
     const handleCategoryList = (category: string, isChecked: boolean) => {
-        // 추가하려고 하는데 이미 최대 3개를 클릭한 경우 alert 띄우기
         if (categoryList.length === 3 && !isChecked) {
             alert('최대 3개까지만 선택이 가능합니다!');
             return;
         }
         if (categoryList.includes(category)) {
-            // category가 있으면 제거하고, 없으면 추가하기
             setCategoryList([...categoryList.filter((el) => el !== category)]);
         } else {
             setCategoryList([...categoryList, category]);
@@ -42,7 +40,6 @@ export default function InterviewPage() {
     const setInterviewIdAtom = useSetRecoilState(interviewIdAtom);
 
     const getQuestionIdObject = (arr: any) => {
-        const data = [{ idx: 1, id: 641 }];
         let obj: any = [];
         arr.forEach(
             (question: any, idx: number) => (obj[idx + 1] = question?.id),
@@ -52,8 +49,6 @@ export default function InterviewPage() {
     };
 
     const handleInterviewStart = async () => {
-        let interviewid = 1;
-
         let body = categoryList.map(
             (category) =>
                 QUESTION_CATEGORY.find(
@@ -74,7 +69,7 @@ export default function InterviewPage() {
             }
         } catch {}
 
-        const pathname = `/interview/${interviewid}?question=1`;
+        const pathname = `/interview/question?question=1`;
         router.replace(pathname);
     };
 

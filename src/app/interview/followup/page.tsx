@@ -61,7 +61,7 @@ export default function InterviewFollowupPage() {
                 } flex items-baseline gap-[8px] rounded-[4.7rem] border items-center mt-[9rem] py-[2rem] px-[5.6rem] text-bodyDefault`}
                 onClick={() =>
                     router.push(
-                        `/interview/result/${interviewId}?id=${obj?.[answer]}&answer=${answer}`,
+                        `/interview/result?id=${obj?.[answer]}&answer=${answer}`,
                     )
                 }
             >

@@ -1,5 +1,6 @@
 'use client';
 
+import { UseFormRegisterReturn } from 'react-hook-form';
 import { BiCheckCircle } from 'react-icons/bi';
 import { TbEyeClosed } from 'react-icons/tb';
 import { BiPencil } from 'react-icons/bi';
@@ -7,7 +8,7 @@ import { BiPencil } from 'react-icons/bi';
 interface InputProps {
     type?: 'text' | 'password' | 'edit';
     placeholder: string;
-    register: any; // TODO - any
+    register: UseFormRegisterReturn<any>;
 }
 
 export function Input({

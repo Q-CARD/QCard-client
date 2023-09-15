@@ -27,24 +27,24 @@ export function Pagination({ children, className }: PaginatinProps) {
 
     const handlePrev = () => {
         if (answer > 1) {
-            const pathname = `/interview/result/${interviewId}?id=${
-                obj[answer]
-            }&answer=${answer - 1}`;
+            const pathname = `/interview/result?id=${obj[answer]}&answer=${
+                answer - 1
+            }`;
             router.push(pathname);
         }
     };
 
     const handleNext = () => {
         if (answer < 10) {
-            const pathname = `/interview/result/${interviewId}?id=${
-                obj[answer]
-            }&answer=${answer + 1}`;
+            const pathname = `/interview/result?id=${obj[answer]}&answer=${
+                answer + 1
+            }`;
             router.push(pathname);
         }
     };
 
     const handlePageMove = (answer: number) => {
-        const pathname = `/interview/result/${interviewId}?id=${obj[answer]}&answer=${answer}`;
+        const pathname = `/interview/result?id=${obj[answer]}&answer=${answer}`;
         router.push(pathname);
     };
 

@@ -1,8 +1,8 @@
-'use client'
+'use client';
 // 모의 면접 모드 종료 페이지 interview/finish
 // import type { Metadata } from 'next';
 import Image from 'next/image';
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import ImgCelebrate from '@/assets/images/image-celebrate.png';
 import { AiOutlineArrowRight } from 'react-icons/ai';
@@ -16,15 +16,12 @@ import { userAtom } from '@/store/recoil';
 //};
 
 export default function InterviewFinishPage() {
-
-    const user = useRecoilValue(userAtom)
-    const [nickname, setNickname] = useState()
+    const user = useRecoilValue(userAtom);
+    const [nickname, setNickname] = useState<string>('');
 
     useEffect(() => {
-        setNickname(user.nickname ?? '유저')
-    }, [])
-
-    
+        setNickname(user.nickname ?? '유저');
+    }, []);
 
     return (
         <section className="flex flex-col items-center m-auto pt-[10.2rem] pb-[11.8rem]">

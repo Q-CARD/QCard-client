@@ -65,10 +65,6 @@ export default function Question() {
             <div className="text-bodyDefault min-h-[3rem] text-grey-6 mt-[2.2rem]">
                 {curPageResult?.answer ?? '내가 녹음한 답변이 없습니다'}
             </div>
-            <Accordian rerenderProps={answer} className="w-full">
-                {curPageResult?.gpt_answer ??
-                    'gpt 답변이 없습니다 다시 한번 녹음해주세요 :)'}
-            </Accordian>
         </>
     );
 }

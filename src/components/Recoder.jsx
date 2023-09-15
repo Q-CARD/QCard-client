@@ -40,11 +40,11 @@ export default function Recoder({
         navigator.getUserMedia(
             { audio: true },
             () => {
-                console.log('Permission Granted');
+                // console.log('Permission Granted');
                 setState({ isBlocked: false });
             },
             () => {
-                console.log('Permission Denied'); // TODO: permission denied한 경우 예외 처리
+                // console.log('Permission Denied'); // TODO: permission denied한 경우 예외 처리
                 setState({ isBlocked: true });
             },
         );
@@ -71,7 +71,6 @@ export default function Recoder({
         }
     };
 
-    
     const stop = async () => {
         //console.log('3. stop 실행');
         setIsRecordFinish(true); // 녹음 완료, 한번만 가능
