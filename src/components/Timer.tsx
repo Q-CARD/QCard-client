@@ -1,6 +1,7 @@
 // 클라이언트 컴포넌트
 import React from 'react';
 import { useSearchParams } from 'next/navigation';
+import { intToString } from '@/utils/utils';
 
 interface TimerProps {
     isRecording: boolean | null;
@@ -8,21 +9,20 @@ interface TimerProps {
     ss: number; // 종료 초
     handleRecordStart: () => void;
     handleRecordStop: () => void;
+    getTime: (second: number) => void;
 }
 
 export default function Timer({
     isRecording,
-    handleRecordStart,
+    // handleRecordStart,
     handleRecordStop,
+    getTime,
     mm,
     ss,
 }: TimerProps) {
     // isRecording의 상태에 따라 타이머 토글
     const searchParams = useSearchParams();
-
     const question = searchParams?.get('question') ?? 1;
-
-    const intToString = (num: number) => String(num).padStart(2, '0');
 
     // 다음 문제로 넘어갈 때마다 타이머 초기화
     React.useEffect(() => {
@@ -37,11 +37,11 @@ export default function Timer({
     const count = React.useRef(0);
 
     const finish = MM * 60 + SS;
-    const interval = React.useRef<any>(0);
+    const interval = React.useRef<NodeJS.Timeout>();
 
     // 각 시간에 대한 변수는 useState로 선언한다
-    const [minute, setMinute] = React.useState(intToString(0)); // 시간으로 하려면 intToString(MM)
-    const [second, setSecond] = React.useState(intToString(0)); // 시간으로 하려면 intToString(SS)
+    const [minute, setMinute] = React.useState(intToString(0));
+    const [second, setSecond] = React.useState(intToString(0));
 
     // 녹음 버튼이 클릭되면 타이머가 작동하도록 한다
     React.useEffect(() => {
@@ -64,8 +64,9 @@ export default function Timer({
         }
     }, [isRecording]);
 
-    // second가 변경될 때마다 finish에 도달했는지 체크한다
+    // second가 변경될 때마다 finish에 도달했는지 체크
     React.useEffect(() => {
+        getTime(count.current); // second가 변할 때마다 RecordCard와 상태 공유
         // 녹음 정지 상태라면 중단한다
         if (count.current >= finish || !isRecording) {
             clearInterval(interval.current);
