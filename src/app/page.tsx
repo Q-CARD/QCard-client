@@ -1,3 +1,4 @@
+// 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -6,15 +7,16 @@ import { Button } from '@/components/Button';
 import { QuestionCard } from '@/components/card/QuestionCard';
 import MockInterview from '@/components/main/MockInterview';
 import { DailyQuestionCard } from '@/components/card/DailyQuestionCard';
+
 import { getQuestionsMain } from '@/api/question';
 import { parseCategoryName } from '@/utils/parseData';
 import { IQuestion, IQuestionMain } from '@/types';
 import ImgHeading from '@/assets/images/image-main-heading.png';
 import ImgCardDeck3 from '@/assets/images/image-card-deck-3.png';
 
-export const metadata = {
-    title: 'QCard Home',
-};
+//export const metadata = {
+//    title: 'QCard Home',
+//};
 
 export default async function Home() {
     // TODO: box-shadow,seperator 커스텀 클래스 적용, '>' react-icons 적용
@@ -84,9 +86,16 @@ export default async function Home() {
                             {parseCategoryName(questionZip.category)}
                         </span>
                     </div>
-                    {questionZip.questions.map((question: IQuestion) => {
-                        return <QuestionCard question={question} />;
-                    })}
+                    {questionZip.questions.map(
+                        (question: IQuestion, idx: number) => {
+                            return (
+                                <QuestionCard
+                                    key={`key-${question}-${idx}`}
+                                    question={question}
+                                />
+                            );
+                        },
+                    )}
                 </div>
             </section>
             <Footer />
