@@ -10,3 +10,5 @@ export const getIdByNum = (num: number) => {
     const obj = useRecoilValue(interviewIdAtom);
     return obj[num];
 };
+
+export const intToString = (num: number) => String(num).padStart(2, '0');
