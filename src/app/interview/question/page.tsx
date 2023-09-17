@@ -31,7 +31,7 @@ export default function InterviewQuestionPage() {
         else alert('다음 질문이 없습니다');
     };
 
-    const [disabled, setDisabled] = useState(false);
+    const [disabled, setDisabled] = useState(true);
 
     // question이 바뀔 때마다 현재 질문 세팅하기
     useEffect(() => {
@@ -56,8 +56,11 @@ export default function InterviewQuestionPage() {
     const NEXT_BUTTON_TEXT = question < 10 ? '다음 질문으로' : '결과 보러가기';
 
     const getRecordingStatus = (isRecording: boolean | null) => {
-        if (typeof isRecording === 'boolean') {
-            setDisabled(isRecording);
+        if (typeof isRecording === 'boolean' && isRecording == false) {
+            setDisabled(false);
+        } else if (typeof isRecording === 'object') {
+            // null 타입
+            setDisabled(true);
         }
     };
 
@@ -74,9 +77,9 @@ export default function InterviewQuestionPage() {
                 onClick={handleNextQuestion}
                 className={`${
                     disabled
-                        ? 'bg-white border border-grey-4 border-1 text-grey-4'
+                        ? 'bg-grey-3 text-grey-6'
                         : 'bg-blue-primary text-white'
-                } w-fit flex items-center mt-[5.7rem] gap-[8px] py-[2.4rem] px-[3.6rem] text-specialHeading3 rounded-[3rem]`}
+                } w-full flex justify-center items-center mt-[3.5rem] gap-[8px] py-[2.4rem] px-[3.6rem] text-specialHeading3 rounded-[1rem]`}
             >
                 {NEXT_BUTTON_TEXT}
                 <AiOutlineArrowRight
