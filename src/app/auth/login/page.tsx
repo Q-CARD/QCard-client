@@ -91,11 +91,13 @@ export default function LoginPage() {
             {errors.password?.message && (
                 <ValidationMessage message={errors.password.message} />
             )}
-            <Button
-                type="block"
-                title="로그인"
-                onClick={handleSubmit(handleSubmitLogin)}
-            />
+            <div className="my-[1.6rem]">
+                <Button
+                    type="block"
+                    title="로그인"
+                    onClick={handleSubmit(handleSubmitLogin)}
+                />
+            </div>
             <div className="text-input">
                 <span className="text-grey-5">회원이 아닌가요? </span>
                 <span

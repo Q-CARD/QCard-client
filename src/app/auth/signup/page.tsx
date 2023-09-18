@@ -100,11 +100,13 @@ export default function SignUpPage() {
             {errors.passwordConfirm?.message && (
                 <ValidationMessage message={errors.passwordConfirm.message} />
             )}
-            <Button
-                type="block"
-                title="회원가입"
-                onClick={handleSubmit(handleSubmitSignup)}
-            />
+            <div className="my-[1.6rem]">
+                <Button
+                    type="block"
+                    title="회원가입"
+                    onClick={handleSubmit(handleSubmitSignup)}
+                />
+            </div>
         </form>
     );
 }
