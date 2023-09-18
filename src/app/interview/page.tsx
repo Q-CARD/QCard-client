@@ -3,14 +3,11 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 
-import Checkbox from '@/components/Checkbox';
-import ImgCardDeck2 from '@/assets/images/image-card-deck-2.png';
-import { QUESTION_CATEGORY } from '@/constants/data';
-
-import { AiOutlineArrowRight } from 'react-icons/ai';
+import CategoryNameCard from '@/components/interview/CategoryNameCard';
 import { newInterview } from '@/api/interview';
+
+import { QUESTION_CATEGORY } from '@/constants/data';
 import { useSetRecoilState } from 'recoil';
 import {
     categoryListAtom,
@@ -27,15 +24,19 @@ export default function InterviewPage() {
 
     const router = useRouter();
 
-    const handleCategoryList = (category: string, isChecked: boolean) => {
+    const handleCategoryList = (
+        category: string | undefined,
+        isChecked: boolean,
+    ) => {
+        console.log('category', category);
         if (categoryList.length === 3 && !isChecked) {
             alert('최대 3개까지만 선택이 가능합니다!');
             return;
         }
-        if (categoryList.includes(category)) {
+        if (categoryList.includes(category ?? '')) {
             setCategoryList([...categoryList.filter((el) => el !== category)]);
         } else {
-            setCategoryList([...categoryList, category]);
+            setCategoryList([...categoryList, category as string]);
         }
     };
     const getQuestionIdObject = (interviewArr: IAnswerInterview[]) => {
@@ -72,39 +73,33 @@ export default function InterviewPage() {
     };
 
     return (
-        <section className="flex justify-center pt-[17rem] min-w-[86rem] m-auto pb-[17.3rem] ">
-            <div>
-                <h1 className="text-center text-black text-5xl font-bold mb-[6.6rem]">
-                    모의 면접을 시작해볼까요?
-                </h1>
-                <Image
-                    src={ImgCardDeck2}
-                    alt="card-deck2"
-                    width={427}
-                    height={409}
-                />
-            </div>
-            <div className="flex flex-col h-[45.6rem] items-center ml-[19.3rem]">
-                <h5 className="text-grey-6 text-bodyDefault text-center">
-                    받고 싶은 질문 유형을 선택해주세요
-                </h5>
-                <div className="flex flex-col gap-[1.6rem] mt-[3.2rem] overflow-y-auto pr-[2rem]">
+        <section className="flex flex-col items-center bg-blue-1 justify-center pt-[8.3rem] min-w-[86rem] m-auto pb-[17.3rem] ">
+            <h1 className="text-center text-heading2 font-bold">
+                모의 면접을 시작해볼까요?
+            </h1>
+            <h3 className="text-heading3 mt-[4rem] text-grey-6">
+                먼저 연습하고 싶은 면접 유형들을 선택해주세요
+            </h3>
+
+            <div className="flex flex-col items-center mx-[15.9rem] pt-[8.4rem] m-auto">
+                <div className="flex items-start content-start flex-wrap min-w-[112.2rem] gap-x-[3.4rem] gap-y-[2.5rem]">
                     {QUESTION_CATEGORY.map(({ id, name }) => (
-                        <Checkbox
+                        <CategoryNameCard
                             key={id}
                             handleCategoryList={handleCategoryList}
                             isCheckableNum={categoryList.length}
                         >
                             {name}
-                        </Checkbox>
+                        </CategoryNameCard>
                     ))}
                 </div>
                 <button
                     onClick={handleInterviewStart}
-                    className="flex items-center mt-[6.4rem] gap-[8px] py-[1.4rem] px-[1.8rem] bg-blue-primary text-specialHeading4 text-white rounded-[3rem]"
+                    className="flex justify-center w-[93rem] h-[8rem] mt-[6.4rem] py-[2.3rem] bg-blue-primary rounded-[1rem]"
                 >
-                    면접 시작하기
-                    <AiOutlineArrowRight size={15} color="#fff" />
+                    <span className="text-heading3 text-white">
+                        모의 면접 시작하기
+                    </span>
                 </button>
             </div>
         </section>
