@@ -5,8 +5,6 @@ import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import ChatRoom from '@/components/chat/ChatRoom';
-import { INTERVIEW_RESULT } from '@/constants/dummy';
-import { AnswerType } from '@/types/index';
 import { interviewIdAtom } from '@/utils/atom';
 import { getInterviewAll } from '@/api/interview';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
