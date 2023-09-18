@@ -7,10 +7,10 @@ import { Input } from '@/components/Input';
 import { Button } from '@/components/Button';
 import ValidationMessage from '@/components/ValidationMessage';
 import { getAccountsProfile, postSignIn } from '@/api/account';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { userAtom, isLoginAtom } from '@/store/recoil';
 import { ACCESS_TOKEN } from '@/constants/constants';
-import { REGEX } from '@/constants/regex';
+import { ERROR_MESSAGES, REGEX } from '@/constants';
 
 interface LoginFormValues {
     email: string;
@@ -26,7 +26,7 @@ export default function LoginPage() {
         formState: { errors },
     } = useForm<LoginFormValues>();
 
-    const [userData, setUserData] = useRecoilState(userAtom);
+    const setUserData = useSetRecoilState(userAtom);
     const handleLogin = useSetRecoilState(isLoginAtom);
 
     const handleSubmitLogin = async ({ email, password }: LoginFormValues) => {
@@ -70,7 +70,7 @@ export default function LoginPage() {
                     required: true,
                     pattern: {
                         value: REGEX.EMAIL,
-                        message: '이메일 형식을 입력해주세요.',
+                        message: ERROR_MESSAGES.NOT_MATCH_REGEX.EMAIL,
                     },
                 })}
             />
@@ -80,8 +80,17 @@ export default function LoginPage() {
             <Input
                 type="password"
                 placeholder="비밀번호"
-                register={register('password', { required: true })}
+                register={register('password', {
+                    required: true,
+                    pattern: {
+                        value: REGEX.PW,
+                        message: ERROR_MESSAGES.NOT_MATCH_REGEX.PW,
+                    },
+                })}
             />
+            {errors.password?.message && (
+                <ValidationMessage message={errors.password.message} />
+            )}
             <Button
                 type="block"
                 title="로그인"
