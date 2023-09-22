@@ -75,8 +75,8 @@ export default function Timer({
     }, [second]);
 
     return (
-        <div className="mt-[1rem]">
-            <div className="text-heading5 text-yellow-sub">
+        <div className="">
+            <div className="text-heading3 w-[7rem] text-black">
                 {minute}:{second}
             </div>
         </div>

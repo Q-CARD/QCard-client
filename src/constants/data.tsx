@@ -38,7 +38,7 @@ export const QUESTION_CATEGORY = [
     },
     {
         id: 5,
-        name: '컴퓨터구조',
+        name: 'JAVA',
         image: java,
         key: 'CATEGORY_JAVA',
     },
