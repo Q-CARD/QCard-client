@@ -19,7 +19,7 @@ export function Input({
     return (
         <div className="relative">
             <input
-                className="w-[41.9rem] h-fit p-[2.4rem] pr-[calc(2.4rem+1.5rem+1rem)] bg-grey-1 rounded-[2rem] focus:outline-none text-black text-input placeholder:text-grey-5"
+                className="w-[41.9rem] h-fit p-[2.4rem] pr-[calc(2.4rem+1.5rem+1rem)] bg-grey-1 rounded-[1rem] focus:outline-none text-black text-input placeholder:text-grey-5"
                 type={type}
                 placeholder={placeholder}
                 spellCheck="false"

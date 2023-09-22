@@ -14,7 +14,7 @@ export function Button({
     disabled = false,
     isChipClicked = false,
 }: ButtonProps): React.JSX.Element {
-    const blockConfig = `w-[41.9rem] h-fit px-[3.6rem] py-[2.4rem] rounded-[2rem] text-buttonBlock text-white bg-blue-primary`;
+    const blockConfig = `w-[41.9rem] h-fit px-[3.6rem] py-[2.4rem] rounded-[1rem] text-buttonBlock text-white bg-blue-primary`;
     const roundConfig = `w-fit h-fit px-[2.4rem] py-[1.8rem] rounded-[3rem] text-buttonRound text-white bg-blue-primary`;
     const chipConfig = `w-fit h-fit px-[1.8rem] py-[1.4rem] rounded-[3rem] text-buttonChip hover:text-white hover:bg-blue-primary`;
     const blackConfig = `w-fit h-fit px-[2.4rem] py-[1.8rem] rounded-[3rem] text-buttonRound text-white bg-black`;
