@@ -5,9 +5,12 @@ import { useSearchParams } from 'next/navigation';
 import MicRecorder from 'mic-recorder-to-mp3';
 import { submitRecordFile } from '@/api/interview';
 
-import { FaPause } from 'react-icons/fa';
-import { BsFillPlayFill } from 'react-icons/bs';
-import ImgBgCircle from '@/assets/images/image-yellow-circle.png';
+// assets
+import IconCircleBlue from '@/assets/icons/icon-circle-blue.png';
+import IconCircleGrey from '@/assets/icons/icon-circle-grey.png';
+import IconPause from '@/assets/icons/icon-record-pause.png';
+import IconMicGrey from '@/assets/icons/icon-mic-grey.png';
+import IconMicBlue from '@/assets/icons/icon-mic-blue.png';
 import { FILE_NAME } from '@/constants/constants';
 
 export default function Recoder({
@@ -15,8 +18,9 @@ export default function Recoder({
     handleRecordStop,
     isRecording,
     interviewQuestionId,
+    getPermission,
 }) {
-    // 녹음 라이브러리: mic-recorder-to-mp3 -> Types 지원 [x]
+    const WARNING = '녹음은 한번만 할 수 있습니다. 다음 문제로 넘어가주세요.';
 
     const searchParams = useSearchParams();
     const answer = searchParams?.get('question') ?? 1;
@@ -25,24 +29,24 @@ export default function Recoder({
     const [Mp3Recorder, _] = useState(new MicRecorder({ bitRate: 128 }));
     const [state, setState] = useState({
         isRecording: false,
-        blobURL: '',
         isBlocked: false,
+        blobURL: '',
     });
+
+    const permissionCallback = (state) => {
+        setState({ isBlocked: !state });
+        getPermission(state);
+    };
 
     useEffect(() => {
         navigator.getUserMedia(
             { audio: true },
-            () => {
-                setState({ isBlocked: false });
-            },
-            () => {
-                setState({ isBlocked: true });
-            },
+            () => permissionCallback(true),
+            () => permissionCallback(false),
         );
     }, []);
 
-    const recordLimit = () =>
-        alert('녹음은 한번만 할 수 있습니다. 다음 문제로 넘어가주세요.');
+    const recordLimit = () => alert(WARNING);
 
     const makeFile = (buffer, blob) => {
         const file = new File(buffer, FILE_NAME, {
@@ -56,18 +60,11 @@ export default function Recoder({
 
     const sendFile = async (formData) => {
         try {
-            let data = await submitRecordFile(interviewQuestionId, formData);
-            //if (data) {
-            //    console.log(`[${data.id}]번 데이터 전송 완료`, data.message);
-            //}
+            await submitRecordFile(interviewQuestionId, formData);
         } catch {}
     };
 
     const start = async () => {
-        if (state.isBlocked) {
-            // TODO: 예외 처리
-            return;
-        }
         Mp3Recorder.start()
             .then(() => {
                 setState({ isRecording: true });
@@ -77,15 +74,13 @@ export default function Recoder({
 
     const stop = async () => {
         setIsRecordFinish(true); // 녹음 완료, 한번만 가능
-        Mp3Recorder.stop()
-            .getMp3()
-            .then(async ([buffer, blob]) => {
-                const blobURL = URL.createObjectURL(blob);
-                setState({ blobURL, isRecording: false });
-                const formData = makeFile(buffer, blob);
-                sendFile(formData);
-            })
-            .catch((e) => console.log(e));
+        let [buffer, blob] = await Mp3Recorder.stop().getMp3();
+
+        if (buffer) {
+            const blobURL = URL.createObjectURL(blob);
+            setState({ blobURL, isRecording: false });
+            await sendFile(makeFile(buffer, blob));
+        }
     };
 
     React.useEffect(() => {
@@ -93,10 +88,38 @@ export default function Recoder({
     }, [answer]);
 
     React.useEffect(() => {
-        if (isRecording === null) return;
-        if (isRecording) start();
-        else stop();
+        if (isRecording === 'not-start') return;
+        isRecording === 'record' ? start() : stop();
     }, [isRecording]);
+
+    const IconArr = [
+        {
+            src: IconMicGrey,
+            width: 48,
+            height: 48,
+            status: 'finish',
+            className: 'top-[calc(50%-24px)] left-[calc(50%-24px)]',
+        },
+        {
+            src: IconMicBlue,
+            width: 48,
+            height: 48,
+            status: 'not-start',
+            className: 'top-[calc(50%-24px)] left-[calc(50%-24px)]',
+        },
+        {
+            src: IconPause,
+            width: 30,
+            height: 30,
+            status: 'record',
+            className: 'top-[calc(50%-15px)] left-[calc(50%-15px)]',
+        },
+    ];
+
+    const getImageByStatus = (status) => {
+        if (isRecordFinish) return IconArr[0];
+        return IconArr.find((icon) => icon.status === status);
+    };
 
     return (
         <div
@@ -107,31 +130,27 @@ export default function Recoder({
                 isRecordFinish
                     ? recordLimit
                     : // 녹음 시도 X && 현재 녹음 중 -> stop
-                    isRecording
+                    isRecording === 'record'
                     ? handleRecordStop
                     : handleRecordStart
             }
         >
             <Image
-                src={ImgBgCircle}
-                alt="image-yellow-circle"
+                src={isRecordFinish ? IconCircleGrey : IconCircleBlue}
+                alt="image-bg-circle"
                 className="absolute"
                 width={64}
                 height={64}
             />
-            {isRecording ? (
-                <FaPause
-                    size="16"
-                    color="var(--white)"
-                    className="absolute top-[2.4rem] left-[2.4rem]"
-                />
-            ) : (
-                <BsFillPlayFill
-                    size="30"
-                    color="var(--white)"
-                    className="absolute top-[1.8rem] left-[1.8rem]"
-                />
-            )}
+            <Image
+                src={getImageByStatus(isRecording)?.src}
+                alt="icon-record"
+                className={`absolute ${
+                    getImageByStatus(isRecording)?.className
+                }`}
+                width={getImageByStatus(isRecording)?.width}
+                height={getImageByStatus(isRecording)?.height}
+            />
         </div>
     );
 }
