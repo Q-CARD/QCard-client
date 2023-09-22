@@ -3,15 +3,36 @@ export interface Test {
     id: number;
 }
 
-export interface AnswerType {
-    question_id: number;
-    question: string;
-    answer: string;
-    gpt_answer: string;
-    id: number;
+// 카테고리 선택 후, 유저 정보 + 질문들 정보 + interview_id 반환
+export interface IUserInterview {
+    account: {
+        email: string;
+        id: number;
+        name: string;
+    };
+    interview_id: number;
+    question: IAnswerInterview[];
+}
+
+export interface IAnswerInterview {
+    additonal_answer_1: null;
+    additional_answer_2: null;
+    additional_answer_3: null; // TODO: null 맞는지 확인
     additional_question_1: string;
     additional_question_2: string;
     additional_question_3: string;
+    answer: string | null;
+    gpt_answer: string | null;
+    id: number;
+    interview: number;
+    question: number;
+    question_model: IQuestionInterview;
+}
+
+export interface IAnswerFollwupQuestion {
+    sequence: number;
+    question_id: number | undefined;
+    answer: string | null;
 }
 
 export interface IAnswer {
@@ -69,4 +90,16 @@ export interface IQuestionDetail {
     question: IQuestion;
     gpt: IGptAnswer;
     answers: IAnswerHearted[];
+}
+
+export interface IQuestionInterview {
+    category: string;
+    id: number;
+    title: string;
+}
+
+export interface ChatMessage {
+    type: 'question' | 'answer';
+    text: string;
+    cnt: number;
 }

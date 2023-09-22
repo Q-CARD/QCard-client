@@ -1,12 +1,12 @@
 // 클라이언트 컴포넌트
-import React from 'react';
+import React, { MouseEvent } from 'react';
 //import IconCheck from '@/assets/icons/icon-check.png';
 import Image from 'next/image';
 
 interface CheckboxProps {
     children: string;
     handleCategoryList: (name: string, isChecked: boolean) => void;
-    isCheckableNum: number; // 체크한 개수
+    isCheckableNum: number;
 }
 
 export default function Checkbox({
@@ -14,13 +14,13 @@ export default function Checkbox({
     handleCategoryList,
     isCheckableNum,
 }: CheckboxProps) {
-    // 체크 상태에 따라 테두리 여부 토글
     const [isChecked, setIsChecked] = React.useState(false);
 
-    // TODO: 이벤트 타입 챙기기
-    const handleCheckboxClick = (e: any) => {
-        const name = e.target.name;
-        const tagName = e.target.tagName;
+    const handleCheckboxClick = (event: MouseEvent<HTMLDivElement>) => {
+        const target = event.target as HTMLInputElement;
+
+        const name = target.name;
+        const tagName = target.tagName;
 
         if (tagName === 'LABEL') return;
 

@@ -1,7 +1,11 @@
 import React from 'react';
 
 interface ChatInputProps {
-    handler: any; // TODO: any
+    handler: (
+        e:
+            | React.ChangeEvent<HTMLInputElement>
+            | React.ChangeEvent<HTMLTextAreaElement>,
+    ) => void;
     disabled: boolean;
 }
 export default function ChatInput({ handler, disabled }: ChatInputProps) {

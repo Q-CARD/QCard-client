@@ -3,35 +3,21 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-import { useRecoilValue } from 'recoil';
-import { interviewListAtom } from '@/utils/atom';
 import { getInterviewAll } from '@/api/interview';
+import { useRecoilValue } from 'recoil';
+import { interviewListAtom } from '@/store/recoil';
 import { categoryKeyToName } from '@/utils/utils';
-import { Accordian } from '../Accordian';
-
-interface AnswerType {
-    question_id: number;
-    question: number;
-    id: number;
-    interview: number;
-    answer: string;
-    gpt_answer: string;
-    additional_question_1: string;
-    additional_question_2: string;
-    additional_question_3: string;
-    additional_answer_1: string;
-    additional_answer_2: string;
-    additional_answer_3: string;
-    question_model: any;
-}
+import { IAnswerInterview } from '@/types';
 
 export default function Question() {
     const searchParams = useSearchParams();
-
     const answer = parseInt(searchParams?.get('answer') ?? '1');
-    const [curPageResult, setCurPageResult] = useState<AnswerType>();
+
+    const [curPageResult, setCurPageResult] = useState<IAnswerInterview>();
 
     const interviewQuestion = useRecoilValue(interviewListAtom);
+
+    const DEFAULT_KEY = 'DEFAULT_KEY';
 
     const getAllInterviewInfo = async (id: number) => {
         let data = await getInterviewAll(id);
@@ -41,7 +27,7 @@ export default function Question() {
     };
 
     const handlePageResult = () => {
-        let curPage: AnswerType = interviewQuestion?.[answer - 1];
+        let curPage: IAnswerInterview = interviewQuestion?.[answer - 1];
         if (!curPage) {
             alert('질문 없음');
             return;
@@ -60,7 +46,9 @@ export default function Question() {
                 {curPageResult?.question_model?.title}
             </h1>
             <div className="rounded-[2rem] mt-[1rem] py-[2px] px-[13px] bg-blue-primary text-white text-bodyExtraSmaller">
-                {categoryKeyToName(curPageResult?.question_model?.category)}
+                {categoryKeyToName(
+                    curPageResult?.question_model?.category ?? DEFAULT_KEY,
+                )}
             </div>
             <div className="text-bodyDefault min-h-[3rem] text-grey-6 mt-[2.2rem]">
                 {curPageResult?.answer ?? '내가 녹음한 답변이 없습니다'}

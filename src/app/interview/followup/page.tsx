@@ -5,10 +5,12 @@ import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import ChatRoom from '@/components/chat/ChatRoom';
-import { interviewIdAtom } from '@/utils/atom';
 import { getInterviewAll } from '@/api/interview';
-import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { IAnswerInterview } from '@/types/index';
+
 import { useRecoilValue } from 'recoil';
+import { interviewIdAtom } from '@/store/recoil';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 export default function InterviewFollowupPage() {
     const searchParams = useSearchParams();
@@ -17,10 +19,11 @@ export default function InterviewFollowupPage() {
     const interviewId = searchParams?.get('id') ?? '1';
     const answer = parseInt(searchParams?.get('answer') ?? '1');
 
-    const [curPageQuestion, setCurPageQuestion] = React.useState<any>();
+    const [curPageQuestion, setCurPageQuestion] =
+        React.useState<IAnswerInterview>();
     const [answerCnt, setAnswerCnt] = React.useState<number>(0); // 답변 횟수 카운트
 
-    const obj = useRecoilValue(interviewIdAtom);
+    const idArr: number[] = useRecoilValue(interviewIdAtom);
 
     const getAllInterviewInfo = async () => {
         let data = await getInterviewAll(parseInt(interviewId));
@@ -59,7 +62,7 @@ export default function InterviewFollowupPage() {
                 } flex items-baseline gap-[8px] rounded-[4.7rem] border items-center mt-[9rem] py-[2rem] px-[5.6rem] text-bodyDefault`}
                 onClick={() =>
                     router.push(
-                        `/interview/result?id=${obj?.[answer]}&answer=${answer}`,
+                        `/interview/result?id=${idArr?.[answer]}&answer=${answer}`,
                     )
                 }
             >

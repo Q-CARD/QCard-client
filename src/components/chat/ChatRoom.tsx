@@ -4,18 +4,13 @@ import ChatBubble from './ChatBubble';
 import ChatInput from './ChatInput';
 
 import useInput from '@/hooks/useInput';
-import { AnswerType } from '@/types/index';
+import { IAnswerInterview } from '@/types/index';
 import { submitAdditionalAnswer } from '@/api/interview';
+import { IAnswerFollwupQuestion, ChatMessage } from '@/types';
 
 interface ChatRoomProps {
-    additionalQuestions: AnswerType | undefined;
+    additionalQuestions: IAnswerInterview | undefined;
     handleAnswerCnt: (answerCnt: number) => void;
-}
-
-interface ChatMessage {
-    type: 'question' | 'answer';
-    text: string;
-    cnt: number;
 }
 
 const ERROR_MESSAGE = '꼬리 질문이 없습니다';
@@ -39,9 +34,9 @@ export default function ChatRoom({
         let regEx = new RegExp(`additional_question_${questionCnt}`);
 
         if (additionalQuestions) {
-            let questionKey: keyof AnswerType = Object.keys(
+            let questionKey: keyof IAnswerInterview = Object.keys(
                 additionalQuestions,
-            ).find((el) => regEx.test(el)) as keyof AnswerType;
+            ).find((el) => regEx.test(el)) as keyof IAnswerInterview;
 
             let newQuestion: ChatMessage = {
                 type: 'question',
@@ -66,7 +61,7 @@ export default function ChatRoom({
         // 세 번 전송
         if (answerList.length === 3) {
             for (let questionCnt = 1; questionCnt <= 3; questionCnt++) {
-                let body = {
+                let body: IAnswerFollwupQuestion = {
                     sequence: questionCnt,
                     question_id: additionalQuestions?.id,
                     answer: answerList?.[questionCnt - 1],
