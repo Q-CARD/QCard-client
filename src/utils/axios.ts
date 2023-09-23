@@ -1,11 +1,11 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { ACCESS_TOKEN } from '@/constants/constants';
+import { CONSTANTS } from '@/constants/constants';
 
 const fetchWrapper = async ({ method, url, body, params }: any) => {
     let token = null;
     if (typeof window !== 'undefined') {
         // execute only client side
-        token = localStorage.getItem(ACCESS_TOKEN); // 로컬스토리지에 토큰 저장
+        token = localStorage.getItem(CONSTANTS.USER.ACCESS_TOKEN); // 로컬스토리지에 토큰 저장
     }
 
     const config: AxiosRequestConfig = {

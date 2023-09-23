@@ -1,4 +1,4 @@
-import { getQuestion } from '@/api/question';
+import { getQuestion } from '@/api/questions';
 import { IAnswerHearted } from '@/types';
 
 /**
