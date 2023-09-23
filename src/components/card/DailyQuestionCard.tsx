@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { IoIosArrowForward } from 'react-icons/io';
 
-import { parseCategoryName } from '@/utils/parseData';
+import { parseCategoryName } from '@/utils/utils';
 import { IQuestion } from '@/types';
 
 interface DailyQuestionCardProps {
