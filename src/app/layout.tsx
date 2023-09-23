@@ -3,8 +3,8 @@ import type { Metadata } from 'next';
 import Favicon from './favicon.ico';
 import { siteConfig } from '@/utils/site';
 
-import Providers from '@/components/Provider';
-import { Header } from '@/components/Header';
+import Providers from '@/components/adapter/Provider';
+import { Header } from '@/components/common/Header';
 import '@/styles/global.css';
 import 'animate.css'; // 아코디언 애니메이션
 

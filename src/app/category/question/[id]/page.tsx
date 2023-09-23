@@ -5,10 +5,10 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
-import { Button } from '@/components/Button';
-import { Textarea } from '@/components/Textarea';
-import { getQuestion } from '@/api/question';
-import { postAnswers } from '@/api/answer';
+import { Button } from '@/components/common/Button';
+import { Textarea } from '@/components/common/Textarea';
+import { getQuestion } from '@/api/questions';
+import { postAnswers } from '@/api/answers';
 import { IQuestionDetail } from '@/types';
 
 export default function CategoryQuestionPage({

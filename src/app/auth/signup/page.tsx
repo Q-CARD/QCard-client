@@ -3,10 +3,10 @@
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
-import { Input } from '@/components/Input';
-import { Button } from '@/components/Button';
+import { Input } from '@/components/common/Input';
+import { Button } from '@/components/common/Button';
 import ValidationMessage from '@/components/ValidationMessage';
-import { postSignUp } from '@/api/account';
+import { postSignUp } from '@/api/accounts';
 import { ERROR_MESSAGES, REGEX } from '@/constants';
 
 interface SignupFormValues {

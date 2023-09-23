@@ -8,7 +8,6 @@ import { submitRecordFile } from '@/api/interview';
 import { FaPause } from 'react-icons/fa';
 import { BsFillPlayFill } from 'react-icons/bs';
 import ImgBgCircle from '@/assets/images/image-yellow-circle.png';
-import { FILE_NAME } from '@/constants/constants';
 
 export default function Recoder({
     handleRecordStart,
@@ -17,6 +16,8 @@ export default function Recoder({
     interviewQuestionId,
 }) {
     // 녹음 라이브러리: mic-recorder-to-mp3 -> Types 지원 [x]
+
+    const FILE_NAME = 'interview.mp3';
 
     const searchParams = useSearchParams();
     const answer = searchParams?.get('question') ?? 1;

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import Timer from '../Timer';
-import Recoder from '../Recoder';
+import Timer from './Timer';
+import Recoder from './Recoder';
 import { IQuestionInterview } from '@/types';
 import { useSearchParams } from 'next/navigation';
 

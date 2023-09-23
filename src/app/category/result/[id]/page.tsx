@@ -7,7 +7,7 @@ import remarkGfm from 'remark-gfm';
 
 import { TextBoxWrapper } from '@/components/TextBoxWrapper';
 import { Profile } from '@/components/Profile';
-import { getQuestion } from '@/api/question';
+import { getQuestion } from '@/api/questions';
 import { IAnswerHearted, IQuestion } from '@/types';
 
 export default function CategoryResultPage({

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import { QuestionDetailCard } from '@/components/card/QuestionDetailCard';
-import { getQuestionsCategory } from '@/api/question';
+import { getQuestionsCategory } from '@/api/questions';
 import { IQuestion } from '@/types';
 import { QUESTION_CATEGORY } from '@/constants/data';
 

@@ -2,14 +2,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import Footer from '@/components/Footer';
-import { Button } from '@/components/Button';
+import Footer from '@/components/common/Footer';
+import { Button } from '@/components/common/Button';
 import { QuestionCard } from '@/components/card/QuestionCard';
 import MockInterview from '@/components/main/MockInterview';
 import { DailyQuestionCard } from '@/components/card/DailyQuestionCard';
 
-import { getQuestionsMain } from '@/api/question';
-import { parseCategoryName } from '@/utils/parseData';
+import { getQuestionsMain } from '@/api/questions';
+import { parseCategoryName } from '@/utils/utils';
 import { IQuestion, IQuestionMain } from '@/types';
 import ImgHeading from '@/assets/images/image-main-heading.png';
 import ImgCardDeck3 from '@/assets/images/image-card-deck-3.png';
