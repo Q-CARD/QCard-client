@@ -16,12 +16,12 @@ export const submitRecordFile = async (
     interview_question_id: number,
     body: FormData,
 ) => {
-    //console.log('녹음 파일 전송');
     return await PUT(`/interview/answer/${interview_question_id}`, body, {
         type: 'record',
     });
 };
 
+// 꼬리질문 답변 전송
 export const submitAdditionalAnswer = async (body: IAnswerFollwupQuestion) => {
     return await PUT(`/interview/additional`, body);
 };
