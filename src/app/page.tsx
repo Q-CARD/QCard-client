@@ -83,7 +83,7 @@ export default async function Home() {
                 <div className="flex flex-wrap gap-[5.2rem]">
                     <div className="w-[36.8rem] h-[36.8rem] p-[4.85rem] bg-blue-primary shadow-3 rounded-[1.8rem] flex justify-center">
                         <span className="text-[4.4rem] font-bold text-white text-center my-auto">
-                            {parseCategoryName(questionZip.category)}
+                            {parseCategoryName(questionZip?.category)}
                         </span>
                     </div>
                     {questionZip.questions.map(
