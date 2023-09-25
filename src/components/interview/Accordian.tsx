@@ -25,9 +25,9 @@ export function Accordian({
     }, [rerenderProps]);
     return (
         <div
-            className={`${className} flex flex-col justify-center items-center w-full py-[2.4rem] px-[3.6rem] text-bodySmaller border border-grey-4 min-h-[7.9rem] rounded-3xl bg-white text-grey-5`}
+            className={`${className} flex flex-col justify-center items-center w-full py-[2.4rem] px-[3.6rem] border border-[2px] border-yellow-3 min-h-[7.9rem] rounded-3xl bg-yellow-1`}
         >
-            <div>
+            <div className="w-full text-bodySmaller">
                 <AccordianTrigger
                     isOpen={isOpen}
                     handleAccordianOpen={handleAccordianOpen}
@@ -50,19 +50,19 @@ export function AccordianTrigger({
 }: AccordianTriggerProps) {
     return (
         <button
-            className="flex justify-center items-center w-full text-bodySmaller bg-white text-grey-5"
+            className="flex justify-center items-center w-full text-heading3 bg-yellow-1"
             onClick={() => handleAccordianOpen()}
         >
-            GPT 첨삭 보기
+            GPT 첨삭 확인하기
             {isOpen ? (
                 <MdKeyboardArrowUp
-                    size="18"
+                    size="28"
                     color="var(--grey-5)"
                     className="ml-[0.8rem]"
                 />
             ) : (
                 <MdKeyboardArrowDown
-                    size="18"
+                    size="28"
                     color="var(--grey-5)"
                     className="ml-[0.8rem]"
                 />
@@ -86,7 +86,7 @@ export function AccordianContent({
         <div
             className={`${
                 isOpen ? 'block' : 'hidden'
-            } self-stretch text-grey-6 text-left text-bodyDefault pt-[1.6rem] transition-all ease-in-out 0.3s`}
+            } self-stretch text-left text-bodyDefault pt-[3.3rem]`}
         >
             {children}
         </div>

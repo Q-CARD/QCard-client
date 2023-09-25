@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { AiOutlineArrowRight } from 'react-icons/ai';
+import { AiOutlineRight } from 'react-icons/ai';
 import { useRecoilValue } from 'recoil';
 import { interviewListAtom } from '@/store/recoil';
 import { IAnswerInterview } from '@/types';
@@ -39,14 +39,10 @@ export default function FollowupButton() {
     return (
         <button
             onClick={handleFollowupQuestion}
-            className="flex justify-center items-center w-full py-[2.4rem] px-[3.6rem] text-heading5 rounded-3xl bg-blue-primary text-white"
+            className="flex justify-center items-center w-full py-[2.4rem] px-[3.6rem] rounded-[1rem] bg-blue-primary text-white gap-[4px]"
         >
-            꼬리질문으로 가기
-            <AiOutlineArrowRight
-                size="18"
-                color="var(--white)"
-                className="ml-[0.8rem]"
-            />
+            <span className="text-heading3">꼬리 질문 연습하기</span>
+            <AiOutlineRight size={25} />
         </button>
     );
 }
