@@ -5,8 +5,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
-import { Button } from '@/components/common/Button';
-import { Textarea } from '@/components/common/Textarea';
+import { Button, Textarea } from '@/components/common';
 import { getQuestion } from '@/api/questions';
 import { postAnswers } from '@/api/answers';
 import { IQuestionDetail } from '@/types';

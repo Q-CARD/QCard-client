@@ -5,7 +5,7 @@ import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Textarea } from '@/components/common/Textarea';
+import { Textarea } from '@/components/common';
 import { AiOutlineRight } from 'react-icons/ai';
 import { getInterviewAll, submitAdditionalAnswer } from '@/api/interview';
 import { IAnswerInterview, IAnswerFollwupQuestion } from '@/types';

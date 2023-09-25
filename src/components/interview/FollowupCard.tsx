@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { IAnswerInterview, IAnswerFollwupQuestion } from '@/types/index';
+import { IAnswerInterview, IAnswerFollwupQuestion } from '@/types';
 import { submitAdditionalAnswer } from '@/api/interview';
-import { Textarea } from '../common/Textarea';
+import { Textarea } from '../common';
 
 interface ChatRoomProps {
     questionList: IAnswerInterview | undefined;

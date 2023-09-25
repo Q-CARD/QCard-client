@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/common';
 import { getAnswersMe } from '@/api/answers';
-import { IAnswer, IAnswerHearted } from '@/types/index';
+import { IAnswer, IAnswerHearted } from '@/types';
 import { QUESTION_CATEGORY } from '@/constants/data';
 
 export default function MyAnswerPage() {

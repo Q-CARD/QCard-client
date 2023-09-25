@@ -3,8 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
-import { Input } from '@/components/common/Input';
-import { Button } from '@/components/common/Button';
+import { Button, Input } from '@/components/common';
 import ValidationMessage from '@/components/ValidationMessage';
 import { getAccountsProfile, postSignIn } from '@/api/accounts';
 import { useSetRecoilState } from 'recoil';

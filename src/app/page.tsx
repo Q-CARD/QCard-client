@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import Footer from '@/components/common/Footer';
-import { Button } from '@/components/common/Button';
+import { Footer, Button } from '@/components/common';
 import { DailyQuestionCard } from '@/components/card/DailyQuestionCard';
 
 import ImgMainCategory from '@/assets/images/image-main-category.png';
