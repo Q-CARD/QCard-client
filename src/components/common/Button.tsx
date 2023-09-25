@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface ButtonProps {
     type: 'block' | 'round' | 'chip' | 'black';
     title: string;
