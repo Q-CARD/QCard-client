@@ -39,10 +39,7 @@ export default function LoginPage() {
 
             // TODO - api 성공 응답 code 요청드리기
             if (data.accessToken) {
-                localStorage.setItem(
-                    CONSTANTS.USER.ACCESS_TOKEN,
-                    data.accessToken,
-                );
+                localStorage.setItem(CONSTANTS.ACCESS_TOKEN, data.accessToken);
 
                 const userdata = await getAccountsProfile();
 
