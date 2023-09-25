@@ -3,7 +3,7 @@ import { useSearchParams } from 'next/navigation';
 
 import Timer from './Timer';
 import Recoder from './Recoder';
-import { IQuestionInterview } from '@/types';
+import { IQuestionInterview, RecordStatusType } from '@/types';
 import { CONSTANTS } from '@/constants/common';
 
 const START_TEXT = '녹음을 시작해주세요.';
@@ -11,8 +11,6 @@ const RECORD_TEXT = '답변을 녹음중입니다.';
 const FINISH_TEXT = '답변 녹음을 완료했습니다.';
 const PERMISSION_WARNING_TEXT = '녹음 권한을 허용해주세요';
 const TIME_MIN_LIMIT_TEXT = '최소 1분은 녹음해주세요';
-
-export type RecordStatusType = 'not-start' | 'record' | 'finish';
 
 export interface IRecorderAction {
     type: string;

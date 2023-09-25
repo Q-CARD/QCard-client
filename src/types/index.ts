@@ -94,8 +94,4 @@ export interface IQuestionInterview {
     title: string;
 }
 
-export interface ChatMessage {
-    type: 'question' | 'answer';
-    text: string;
-    cnt: number;
-}
+export type RecordStatusType = 'not-start' | 'record' | 'finish';

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import RecordCard from '@/components/interview/RecordCard';
-import { IQuestionInterview, StatusType } from '@/types';
+import { IQuestionInterview, RecordStatusType } from '@/types';
 
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { useRecoilValue } from 'recoil';
@@ -55,7 +55,7 @@ export default function InterviewQuestionPage() {
 
     const NEXT_BUTTON_TEXT = question < 10 ? '다음 질문으로' : '결과 보러가기';
 
-    const getRecordingStatus = (recording: StatusType) => {
+    const getRecordingStatus = (recording: RecordStatusType) => {
         if (recording === 'finish') setDisabled(false);
         else if (recording === 'not-start') setDisabled(true);
     };
