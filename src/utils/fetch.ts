@@ -1,6 +1,6 @@
 // fetch.ts
 import wretch from 'wretch';
-import { CONSTANTS } from '@/constants/constants';
+import { CONSTANTS } from '@/constants/common';
 import FormDataAddon from 'wretch/addons/formData';
 import QueryStringAddon from 'wretch/addons/queryString';
 
