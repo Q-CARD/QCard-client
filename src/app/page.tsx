@@ -1,101 +1,100 @@
-// 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-
 import Footer from '@/components/common/Footer';
 import { Button } from '@/components/common/Button';
-import { QuestionCard } from '@/components/card/QuestionCard';
-import MockInterview from '@/components/main/MockInterview';
 import { DailyQuestionCard } from '@/components/card/DailyQuestionCard';
 
-import { getQuestionsMain } from '@/api/questions';
-import { parseCategoryName } from '@/utils/utils';
-import { IQuestion, IQuestionMain } from '@/types';
+import ImgMainCategory from '@/assets/images/image-main-category.png';
+import ImgInterviewIllust from '@/assets/images/image-interview-illust.png';
 import ImgHeading from '@/assets/images/image-main-heading.png';
 import ImgCardDeck3 from '@/assets/images/image-card-deck-3.png';
 
-//export const metadata = {
-//    title: 'QCard Home',
-//};
+import { getQuestionsMain } from '@/api/questions';
+import { IQuestionMain } from '@/types';
+
+export const metadata = {
+    title: 'QCard Home',
+};
 
 export default async function Home() {
-    // TODO: box-shadow,seperator 커스텀 클래스 적용, '>' react-icons 적용
-
     const questionsMain: IQuestionMain = await getQuestionsMain();
 
-    const questionZip = questionsMain.questionZip;
     const questionDaily = questionsMain.questionDaily;
 
     return (
         <>
-            <section className="flex justify-between pt-[9.4rem] pb-[6rem] pr-[6.6rem] pl-[12.6rem] shadow-md">
-                <div className="flex-col pt-[6rem]">
+            <section className="bg-main flex justify-between pt-[16.7rem] pb-[9rem] pr-[4.2rem] pl-[16.2rem]">
+                <div className="flex-col">
                     <Image
                         src={ImgHeading}
                         alt="main-heading"
-                        width={600}
+                        width={541}
                         height={140}
                     />
-                    <div className="pt-[1.8rem] text-grey-5 text-specialHeading2">
-                        __개의 기술 질문과 GPT의 모범답안,
-                        <br /> 내가 쓰고 함께 읽는 탄탄한 기술 면접 준비
-                    </div>
-                    <div className="pt-[3.4rem]">
-                        <Link href="/category">
-                            <Button type="round" title="시작하고 성장하기 >" />
-                        </Link>
+                    <div className="pt-[4.4rem] text-grey-5 text-specialHeading5 break-keep">
+                        다양한 카테고리의 질문으로 이루어진 큐카드와
+                        <br />
+                        GPT의 모범 답안으로 기술 면접을 준비해요!
                     </div>
                 </div>
-                <div>
+                <div className="mt-[4.1px]">
                     <Image
                         src={ImgCardDeck3}
                         alt="card-deck3"
-                        width={565}
-                        height={463}
+                        width={615}
+                        height={505}
                     />
                 </div>
             </section>
-            <section className="flex justify-between m-auto px-[10rem] py-[17.5rem]">
-                <div className="flex-col px-[5rem] py-[6rem]">
-                    <h2 className="text-heading2 text-black w-[20rem]">
-                        오늘의 질문
-                    </h2>
-                    <p className="pt-[5.8rem] text-grey-6 text-bodyLarger">
-                        하루에 하나씩,
-                        <br />
-                        차근차근 준비해봐요
-                    </p>
+            <section className="flex flex-col bg-blue-1 m-auto pt-[12.6rem] pb-[25.5rem] px-[15.9rem]">
+                <h2 className="text-heading2">오늘의 질문</h2>
+                <p className="pt-[3rem] text-grey-6 text-specialHeading5">
+                    하루에 하나씩, 차근차근 준비해봐요
+                </p>
+                <div className="mt-[9.9rem] flex justify-center">
+                    <DailyQuestionCard question={questionDaily} />
                 </div>
-                <DailyQuestionCard question={questionDaily} />
             </section>
-            <hr className="seperator" />
-            <MockInterview />
-            <hr className="seperator" />
-            <section className="flex flex-col gap-[5.6rem] py-[17.5rem] mx-[11.6rem]">
-                <div className="flex">
-                    <h3 className="text-heading2 text-black">
-                        질문 모음집 보러가기
-                    </h3>
-                    <p className="ml-[3.7rem] text-grey-6 text-bodyLarger">
-                        다양한 카테고리의 큐카드로 면접에 대비해요
-                    </p>
-                </div>
-                <div className="flex flex-wrap gap-[5.2rem]">
-                    <div className="w-[36.8rem] h-[36.8rem] p-[4.85rem] bg-blue-primary shadow-3 rounded-[1.8rem] flex justify-center">
-                        <span className="text-[4.4rem] font-bold text-white text-center my-auto">
-                            {parseCategoryName(questionZip?.category)}
-                        </span>
+            <section className="flex flex-col px-[10.7rem] py-[15.9rem]">
+                <h3 className="text-heading2">
+                    모의 면접으로 실전에 대비하세요.
+                </h3>
+                <p className="flex mt-[3rem] text-grey-6 text-specialHeading5">
+                    실전 같은 연습으로 경험을 쌓아나가요!
+                </p>
+                <div className="relative mt-[6.9rem]">
+                    <Image
+                        src={ImgInterviewIllust}
+                        alt="img-interview-illust"
+                        width={1079}
+                        height={703}
+                    />
+                    <div className="absolute bottom-[7.5rem] left-[calc(50%-35.3rem/2)]">
+                        {/* TODO: 버튼 padding 속성 추가 */}
+                        <Link href="/interview">
+                            <Button type="round" title="모의 면접 바로가기" />
+                        </Link>
                     </div>
-                    {questionZip.questions.map(
-                        (question: IQuestion, idx: number) => {
-                            return (
-                                <QuestionCard
-                                    key={`key-${question}-${idx}`}
-                                    question={question}
-                                />
-                            );
-                        },
-                    )}
+                </div>
+            </section>
+            <section className="flex flex-col bg-yellow-1 pt-[14.8rem] pb-[11.7rem] px-[16rem]">
+                <h3 className="text-heading2">질문 모음집 보러가기</h3>
+                <p className="mt-[3rem] text-grey-6 text-specialHeading5">
+                    QCARD 질문부터 미래의 동료들의 질문으로 연습해요!
+                </p>
+                <div className="relative mt-[4.6rem]">
+                    <Image
+                        src={ImgMainCategory}
+                        alt="img-main-category"
+                        width={1131}
+                        height={707}
+                    />
+                    <div className="absolute bottom-[7.5rem] left-[calc(50%-35.3rem/2)]">
+                        {/* TODO: 버튼 padding 속성 추가 */}
+                        <Link href="/category">
+                            <Button type="round" title="큐카드 모음 바로가기" />
+                        </Link>
+                    </div>
                 </div>
             </section>
             <Footer />

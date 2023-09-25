@@ -82,7 +82,7 @@ export default function InterviewPage() {
             </h3>
 
             <div className="flex flex-col items-center mx-[15.9rem] pt-[8.4rem] m-auto">
-                <div className="flex items-start content-start flex-wrap min-w-[112.2rem] gap-x-[3.4rem] gap-y-[2.5rem]">
+                <div className="flex items-start justify-center content-start flex-wrap w-[112.2rem] gap-x-[3.4rem] gap-y-[2.5rem]">
                     {QUESTION_CATEGORY.map(({ id, name }) => (
                         <CategoryNameCard
                             key={id}
