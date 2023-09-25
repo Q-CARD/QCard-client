@@ -13,7 +13,7 @@ if (typeof window !== 'undefined') {
 const api = wretch(process.env.NEXT_PUBLIC_API_BASE_URL)
     .auth(`${token}`)
     .errorType('json')
-    .resolve((r) => r.json());
+    .resolve((r) => r.json() as any);
 
 export const http = {
     GET: function get(url: string, option?: any) {
