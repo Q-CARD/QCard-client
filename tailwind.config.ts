@@ -13,6 +13,9 @@ const config: Config = {
     ],
     theme: {
         extend: {
+            backgroundImage: {
+                main: 'linear-gradient(108deg, rgba(255, 228, 157, 0.21) -12.78%, #FFFBF0 19.6%, #F3F8FF 102.97%)',
+            },
             fontSize: {
                 // heading - bold
                 heading1: ['56px', { fontWeight: '700', lineHeight: '66px' }],
@@ -37,6 +40,10 @@ const config: Config = {
                 specialHeading4: [
                     '12px',
                     { fontWeight: '700', lineHeight: '14px' },
+                ],
+                specialHeading5: [
+                    '30px',
+                    { fontWeight: '500', lineHeight: '45px' },
                 ],
                 // body - regular
                 bodyLarge: ['22px', { fontWeight: '400', lineHeight: '36px' }],
