@@ -13,18 +13,6 @@ const config: Config = {
     ],
     theme: {
         extend: {
-            backgroundImage: {
-                //'my-checkbox': "url(/icons/icon-check.png')",
-                //'my-checkbox-active': "url('/icons/icon-check-active.png')",
-                'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-                'gradient-conic':
-                    'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-            },
-            fontFamily: {
-                // sans: ['var(--default-font)'],
-                // sans: 'AppleSDGothicNeo',
-                // logo: ['var(--logo-font)'],
-            },
             fontSize: {
                 // heading - bold
                 heading1: ['56px', { fontWeight: '700', lineHeight: '66px' }],

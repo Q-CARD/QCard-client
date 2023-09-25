@@ -2,14 +2,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import Footer from '@/components/Footer';
-import { Button } from '@/components/Button';
+import Footer from '@/components/common/Footer';
+import { Button } from '@/components/common/Button';
 import { QuestionCard } from '@/components/card/QuestionCard';
 import MockInterview from '@/components/main/MockInterview';
 import { DailyQuestionCard } from '@/components/card/DailyQuestionCard';
 
-import { getQuestionsMain } from '@/api/question';
-import { parseCategoryName } from '@/utils/parseData';
+import { getQuestionsMain } from '@/api/questions';
+import { parseCategoryName } from '@/utils/utils';
 import { IQuestion, IQuestionMain } from '@/types';
 import ImgHeading from '@/assets/images/image-main-heading.png';
 import ImgCardDeck3 from '@/assets/images/image-card-deck-3.png';
@@ -83,7 +83,7 @@ export default async function Home() {
                 <div className="flex flex-wrap gap-[5.2rem]">
                     <div className="w-[36.8rem] h-[36.8rem] p-[4.85rem] bg-blue-primary shadow-3 rounded-[1.8rem] flex justify-center">
                         <span className="text-[4.4rem] font-bold text-white text-center my-auto">
-                            {parseCategoryName(questionZip.category)}
+                            {parseCategoryName(questionZip?.category)}
                         </span>
                     </div>
                     {questionZip.questions.map(

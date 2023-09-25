@@ -3,9 +3,9 @@ import { Suspense } from 'react';
 import { headers } from 'next/headers';
 
 // components
-import { Accordian } from '@/components/Accordian';
-import { Pagination } from '@/components/Pagination';
-import MarkdownRenderer from '@/components/Markdown';
+import { Accordian } from '@/components/interview/Accordian';
+import { Pagination } from '@/components/interview/Pagination';
+import MarkdownRenderer from '@/components/interview/Markdown';
 import {
     Question,
     FollowupButton,

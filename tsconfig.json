@@ -28,7 +28,7 @@
         "**/*.ts",
         "**/*.tsx",
         ".next/types/**/*.ts",
-        "src/components/Recoder.jsx"
+        "src/components/interview/Recoder.jsx"
     ],
     "exclude": ["node_modules"]
 }

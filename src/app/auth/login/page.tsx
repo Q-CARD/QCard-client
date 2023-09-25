@@ -3,13 +3,13 @@
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
-import { Input } from '@/components/Input';
-import { Button } from '@/components/Button';
+import { Input } from '@/components/common/Input';
+import { Button } from '@/components/common/Button';
 import ValidationMessage from '@/components/ValidationMessage';
-import { getAccountsProfile, postSignIn } from '@/api/account';
+import { getAccountsProfile, postSignIn } from '@/api/accounts';
 import { useSetRecoilState } from 'recoil';
 import { userAtom, isLoginAtom } from '@/store/recoil';
-import { ACCESS_TOKEN } from '@/constants/constants';
+import { CONSTANTS } from '@/constants/common';
 import { ERROR_MESSAGES, REGEX } from '@/constants';
 
 interface LoginFormValues {
@@ -40,8 +40,10 @@ export default function LoginPage() {
 
             // TODO - api 성공 응답 code 요청드리기
             if (data.accessToken) {
-                localStorage.setItem(ACCESS_TOKEN, data.accessToken);
-                // localStorage.setItem('REFRESH_TOKEN', data.refreshToken);
+                localStorage.setItem(
+                    CONSTANTS.USER.ACCESS_TOKEN,
+                    data.accessToken,
+                );
 
                 const userdata = await getAccountsProfile();
 

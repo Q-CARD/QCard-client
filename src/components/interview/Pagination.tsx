@@ -3,7 +3,6 @@
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { getIdByNum } from '@/utils/utils';
 import { interviewIdAtom } from '@/store/recoil';
 import { useRecoilValue } from 'recoil';
 

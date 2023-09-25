@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-import { Button } from '@/components/Button';
-import { getAnswersMe } from '@/api/answer';
+import { Button } from '@/components/common/Button';
+import { getAnswersMe } from '@/api/answers';
 import { IAnswer, IAnswerHearted } from '@/types/index';
 import { QUESTION_CATEGORY } from '@/constants/data';
 

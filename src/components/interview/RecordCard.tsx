@@ -1,9 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import Timer from '../Timer';
-import Recoder from '../Recoder';
-import { IQuestionInterview, IActionRecord, StatusType } from '@/types';
 import { useSearchParams } from 'next/navigation';
-import { DEFAULT_QUESTION } from '@/constants/constants';
+
+import Timer from './Timer';
+import Recoder from './Recoder';
+import { IQuestionInterview, IActionRecord, StatusType } from '@/types';
+import { CONSTANTS } from '@/constants';
 
 const START_TEXT = '녹음을 시작해주세요.';
 const RECORD_TEXT = '답변을 녹음중입니다.';
@@ -116,7 +117,8 @@ export default function RecordCard({
             </div>
             <div className="text-center flex items-center flex-col m-auto max-w-[78rem]">
                 <h1 className="flex text-specialHeading break-keep text-center">
-                    {question?.title ?? DEFAULT_QUESTION}
+                    {question?.title ??
+                        CONSTANTS.INERVIEW.QUESTION.DEFAULT_QUESTION}
                 </h1>
             </div>
             <hr className="bg-grey-2 w-full h-[2px]" />

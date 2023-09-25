@@ -11,7 +11,6 @@ import IconCircleGrey from '@/assets/icons/icon-circle-grey.png';
 import IconPause from '@/assets/icons/icon-record-pause.png';
 import IconMicGrey from '@/assets/icons/icon-mic-grey.png';
 import IconMicBlue from '@/assets/icons/icon-mic-blue.png';
-import { FILE_NAME } from '@/constants/constants';
 
 export default function Recoder({
     handleRecordStart,
@@ -21,6 +20,8 @@ export default function Recoder({
     getPermission,
 }) {
     const WARNING = '녹음은 한번만 할 수 있습니다. 다음 문제로 넘어가주세요.';
+
+    const FILE_NAME = 'interview.mp3';
 
     const searchParams = useSearchParams();
     const answer = searchParams?.get('question') ?? 1;

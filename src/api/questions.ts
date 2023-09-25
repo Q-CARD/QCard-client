@@ -1,10 +1,16 @@
-import { GET, POST } from '@/utils/axios';
+import { http } from '@/utils/fetch';
 
-// 특정 모의면접에서 한가지 질문에 대한 답변 Mp3 파일 전송
-export const getQuestion = async () => {
-    return await GET(`/questions/22`);
+// category에 해당하는 질문리스트 반환
+export const getQuestionsCategory = async (category: string) => {
+    return await http.GET(`/questions/categories/${category}`);
 };
 
-export const getQuestionMain = async () => {
-    return await GET(`/questions/main`);
+// 특정 질문 상세정보 반환
+export const getQuestion = async (questionId: number) => {
+    return await http.GET(`/questions/${questionId}`);
+};
+
+// 메인 화면에 사용되는 Question 반환
+export const getQuestionsMain = async () => {
+    return await http.GET(`/questions/main`);
 };

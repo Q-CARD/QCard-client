@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import RecordCard from '@/components/card/RecordCard';
+import RecordCard from '@/components/interview/RecordCard';
 import { IQuestionInterview, StatusType } from '@/types';
 
 import { AiOutlineArrowRight } from 'react-icons/ai';

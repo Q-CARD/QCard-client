@@ -46,7 +46,6 @@ export function Header() {
         }
     }, [isLogin]);
 
-
     // console.log('isLogin', isLogin);
 
     return (

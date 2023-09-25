@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import { Button } from '@/components/Button';
+import { Button } from '@/components/common/Button';
 
 import { useRecoilValue } from 'recoil';
 import { isLoginAtom } from '@/store/recoil';
