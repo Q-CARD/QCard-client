@@ -103,3 +103,11 @@ export interface ChatMessage {
     text: string;
     cnt: number;
 }
+
+// TODO: types 리팩토링
+export type StatusType = 'not-start' | 'record' | 'finish';
+
+export interface IActionRecord {
+    type: string;
+    recording: StatusType;
+}

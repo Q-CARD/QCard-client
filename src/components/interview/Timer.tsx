@@ -1,10 +1,10 @@
-// 클라이언트 컴포넌트
 import React from 'react';
 import { useSearchParams } from 'next/navigation';
 import { intToString } from '@/utils/utils';
+import { StatusType } from '@/types/index';
 
 interface TimerProps {
-    isRecording: boolean | null;
+    isRecording: StatusType;
     mm: number; // 종료 분
     ss: number; // 종료 초
     handleRecordStart: () => void;
@@ -14,7 +14,6 @@ interface TimerProps {
 
 export default function Timer({
     isRecording,
-    // handleRecordStart,
     handleRecordStop,
     getTime,
     mm,
@@ -39,13 +38,12 @@ export default function Timer({
     const finish = MM * 60 + SS;
     const interval = React.useRef<NodeJS.Timeout>();
 
-    // 각 시간에 대한 변수는 useState로 선언한다
     const [minute, setMinute] = React.useState(intToString(0));
     const [second, setSecond] = React.useState(intToString(0));
 
-    // 녹음 버튼이 클릭되면 타이머가 작동하도록 한다
+    // 녹음 버튼이 클릭되면 타이머가 작동
     React.useEffect(() => {
-        if (isRecording) {
+        if (isRecording === 'record') {
             interval.current = setInterval(() => {
                 count.current++;
                 setMinute(intToString(Math.floor((count.current % 3600) / 60)));
@@ -54,11 +52,11 @@ export default function Timer({
         }
     }, [isRecording]);
 
-    // 1분이 지나면 isRecording 상태를 true로 바꿈
+    // time limit 경과 후 녹음 종료
     const changeRecordingState = React.useCallback(() => {
         if (count.current >= finish) {
             alert(`${finish}초가 지났으므로 녹음이 완료되었습니다`);
-            if (isRecording) {
+            if (isRecording === 'record') {
                 handleRecordStop();
             }
         }
@@ -67,8 +65,8 @@ export default function Timer({
     // second가 변경될 때마다 finish에 도달했는지 체크
     React.useEffect(() => {
         getTime(count.current); // second가 변할 때마다 RecordCard와 상태 공유
-        // 녹음 정지 상태라면 중단한다
-        if (count.current >= finish || !isRecording) {
+        // 녹음 정지 상태라면 중단
+        if (count.current >= finish || isRecording === 'finish') {
             clearInterval(interval.current);
         }
         changeRecordingState();

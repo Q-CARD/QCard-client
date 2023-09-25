@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import RecordCard from '@/components/interview/RecordCard';
-import { IQuestionInterview } from '@/types';
+import { IQuestionInterview, StatusType } from '@/types';
 
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { useRecoilValue } from 'recoil';
@@ -21,7 +21,7 @@ export default function InterviewQuestionPage() {
         useState<IQuestionInterview>();
     const [interviewQuestionId, setInterviewQuestionId] = useState<number>(1);
 
-    const handleCurQuestion = () => {
+    const handleQuestion = () => {
         let curQuestion: IQuestionInterview =
             interviewQuestion?.[question - 1]?.['question_model'];
 
@@ -35,7 +35,7 @@ export default function InterviewQuestionPage() {
 
     // question이 바뀔 때마다 현재 질문 세팅하기
     useEffect(() => {
-        handleCurQuestion();
+        handleQuestion();
     }, [question]);
 
     const firstInterviewId = useRecoilValue(interviewIdAtom);
@@ -55,13 +55,9 @@ export default function InterviewQuestionPage() {
 
     const NEXT_BUTTON_TEXT = question < 10 ? '다음 질문으로' : '결과 보러가기';
 
-    const getRecordingStatus = (isRecording: boolean | null) => {
-        if (typeof isRecording === 'boolean' && isRecording == false) {
-            setDisabled(false);
-        } else if (typeof isRecording === 'object') {
-            // null 타입
-            setDisabled(true);
-        }
+    const getRecordingStatus = (recording: StatusType) => {
+        if (recording === 'finish') setDisabled(false);
+        else if (recording === 'not-start') setDisabled(true);
     };
 
     return (
