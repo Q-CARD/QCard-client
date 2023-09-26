@@ -3,8 +3,8 @@ import { useSearchParams } from 'next/navigation';
 
 import Timer from './Timer';
 import Recoder from './Recoder';
-import { IQuestionInterview, IActionRecord, StatusType } from '@/types';
-import { CONSTANTS } from '@/constants';
+import { IQuestionInterview, RecordStatusType } from '@/types';
+import { CONSTANTS } from '@/constants/common';
 
 const START_TEXT = '녹음을 시작해주세요.';
 const RECORD_TEXT = '답변을 녹음중입니다.';
@@ -12,8 +12,13 @@ const FINISH_TEXT = '답변 녹음을 완료했습니다.';
 const PERMISSION_WARNING_TEXT = '녹음 권한을 허용해주세요';
 const TIME_MIN_LIMIT_TEXT = '최소 1분은 녹음해주세요';
 
+export interface IRecorderAction {
+    type: string;
+    recording: RecordStatusType;
+}
+
 interface RecordStatus {
-    status: StatusType;
+    status: RecordStatusType;
     text: RecordStatusText;
 }
 
@@ -24,7 +29,7 @@ type RecordStatusText =
 
 function recordReducer(
     state: RecordStatus,
-    action: IActionRecord,
+    action: IRecorderAction,
 ): RecordStatus {
     switch (action.type) {
         case 'start':
@@ -47,7 +52,7 @@ interface RecordCardTypes {
     interviewQuestionId: number;
     question: IQuestionInterview | undefined;
     cnt: number;
-    getRecordingStatus: (recording: StatusType) => void;
+    getRecordingStatus: (recording: RecordStatusType) => void;
 }
 
 export default function RecordCard({
@@ -117,8 +122,7 @@ export default function RecordCard({
             </div>
             <div className="text-center flex items-center flex-col m-auto max-w-[78rem]">
                 <h1 className="flex text-specialHeading break-keep text-center">
-                    {question?.title ??
-                        CONSTANTS.INERVIEW.QUESTION.DEFAULT_QUESTION}
+                    {question?.title ?? CONSTANTS.INTERVIEW_DEFAULT_QUESTION}
                 </h1>
             </div>
             <hr className="bg-grey-2 w-full h-[2px]" />

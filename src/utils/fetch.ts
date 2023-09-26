@@ -7,13 +7,13 @@ import QueryStringAddon from 'wretch/addons/queryString';
 let token = null;
 if (typeof window !== 'undefined') {
     // execute only client side
-    token = localStorage.getItem(CONSTANTS.USER.ACCESS_TOKEN);
+    token = localStorage.getItem(CONSTANTS.ACCESS_TOKEN);
 }
 
 const api = wretch(process.env.NEXT_PUBLIC_API_BASE_URL)
     .auth(`${token}`)
     .errorType('json')
-    .resolve((r) => r.json() as any);
+    .resolve((r: any) => r.json() as any);
 
 export const http = {
     GET: function get(url: string, option?: any) {

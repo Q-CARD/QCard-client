@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { IAnswerInterview, IAnswerFollwupQuestion } from '@/types/index';
+import { IAnswerInterview, IAnswerFollwupQuestion } from '@/types';
 import { submitAdditionalAnswer } from '@/api/interview';
-import { Textarea } from '../common/Textarea';
+import { Textarea } from '../common';
 
-interface ChatRoomProps {
+interface FollowupCardProps {
     questionList: IAnswerInterview | undefined;
     getAnswerLen: (answerCnt: number) => void;
 }
@@ -19,7 +19,7 @@ const ERROR_MESSAGE = '꼬리 질문이 없습니다';
 export default function FollwupCard({
     questionList,
     getAnswerLen,
-}: ChatRoomProps) {
+}: FollowupCardProps) {
     const [questionCnt, setQuestionCnt] = React.useState<number>(1);
     const [answerList, setAnswerList] = React.useState<string[]>([]);
     const [question, setQuestion] = React.useState<string>();

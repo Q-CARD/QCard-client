@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSearchParams } from 'next/navigation';
 import { intToString } from '@/utils/utils';
-import { StatusType } from '@/types/index';
+import { RecordStatusType } from '@/types';
 
 interface TimerProps {
-    isRecording: StatusType;
+    isRecording: RecordStatusType;
     mm: number; // 종료 분
     ss: number; // 종료 초
     handleRecordStart: () => void;

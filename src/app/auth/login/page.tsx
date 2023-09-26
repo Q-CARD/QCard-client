@@ -3,8 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
-import { Input } from '@/components/common/Input';
-import { Button } from '@/components/common/Button';
+import { Button, Input } from '@/components/common';
 import ValidationMessage from '@/components/ValidationMessage';
 import { getAccountsProfile, postSignIn } from '@/api/accounts';
 import { useSetRecoilState } from 'recoil';
@@ -40,10 +39,7 @@ export default function LoginPage() {
 
             // TODO - api 성공 응답 code 요청드리기
             if (data.accessToken) {
-                localStorage.setItem(
-                    CONSTANTS.USER.ACCESS_TOKEN,
-                    data.accessToken,
-                );
+                localStorage.setItem(CONSTANTS.ACCESS_TOKEN, data.accessToken);
 
                 const userdata = await getAccountsProfile();
 

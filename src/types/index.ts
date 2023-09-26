@@ -1,23 +1,16 @@
 import { StaticImageData } from 'next/image';
-export interface Test {
-    id: number;
-}
 
 // 카테고리 선택 후, 유저 정보 + 질문들 정보 + interview_id 반환
 export interface IUserInterview {
-    account: {
-        email: string;
-        id: number;
-        name: string;
-    };
+    account: IUser;
     interview_id: number;
     question: IAnswerInterview[];
 }
 
 export interface IAnswerInterview {
-    additonal_answer_1: null;
-    additional_answer_2: null;
-    additional_answer_3: null; // TODO: null 맞는지 확인
+    additonal_answer_1: null | string;
+    additional_answer_2: null | string;
+    additional_answer_3: null | string;
     additional_question_1: string;
     additional_question_2: string;
     additional_question_3: string;
@@ -35,14 +28,17 @@ export interface IAnswerFollwupQuestion {
     answer: string | null;
 }
 
+export interface IUser {
+    name: string;
+    email: string;
+    id: number;
+}
+
 export interface IAnswer {
     question: IQuestion;
     answerId: number;
     type: string;
-    account: {
-        name: string;
-        email: string;
-    };
+    account: Pick<IUser, 'name' | 'email'>;
     content: string;
     heartCount: number;
     createdAt: string; // string / Date
@@ -98,16 +94,4 @@ export interface IQuestionInterview {
     title: string;
 }
 
-export interface ChatMessage {
-    type: 'question' | 'answer';
-    text: string;
-    cnt: number;
-}
-
-// TODO: types 리팩토링
-export type StatusType = 'not-start' | 'record' | 'finish';
-
-export interface IActionRecord {
-    type: string;
-    recording: StatusType;
-}
+export type RecordStatusType = 'not-start' | 'record' | 'finish';
