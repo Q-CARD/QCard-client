@@ -35,7 +35,8 @@ export default function InterviewFollowupPage() {
     const [answerList, setAnswerList] = React.useState<string[]>([]);
     const [disabled, setDisabled] = React.useState<boolean>(true);
 
-    const followupRegEx = new RegExp(`additional_question_${questionCount}`);
+    const addQuestionRegEx = new RegExp(`additional_question_${questionCount}`);
+    const addAnswerRegEx = new RegExp(`additional_answer_${questionCount}`);
 
     const idArr: number[] = useRecoilValue(interviewIdAtom);
 
@@ -75,7 +76,7 @@ export default function InterviewFollowupPage() {
         if (questionList) {
             let questionKey: keyof IAnswerInterview = Object.keys(
                 questionList,
-            ).find((el) => followupRegEx.test(el)) as keyof IAnswerInterview;
+            ).find((el) => addQuestionRegEx.test(el)) as keyof IAnswerInterview;
             return questionList[questionKey] as string;
         }
         return DEFAULT_QUESTION;
@@ -117,6 +118,18 @@ export default function InterviewFollowupPage() {
             ? `${answer}번 질문으로 돌아가기`
             : '다음 질문';
 
+    const setDefaultTAValue = (): string => {
+        if (questionList) {
+            let answerKey = Object.keys(questionList)?.find((el: string) =>
+                addAnswerRegEx.test(el),
+            ) as keyof IAnswerInterview;
+            if (typeof questionList[answerKey] == 'string') {
+                let answer = questionList[answerKey] as string;
+                if (answer.length > 0) return answer;
+            }
+        }
+        return '';
+    };
     return (
         <section className="flex flex-col items-center m-auto text-center">
             <div className="self-end bg-blue-primary rounded-t-[1rem] py-[1.1rem] px-[3.6rem]">
@@ -143,6 +156,7 @@ export default function InterviewFollowupPage() {
 
                         {/** TODO: textarea width, height 변경 */}
                         <Textarea
+                            defaultValue={setDefaultTAValue()}
                             placeholder="자세히 입력할 수록 좋아요"
                             register={register('followup_answer', {
                                 required: true,
