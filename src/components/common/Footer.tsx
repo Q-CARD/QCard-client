@@ -1,7 +1,3 @@
-import IconYoutube from '@/assets/icons/icon-youtube.png';
-import IconInstagram from '@/assets/icons/icon-instagram.png';
-import Image from 'next/image';
-
 export function Footer() {
     // aria-label: 이미지의 대체 텍스트 역할
     // aria-labelledby: 화면에 현재 요소를 설명할 텍스트가 있는 경우 텍스트(id)와 현재 요소 연결
