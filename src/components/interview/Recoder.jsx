@@ -54,9 +54,7 @@ export default function Recoder({
             type: blob.type,
             lastModified: Date.now(),
         });
-        const formData = new FormData();
-        formData.append('file', file);
-        return formData;
+        return { file: file };
     };
 
     const sendFile = async (formData) => {
