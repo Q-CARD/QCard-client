@@ -15,6 +15,7 @@ const config: Config = {
         extend: {
             backgroundImage: {
                 main: 'linear-gradient(108deg, rgba(255, 228, 157, 0.21) -12.78%, #FFFBF0 19.6%, #F3F8FF 102.97%)',
+                finish: 'linear-gradient(108deg, #FFE49D -12.78%, #FFFBF0 19.6%, #F3F8FF 102.97%)',
             },
             fontSize: {
                 // heading - bold
