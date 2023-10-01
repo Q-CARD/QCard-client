@@ -5,7 +5,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 
 import CategoryNameCard from '@/components/interview/CategoryNameCard';
-import { newInterview } from '@/api/interview';
+import { startNewInterview } from '@/api/interview';
 
 import { QUESTION_CATEGORY } from '@/constants/data';
 import { useSetRecoilState } from 'recoil';
@@ -61,7 +61,9 @@ export default function InterviewPage() {
         setCategoryListAtom(body as string[]);
 
         try {
-            let data: IUserInterview = await newInterview(body as string[]);
+            let data: IUserInterview = await startNewInterview(
+                body as string[],
+            );
             if (data) {
                 setInterviewListAtom(data.question);
                 getQuestionIdObject(data.question);
