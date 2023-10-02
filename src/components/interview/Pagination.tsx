@@ -29,12 +29,16 @@ export function Pagination({ children, className }: PaginatinProps) {
     };
 
     const handleNext = () => {
+        let pathname = '';
+        console.log('answer', answer);
         if (answer < 10) {
-            const pathname = `/interview/result?id=${obj[answer]}&answer=${
+            pathname = `/interview/result?id=${obj[answer]}&answer=${
                 answer + 1
             }`;
-            router.push(pathname);
+        } else if (answer == 10) {
+            pathname = '/interview/finish';
         }
+        router.push(pathname);
     };
 
     const handlePageMove = (answer: number) => {
@@ -49,9 +53,7 @@ export function Pagination({ children, className }: PaginatinProps) {
                 size="18"
                 color="var(--grey-6)"
                 className="cursor-pointer"
-            >
-                이전
-            </AiOutlineArrowLeft>
+            />
 
             <div className={`flex gap-[1.4rem]`}>
                 {' '}
@@ -69,9 +71,7 @@ export function Pagination({ children, className }: PaginatinProps) {
                 size="18"
                 color="var(--grey-6)"
                 className="cursor-pointer"
-            >
-                다음
-            </AiOutlineArrowRight>
+            />
         </div>
     );
 }

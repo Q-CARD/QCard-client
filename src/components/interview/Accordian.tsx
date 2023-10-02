@@ -1,19 +1,18 @@
 'use client';
 import React from 'react';
+import { useSearchParams } from 'next/navigation';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 
 interface AccordianProps {
     className: string;
     children: React.ReactNode;
-    rerenderProps: string;
 }
 
-export function Accordian({
-    className,
-    children,
-    rerenderProps,
-}: AccordianProps) {
+export function Accordian({ className, children }: AccordianProps) {
     const [isOpen, setIsOpen] = React.useState(false);
+
+    const searchParams = useSearchParams();
+    const interviewId = searchParams.get('id') ?? '1';
 
     const handleAccordianOpen = () => {
         setIsOpen(!isOpen);
@@ -22,7 +21,7 @@ export function Accordian({
 
     React.useEffect(() => {
         setIsOpen(false);
-    }, [rerenderProps]);
+    }, [interviewId]);
     return (
         <div
             className={`${className} flex flex-col justify-center items-center w-full py-[2.4rem] px-[3.6rem] border border-[2px] border-yellow-3 min-h-[7.9rem] rounded-3xl bg-yellow-1`}
