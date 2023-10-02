@@ -3,7 +3,7 @@ import { IAnswerFollwupQuestion } from '@/types';
 
 // 면접보길 원하는 카테고리 리스트 전송받은 후 인터뷰 id 반환
 export const startNewInterview = async (categoryList: string[]) => {
-    return await http.POST(`/interview/start`, { category: categoryList });
+    return await http.POST(`/interview/start`, { categories: categoryList });
 };
 
 // 모의면접의 interview_question_id 당 모든 값을 반환
