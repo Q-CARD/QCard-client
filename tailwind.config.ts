@@ -78,6 +78,8 @@ const config: Config = {
                     { fontWeight: '700', lineHeight: '18px' },
                 ],
                 buttonChip: ['12px', { fontWeight: '700', lineHeight: '14px' }],
+                // header
+                header: ['30px', { fontWeight: '800' }],
             },
             colors: {
                 black: '#444449',
@@ -111,6 +113,7 @@ const config: Config = {
                 red: { 4: '#ff3c5f', 3: '#ffaebd', 2: '#ffe5ec', 1: '#fff4f5' },
             },
             boxShadow: {
+                header: '0px 2px 6px 0px rgba(20, 20, 43, 0.06)',
                 4: '0px 14px 42px 0px rgba(20, 20, 43, 0.14)',
                 3: '0px 8px 28px 0px rgba(20, 20, 43, 0.10)',
                 2: '0px 2px 12px 0px rgba(20, 20, 43, 0.08)',
