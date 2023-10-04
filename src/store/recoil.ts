@@ -4,9 +4,13 @@ import { IAnswerInterview } from '@/types';
 
 const { persistAtom } = recoilPersist();
 
-export const userAtom = atom<{ nickname: string; email: string }>({
+export const userAtom = atom<{
+    nickname: string;
+    email: string;
+    profileImg: string;
+}>({
     key: 'user',
-    default: { nickname: '', email: '' },
+    default: { nickname: '', email: '', profileImg: '' },
     effects_UNSTABLE: [persistAtom],
 });
 
