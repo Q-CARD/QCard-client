@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useRecoilValue } from 'recoil';
@@ -29,8 +30,27 @@ export default function MyProfilePage() {
         defaultValues: { nickname: user.nickname, email: user.email },
     });
 
-    // TODO - 이미지 업로드
-    const saveImgFile = () => {};
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [profileImgURL, setProfileImgURL] = useState<string>(''); // 미리보기용 임시 url
+    const [profileImgFile, setProfileImgFile] = useState<File>();
+
+    // TODO - 이미지 업로드 api 연동
+    const handleProfileImgChange = (e: React.ChangeEvent) => {
+        const file = (e.target as HTMLInputElement).files?.[0];
+
+        if (file) {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = (data) => {
+                setProfileImgURL(
+                    typeof data.target?.result === 'string'
+                        ? data.target?.result
+                        : '',
+                );
+                setProfileImgFile(file);
+            };
+        }
+    };
 
     // TODO - 프로필 수정 api 연동
     const handleSubmitProfile = async ({
@@ -40,14 +60,14 @@ export default function MyProfilePage() {
         const payload = {
             nickname: nickname,
             email: email,
-            // profile:
+            // profile: ,
         };
 
-        try {
-            await putAccountsProfile(payload);
+        // try {
+        //     await putAccountsProfile(payload);
 
-            alert('프로필 정보가 수정되었습니다.');
-        } catch (e) {}
+        //     alert('프로필 정보가 수정되었습니다.');
+        // } catch (e) {}
     };
 
     // TODO - 유저 탈퇴 api 연동 - 탈퇴 api 요청.
@@ -66,7 +86,10 @@ export default function MyProfilePage() {
                         }}
                     >
                         <Image
-                            src={user.profileImg ?? defaultImage}
+                            src={
+                                profileImgURL ||
+                                (user.profileImg ?? defaultImage)
+                            }
                             alt="profile-image"
                             fill
                             sizes="16.4rem"
@@ -77,15 +100,19 @@ export default function MyProfilePage() {
                         />
                     </div>
                     <label
-                        htmlFor="file"
+                        htmlFor="fileInput"
                         className="absolute bottom-0 right-0 w-[4rem] h-[4rem] rounded-full border-[0.1rem] border-grey-3 bg-white cursor-pointer flex justify-center items-center"
+                        onClick={() => {
+                            fileInputRef?.current?.click();
+                        }}
                     >
                         <input
-                            name="file"
+                            ref={fileInputRef}
+                            name="fileInput"
                             className="hidden"
                             type="file"
                             accept="image/*"
-                            onChange={saveImgFile}
+                            onChange={handleProfileImgChange}
                         />
                         <BsCamera size="19.2" color="var(--grey-5)" />
                     </label>
