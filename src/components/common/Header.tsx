@@ -31,8 +31,14 @@ export function Header() {
     const profileRef = useRef<HTMLDivElement>(null);
 
     const handleOutsideClick = (e: React.MouseEvent) => {
-        if (isProfileModalOpen && e.target !== modalRef.current) {
-            setIsProfileModalOpen(false);
+        if (e.target instanceof Element) {
+            const refChildren = Array.from(modalRef.current?.children ?? []);
+            const isProfileModalClicked =
+                e.target === modalRef.current || refChildren.includes(e.target);
+
+            if (isProfileModalOpen && !isProfileModalClicked) {
+                setIsProfileModalOpen(false);
+            }
         }
     };
 

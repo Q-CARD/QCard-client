@@ -10,5 +10,6 @@ export const CONSTANTS = {
 };
 
 export const ZINDEX = {
-    '50': 50,
+    '50': 50, // Header
+    '51': 51, // ProfileModal
 };
