@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from './Button';
-import { LogoutModal } from './LogoutModal';
+import { ProfileModal } from './ProfileModal';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { isLoginAtom, userAtom } from '@/store/recoil';
 import { ZINDEX } from '@/constants';
@@ -24,14 +24,15 @@ export function Header() {
     const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
 
     // logout modal
-    const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
+    const [isProfileModalOpen, setIsProfileModalOpen] =
+        useState<boolean>(false);
 
     const modalRef = useRef<HTMLDivElement>(null);
     const profileRef = useRef<HTMLDivElement>(null);
 
     const handleOutsideClick = (e: React.MouseEvent) => {
-        if (isLogoutModalOpen && e.target !== modalRef.current) {
-            setIsLogoutModalOpen(false);
+        if (isProfileModalOpen && e.target !== modalRef.current) {
+            setIsProfileModalOpen(false);
         }
     };
 
@@ -51,7 +52,7 @@ export function Header() {
                     height: '6rem',
                     cursor: 'pointer',
                 }}
-                onClick={() => setIsLogoutModalOpen((prev) => !prev)}
+                onClick={() => setIsProfileModalOpen((prev) => !prev)}
             >
                 <Image
                     src={user.profileImg ?? defaultImage}
@@ -121,9 +122,9 @@ export function Header() {
                 </>
             )}
 
-            <LogoutModal
-                open={isLogoutModalOpen}
-                setOpen={setIsLogoutModalOpen}
+            <ProfileModal
+                open={isProfileModalOpen}
+                setOpen={setIsProfileModalOpen}
                 modalRef={modalRef}
             />
         </header>

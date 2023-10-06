@@ -8,13 +8,17 @@ import { isLoginAtom, userAtom } from '@/store/recoil';
 import defaultImage from '@/assets/images/image-default-profile.png';
 import { CONSTANTS } from '@/constants';
 
-interface LogoutModalProps {
+interface ProfileModalProps {
     open: boolean;
     setOpen: (value: boolean) => void;
     modalRef: React.RefObject<HTMLDivElement>;
 }
 
-export const LogoutModal = ({ open, setOpen, modalRef }: LogoutModalProps) => {
+export const ProfileModal = ({
+    open,
+    setOpen,
+    modalRef,
+}: ProfileModalProps) => {
     const router = useRouter();
 
     const user = useRecoilValue(userAtom);
