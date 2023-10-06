@@ -16,3 +16,8 @@ export const postSignUp = async (payload: any) => {
 export const getAccountsProfile = async () => {
     return await http.GET(`/accounts/profile`);
 };
+
+// 프로필 수정
+export const putAccountsProfile = async (payload: any) => {
+    return await http.PUT(`/accounts/profile`, payload);
+};
