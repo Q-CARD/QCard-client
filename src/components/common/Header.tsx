@@ -1,77 +1,152 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import Logo from '@/assets/logo.png';
+
 import { Button } from './Button';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { LogoutModal } from './LogoutModal';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { isLoginAtom, userAtom } from '@/store/recoil';
+import { ZINDEX } from '@/constants';
+import Logo from '@/assets/logo.png';
+import defaultImage from '@/assets/images/image-default-profile.png';
 
 export function Header() {
     // Link: <a>요소 확장 프리페칭 + 클라이언트 사이드 내비게이션
     // useRouter: 프로그래밍 방식으로 라우트 변경 (브라우저 API 처럼 push, replace, reload 사용 가능)
 
-    // TODO: box-shadow: 0px 2px 12px 0px rgba(20, 20, 43, 0.08);
-    // TODO: header: z-index: 50 상수화
+    const pathname = usePathname();
+    const isAuthPath = pathname.includes('auth');
+    const isMyPagePath = pathname.includes('mypage');
 
-    const [user, setUser] = useRecoilState(userAtom);
+    const user = useRecoilValue(userAtom);
     const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
 
-    interface TitleType {
-        link: string;
-        title: 'Sign in' | 'My Page';
-        type: 'round' | 'black';
-    }
-    const [title, setTitle] = useState<TitleType>({
-        link: '/auth/login',
-        title: 'Sign in',
-        type: 'round',
-    });
+    // logout modal
+    const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
 
-    React.useEffect(() => {
+    const modalRef = useRef<HTMLDivElement>(null);
+    const profileRef = useRef<HTMLDivElement>(null);
+
+    const handleOutsideClick = (e: React.MouseEvent) => {
+        if (isLogoutModalOpen && e.target !== modalRef.current) {
+            setIsLogoutModalOpen(false);
+        }
+    };
+
+    // right buttons
+    const RIGHTBUTTONS = {
+        signIn: (
+            <Link href="/auth/login">
+                <Button type="round" title="Sign in" />
+            </Link>
+        ),
+        profile: (
+            <div
+                style={{
+                    display: 'flex',
+                    position: 'relative',
+                    width: '6rem',
+                    height: '6rem',
+                    cursor: 'pointer',
+                }}
+                onClick={() => setIsLogoutModalOpen((prev) => !prev)}
+            >
+                <Image
+                    src={user.profileImg ?? defaultImage}
+                    alt="profile-image"
+                    fill
+                    style={{
+                        borderRadius: '50%',
+                        objectFit: 'cover',
+                    }}
+                />
+            </div>
+        ),
+    };
+    const [rightButton, setRightButton] = useState<React.ReactNode>(
+        RIGHTBUTTONS.signIn,
+    );
+
+    useEffect(() => {
         if (user.email && user.email.length > 0) {
             setIsLogin(true);
-            setTitle({
-                link: '/mypage/answer',
-                title: 'My Page',
-                type: 'black',
-            });
+
+            setRightButton(RIGHTBUTTONS.profile);
         } else {
             setIsLogin(false);
-            setTitle({
-                link: '/auth/login',
-                title: 'Sign in',
-                type: 'round',
-            });
+
+            setRightButton(RIGHTBUTTONS.signIn);
         }
     }, [isLogin]);
 
-    // console.log('isLogin', isLogin);
-
     return (
         <header
-            className="fixed top-0 flex z-50 bg-white justify-between items-center w-full 
-        h-[11.2rem] pt-[3.2rem] pb-[2.6rem] px-[10rem] shadow-md"
+            className={`fixed top-0 flex bg-white items-center w-full 
+        h-[11.2rem] px-[16rem] shadow-header z-${ZINDEX['50']}`}
+            onClick={handleOutsideClick}
         >
             <Link aria-label="Home" href="/">
                 <Image
                     src={Logo}
                     alt="qcard-logo"
-                    width={155}
-                    height={54}
+                    width={134}
+                    height={44}
                     className="object-cover"
                     sizes="155px"
                     loading="lazy"
                 />
             </Link>
-            <div className="flex gap-[2.4rem]">
-                <Link href="/category">
-                    <Button type="round" title="Questions" />
-                </Link>
-                <Link href={title.link}>
-                    <Button type={title.type} title={title.title} />
-                </Link>
-            </div>
+
+            {!isAuthPath && (
+                <>
+                    {!isMyPagePath && (
+                        <div className="flex gap-[6.3rem] ml-[8.7rem]">
+                            <HeaderSingleTab title={'홈'} path="/" />
+                            <HeaderSingleTab
+                                title={'모의면접'}
+                                path="/interview"
+                            />
+                            <HeaderSingleTab
+                                title={'질문모음'}
+                                path="/category"
+                            />
+                        </div>
+                    )}
+
+                    <div className="ml-auto" ref={profileRef}>
+                        {rightButton}
+                    </div>
+                </>
+            )}
+
+            <LogoutModal
+                open={isLogoutModalOpen}
+                setOpen={setIsLogoutModalOpen}
+                modalRef={modalRef}
+            />
         </header>
     );
 }
+
+const HeaderSingleTab = ({ title, path }: { title: string; path: string }) => {
+    const pathname = usePathname();
+
+    const isSelected = pathname === path;
+
+    return (
+        <Link className="h-[11.2rem] " href={path}>
+            <span
+                className={`h-full pt-[0.4rem] text-heading3 border-b-[0.4rem] flex items-center ${
+                    isSelected
+                        ? 'text-black border-blue-primary'
+                        : 'text-grey-5 hover:text-black border-white hover:border-blue-primary'
+                }
+                `}
+            >
+                {title}
+            </span>
+        </Link>
+    );
+};

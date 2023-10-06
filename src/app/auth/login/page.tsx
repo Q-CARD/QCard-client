@@ -26,7 +26,7 @@ export default function LoginPage() {
     } = useForm<LoginFormValues>();
 
     const setUserData = useSetRecoilState(userAtom);
-    const handleLogin = useSetRecoilState(isLoginAtom);
+    const setIsLogin = useSetRecoilState(isLoginAtom);
 
     const handleSubmitLogin = async ({ email, password }: LoginFormValues) => {
         const payload = {
@@ -37,7 +37,6 @@ export default function LoginPage() {
         try {
             const data = await postSignIn(payload);
 
-            // TODO - api 성공 응답 code 요청드리기
             if (data.accessToken) {
                 localStorage.setItem(CONSTANTS.ACCESS_TOKEN, data.accessToken);
 
@@ -47,13 +46,18 @@ export default function LoginPage() {
                     setUserData({
                         nickname: userdata.name,
                         email: userdata.email,
+                        profileImg: userdata.profile,
                     });
-                    handleLogin(true);
+
+                    setIsLogin(true);
                 }
 
                 router.push('/');
             }
-        } catch (e) {}
+        } catch (e: any) {
+            // const errorResponse = JSON.parse(e.message);
+            // alert(errorResponse.details);
+        }
     };
 
     const moveToSignup = () => {
