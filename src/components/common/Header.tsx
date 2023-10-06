@@ -1,10 +1,11 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from './Button';
+import { LogoutModal } from './LogoutModal';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { isLoginAtom, userAtom } from '@/store/recoil';
 import { ZINDEX } from '@/constants';
@@ -22,6 +23,19 @@ export function Header() {
     const user = useRecoilValue(userAtom);
     const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
 
+    // logout modal
+    const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
+
+    const modalRef = useRef<HTMLDivElement>(null);
+    const profileRef = useRef<HTMLDivElement>(null);
+
+    const handleOutsideClick = (e: React.MouseEvent) => {
+        if (isLogoutModalOpen && e.target !== modalRef.current) {
+            setIsLogoutModalOpen(false);
+        }
+    };
+
+    // right buttons
     const RIGHTBUTTONS = {
         signIn: (
             <Link href="/auth/login">
@@ -35,7 +49,9 @@ export function Header() {
                     position: 'relative',
                     width: '6rem',
                     height: '6rem',
+                    cursor: 'pointer',
                 }}
+                onClick={() => setIsLogoutModalOpen((prev) => !prev)}
             >
                 <Image
                     src={user.profileImg ?? defaultImage}
@@ -69,6 +85,7 @@ export function Header() {
         <header
             className={`fixed top-0 flex bg-white items-center w-full 
         h-[11.2rem] px-[16rem] shadow-header z-${ZINDEX['50']}`}
+            onClick={handleOutsideClick}
         >
             <Link aria-label="Home" href="/">
                 <Image
@@ -98,9 +115,17 @@ export function Header() {
                         </div>
                     )}
 
-                    <div className="ml-auto">{rightButton}</div>
+                    <div className="ml-auto" ref={profileRef}>
+                        {rightButton}
+                    </div>
                 </>
             )}
+
+            <LogoutModal
+                open={isLogoutModalOpen}
+                setOpen={setIsLogoutModalOpen}
+                modalRef={modalRef}
+            />
         </header>
     );
 }
