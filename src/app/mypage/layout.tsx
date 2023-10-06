@@ -6,11 +6,9 @@ interface MypageLayoutProps {
 
 export default function MypageLayout({ children }: MypageLayoutProps) {
     return (
-        <div className="w-screen y-full flex">
-            <div className="y-full min-w-[20rem] ml-[11.5rem] mt-[6rem] flex flex-col gap-[1.6rem]">
-                <MypageNavbar />
-            </div>
-            {children}
+        <div className="w-screen h-[calc(100vh-11.2rem)] flex">
+            <MypageNavbar />
+            <div className="w-[calc(100%-30rem)] h-full">{children}</div>
         </div>
     );
 }
