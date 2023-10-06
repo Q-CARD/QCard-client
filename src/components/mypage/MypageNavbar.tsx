@@ -1,24 +1,24 @@
 import { BsPerson, BsFileEarmarkText } from 'react-icons/bs';
 import { LiaPencilRulerSolid } from 'react-icons/lia';
 
-interface TabItemProps {
+interface MypageNavItemProps {
     title: string;
     icon: React.ReactNode;
     onClick: () => void;
     isSelected: boolean;
 }
-export function Tab() {
-    // TODO - Tab 메뉴 선택
+export function MypageNavbar() {
+    // TODO - MypageNavbar 메뉴 선택
 
     return (
         <div>
-            <TabItem
+            <MypageNavItem
                 title="프로필"
                 icon={<BsPerson className="mypageMenuIcon" size="24" />}
                 onClick={() => {}}
                 isSelected={false}
             />
-            <TabItem
+            <MypageNavItem
                 title="내가 쓴 답변"
                 icon={
                     <BsFileEarmarkText className="mypageMenuIcon" size="24" />
@@ -26,7 +26,7 @@ export function Tab() {
                 onClick={() => {}}
                 isSelected={true}
             />
-            <TabItem
+            <MypageNavItem
                 title="내가 쓴 질문"
                 icon={
                     <LiaPencilRulerSolid className="mypageMenuIcon" size="24" />
@@ -38,12 +38,12 @@ export function Tab() {
     );
 }
 
-const TabItem = ({
+const MypageNavItem = ({
     title,
     icon,
     onClick,
     isSelected = false,
-}: TabItemProps) => {
+}: MypageNavItemProps) => {
     const defaultConfig = 'text-black bg-white';
     const selectedConfig = 'text-blue-primary bg-blue-2';
 
