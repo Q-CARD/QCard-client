@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Button } from './Button';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { isLoginAtom, userAtom } from '@/store/recoil';
-import defaultImage from '@/assets/images/image-default-profile.png';
+import defaultImage from '@/assets/icons/icon-default-profile.png';
 import { CONSTANTS, ZINDEX } from '@/constants';
 
 interface ProfileModalProps {
@@ -52,7 +52,7 @@ export const ProfileModal = ({
             ref={modalRef}
         >
             <div
-                className="w-full pt-[2.9rem] flex flex-col items-center gap-[1.6rem] rounded-t-[0.6rem] cursor-pointer hover:bg-blue-1 hover:border-blue-primary"
+                className="w-full pt-[2.9rem] flex flex-col items-center gap-[1.6rem] pb-[2rem] rounded-t-[0.6rem] cursor-pointer hover:bg-blue-1 hover:border-blue-primary"
                 onClick={handleProfileClick}
             >
                 <div
@@ -67,6 +67,7 @@ export const ProfileModal = ({
                         src={user.profileImg ?? defaultImage}
                         alt="profile-modal-image"
                         fill
+                        sizes="6rem"
                         style={{
                             borderRadius: '50%',
                             objectFit: 'cover',
@@ -77,7 +78,7 @@ export const ProfileModal = ({
                     {user.nickname}
                 </span>
             </div>
-            <hr className="w-full h-[0.2rem] my-[2rem] bg-grey-2" />
+            <hr className="w-full h-[0.2rem] mb-[2rem] bg-grey-2" />
             <Button type="round" title="로그아웃" onClick={handleLogout} />
         </div>
     );

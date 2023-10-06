@@ -10,7 +10,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { isLoginAtom, userAtom } from '@/store/recoil';
 import { ZINDEX } from '@/constants';
 import Logo from '@/assets/logo.png';
-import defaultImage from '@/assets/images/image-default-profile.png';
+import defaultImage from '@/assets/icons/icon-default-profile.png';
 
 export function Header() {
     // Link: <a>요소 확장 프리페칭 + 클라이언트 사이드 내비게이션
@@ -64,6 +64,7 @@ export function Header() {
                     src={user.profileImg ?? defaultImage}
                     alt="profile-image"
                     fill
+                    sizes="6rem"
                     style={{
                         borderRadius: '50%',
                         objectFit: 'cover',
