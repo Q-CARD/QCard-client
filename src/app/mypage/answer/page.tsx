@@ -1,11 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 import { Button } from '@/components/common';
+import { BsChevronDown, BsChevronRight } from 'react-icons/bs';
+
 import { getAnswersMe } from '@/api/answers';
 import { IAnswer, IAnswerHearted } from '@/types';
 import { QUESTION_CATEGORY } from '@/constants/data';
+import FolerPinkImg from '@/assets/images/image-foler-pink.png';
 
 export default function MyAnswerPage() {
     const [myAnswerList, setMyAnswerList] = useState<IAnswerHearted[]>([]);
@@ -17,38 +22,18 @@ export default function MyAnswerPage() {
         id: QUESTION_CATEGORY[0].id,
         key: QUESTION_CATEGORY[0].key,
     });
-    const [selectedCategoryList, setSelectedCategoryList] = useState<
-        IAnswerHearted[]
-    >([]);
 
     useEffect(() => {
         loadAnswersMe();
-    }, []);
-
-    useEffect(() => {
-        setSelectedCategoryList(filteredDataBySelectedCategory);
     }, [selectedCategory]);
 
     const loadAnswersMe = async () => {
         try {
-            const data = await getAnswersMe();
+            const data = await getAnswersMe(selectedCategory.key);
 
             setMyAnswerList(data);
-
-            // TODO - 함수 위치 고민해보기. loadAnswersMe 함수는 두 가지 역할을 하는 중이지 않을까?
-            setSelectedCategoryList(
-                data.filter((item: IAnswerHearted) => {
-                    return item.question.category === QUESTION_CATEGORY[0].key;
-                }),
-            );
         } catch (e) {}
     };
-
-    const filteredDataBySelectedCategory = myAnswerList.filter(
-        ({ question }: IAnswerHearted) => {
-            return question.category === selectedCategory.key;
-        },
-    );
 
     const selectCategory = (category: any) => {
         setSelectedCategory({
@@ -58,29 +43,53 @@ export default function MyAnswerPage() {
     };
 
     return (
-        <div className="w-full h-full flex flex-col items-center gap-[3.4rem] mb-[3.4rem]">
-            <div className="mx-[10.3rem] my-[2rem] flex justify-center flex-wrap gap-[2.8rem]">
+        <div className="w-[79rem] h-full ml-[10rem] flex flex-col items-center gap-[4.8rem] mb-[4.8rem]">
+            {/* 카테고리 칩 필터 구역 */}
+            <div className="mt-[5.5rem] flex flex-wrap gap-[2rem]">
                 {QUESTION_CATEGORY.map((category) => (
                     <Button
                         key={`button-question-category-${category.id}`}
                         type="chip"
                         title={category.name}
-                        onClick={() => selectCategory(category)}
+                        onClick={() => {
+                            selectCategory(category);
+                        }}
                         isChipClicked={selectedCategory.id === category.id}
                     />
                 ))}
             </div>
-            {selectedCategoryList.map((answer: IAnswer) => (
-                <AnswerCard
-                    key={`answer-card-${answer.answerId}`}
-                    data={answer}
-                />
-            ))}
+
+            {myAnswerList.length ? (
+                <div className="w-full flex flex-col gap-[4.6rem]">
+                    {myAnswerList.map((answer: any) => (
+                        <AnswerCard
+                            key={`answer-card-${answer.answerId}`}
+                            data={answer}
+                        />
+                    ))}
+                </div>
+            ) : (
+                <div className="flex flex-col items-center gap-[3.2rem]">
+                    <Image
+                        src={FolerPinkImg}
+                        alt="img-foler-pink"
+                        width={165}
+                        height={165}
+                    />
+                    <span className="text-black text-specialHeading">
+                        아직 나의 답변이 없어요!
+                    </span>
+                    <span className="text-grey-5 text-heading4">
+                        큐카드와 면접을 연습해볼까요?
+                    </span>
+                </div>
+            )}
         </div>
     );
 }
 
-const AnswerCard = ({ data }: { data: IAnswer }) => {
+const AnswerCard = ({ data }: { data: any }) => {
+    // TODO - type 정리
     const {
         answerId,
         type,
@@ -92,17 +101,45 @@ const AnswerCard = ({ data }: { data: IAnswer }) => {
         question,
     } = data;
 
-    const categoryName = QUESTION_CATEGORY.find(({ key }) => {
-        return key === question.category;
-    })?.name;
+    const router = useRouter();
+
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+
+    const handleToggleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        e.stopPropagation();
+        setIsOpen((prev) => !prev);
+    };
+
+    const moveToDetailPage = (e: React.MouseEvent<HTMLDivElement>) => {
+        router.push(`/category/result/${question.id}`);
+    };
 
     return (
-        <div className="w-[68rem] px-[5rem] py-[3.14rem] rounded-[1.5702rem] border-[0.0785rem] border-grey-4 flex flex-col items-center">
-            <div className="text-heading4 mb-[1.57rem]">{question.title}</div>
-            <div className="text-[0.785rem] font-semibold text-white px-[1.1rem] py-[0.2rem] mb-[4.24rem] bg-blue-primary rounded-[1.57rem]">
-                {categoryName}
+        <div
+            className="w-full p-[2.5rem] bg-yellow-1 rounded-[1.5702rem] border-[0.2rem] border-yellow-sub flex flex-col items-center gap-[2rem]"
+            onClick={moveToDetailPage}
+        >
+            <div className="w-full flex justify-between">
+                <span className="text-heading4">{question.title}</span>
+                <div onClick={handleToggleClick}>
+                    {isOpen ? (
+                        <BsChevronDown
+                            size="24"
+                            color="var(--grey-6)"
+                            className="cursor-pointer"
+                        />
+                    ) : (
+                        <BsChevronRight
+                            size="24"
+                            color="var(--grey-6)"
+                            className="cursor-pointer"
+                        />
+                    )}
+                </div>
             </div>
-            <div className="text-bodySmaller text-grey-6">{content}</div>
+            <span className="w-full text-bodySmall text-grey-6 break-all">
+                {isOpen ? content : `${content.slice(0, 386)}...`}
+            </span>
         </div>
     );
 };

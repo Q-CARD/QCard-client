@@ -10,6 +10,7 @@ import backend from '@/assets/images/category/backend.png';
 import frontend from '@/assets/images/category/frontend.png';
 import ai from '@/assets/images/category/ai.png';
 import personal from '@/assets/images/category/personal.png';
+import etc from '@/assets/images/category/etc.png';
 
 export const QUESTION_CATEGORY = [
     {
@@ -83,6 +84,12 @@ export const QUESTION_CATEGORY = [
         name: '인성 질문',
         image: personal,
         key: 'CATEGORY_인성',
+    },
+    {
+        id: 13,
+        name: '기타',
+        image: etc,
+        key: 'CATEGORY_ETC',
     },
 ];
 
