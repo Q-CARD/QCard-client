@@ -52,7 +52,7 @@ export default function MyAnswerPage() {
             {myAnswerList.length ? (
                 <div className="w-full flex flex-col gap-[4.6rem]">
                     {myAnswerList.map((answer: any) => (
-                        <AnswerCard
+                        <MyAnswerCard
                             key={`answer-card-${answer.answerId}`}
                             data={answer}
                         />
@@ -78,7 +78,7 @@ export default function MyAnswerPage() {
     );
 }
 
-const AnswerCard = ({ data }: { data: any }) => {
+const MyAnswerCard = ({ data }: { data: any }) => {
     // TODO - type 정리
     const {
         answerId,
