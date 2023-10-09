@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 import CategoryChips from '@/components/common/CategoryChips';
 import { BsChevronRight } from 'react-icons/bs';
-import { getQuestionsMe } from '@/api/questions';
+import { getQuestions } from '@/api/questions';
 import { routeByUserAnswered } from '@/utils/routeByUserAnswered';
 import { QUESTION_CATEGORY } from '@/constants/data';
 import FolerBlueImg from '@/assets/images/image-foler-blue.png';
@@ -28,7 +28,11 @@ export default function MyQuestionPage() {
 
     const loadAnswersMe = async () => {
         try {
-            const data = await getQuestionsMe(selectedCategory.key);
+            const data = await getQuestions(
+                selectedCategory.key,
+                'TYPE_CUSTOM',
+                true,
+            );
 
             setMyQuestionList(data.content);
         } catch (e) {}

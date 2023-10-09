@@ -15,12 +15,19 @@ export const getQuestionsMain = async () => {
     return await http.GET(`/questions/main`);
 };
 
-// 내가 쓴 질문 리스트 반환
-export const getQuestionsMe = async (param: string) => {
+// question을 검색하여 관련 데이터를 반환
+export const getQuestions = async (
+    category?: string,
+    type?: 'TYPE_QCARD' | 'TYPE_CUSTOM',
+    mine?: boolean,
+    size?: number,
+    page?: number,
+) => {
     return await http.GET(`/questions`, {
-        category: param,
-        type: 'TYPE_CUSTOM',
-        mine: true,
-        size: 100, // 페이지네이션 적용
+        category: category,
+        type: type,
+        mine: mine,
+        size: size,
+        page: page,
     });
 };
