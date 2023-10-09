@@ -3,10 +3,13 @@
 import { useEffect, useState } from 'react';
 
 import { QuestionDetailCard } from '@/components/card/QuestionDetailCard';
-import { getQuestionsCategory } from '@/api/questions';
+import { getQuestions } from '@/api/questions';
 import { IQuestion } from '@/types';
 import { QUESTION_CATEGORY } from '@/constants/data';
 
+/**
+ * @description 질문모음 > 개별 카테고리 페이지
+ */
 export default function CategoryDetailPage({
     params,
 }: {
@@ -24,29 +27,30 @@ export default function CategoryDetailPage({
 
     const loadCategoryQuestions = async () => {
         try {
-            const data = await getQuestionsCategory(
-                categoryInfo?.key as string,
-            );
+            const data = await getQuestions(categoryInfo?.key);
 
-            setCategoryQuestions(data);
+            setCategoryQuestions(data.content);
         } catch (e) {}
     };
 
     return (
-        <div className="flex flex-col">
-            <div className="ml-[10rem] mt-[3.5rem] mb-[2.2rem] flex flex-col gap-[1.6rem]">
-                <div className="text-heading2 text-black">질문 모음집</div>
-                <div className="text-heading3 text-blue-primary">
+        <div className="w-full h-full py-[7.9rem] flex flex-col items-center">
+            <div className="w-[93rem] mb-[6.2rem] flex">
+                <span className="text-heading2 text-blue-primary">
                     {categoryInfo?.name}
-                </div>
+                </span>
             </div>
-            <div className="mx-auto flex flex-col gap-[3.2rem]">
-                {categoryQuestions.map((question: IQuestion) => {
+            <div className="mx-auto flex flex-col">
+                {categoryQuestions.map((question: IQuestion, idx: number) => {
                     return (
-                        <QuestionDetailCard
+                        <div
                             key={`question-detail-card-${question.questionId}`}
-                            questionInfo={question}
-                        />
+                        >
+                            <QuestionDetailCard questionInfo={question} />
+                            {idx !== categoryQuestions.length - 1 && (
+                                <hr className="w-full h-[0.2rem] my-[4.6rem] bg-grey-2" />
+                            )}
+                        </div>
                     );
                 })}
             </div>
