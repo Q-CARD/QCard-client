@@ -16,10 +16,12 @@ const api = wretch(process.env.NEXT_PUBLIC_API_BASE_URL)
     .resolve((r: any) => r.json() as any);
 
 export const http = {
-    GET: function get(url: string, option?: any) {
-        return api.get(url);
+    GET: function get(url: string, query?: any) {
+        return query
+            ? api.addon(QueryStringAddon).query(query).get(url)
+            : api.get(url);
     },
-    POST: function post(url: string, body?: any, option?: any) {
+    POST: function post(url: string, body?: any) {
         return api.url(url).post(body);
     },
     PATCH: function patch(url: string, body?: any) {
@@ -31,7 +33,7 @@ export const http = {
             : api.url(url).put(body);
     },
     // delete is a reserved word in JS.
-    DELETE: function del(url: string, option?: any) {
+    DELETE: function del(url: string) {
         return api.delete(url);
     },
 };

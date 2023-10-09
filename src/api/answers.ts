@@ -6,8 +6,8 @@ export const postAnswers = async (payload: any) => {
 };
 
 // 내가 쓴 답변 리스트 반환
-export const getAnswersMe = async () => {
-    return await http.GET(`/answers/me`);
+export const getAnswersMe = async (param: string) => {
+    return await http.GET(`/answers/me`, { category: param });
 };
 
 // 특정 답변에 대한 수정 전송

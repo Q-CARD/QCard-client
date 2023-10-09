@@ -5,12 +5,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from './Button';
-import { LogoutModal } from './LogoutModal';
+import { ProfileModal } from './ProfileModal';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { isLoginAtom, userAtom } from '@/store/recoil';
 import { ZINDEX } from '@/constants';
 import Logo from '@/assets/logo.png';
-import defaultImage from '@/assets/images/image-default-profile.png';
+import defaultImage from '@/assets/icons/icon-default-profile.png';
 
 export function Header() {
     // Link: <a>요소 확장 프리페칭 + 클라이언트 사이드 내비게이션
@@ -24,14 +24,21 @@ export function Header() {
     const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
 
     // logout modal
-    const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
+    const [isProfileModalOpen, setIsProfileModalOpen] =
+        useState<boolean>(false);
 
     const modalRef = useRef<HTMLDivElement>(null);
     const profileRef = useRef<HTMLDivElement>(null);
 
     const handleOutsideClick = (e: React.MouseEvent) => {
-        if (isLogoutModalOpen && e.target !== modalRef.current) {
-            setIsLogoutModalOpen(false);
+        if (e.target instanceof Element) {
+            const refChildren = Array.from(modalRef.current?.children ?? []);
+            const isProfileModalClicked =
+                e.target === modalRef.current || refChildren.includes(e.target);
+
+            if (isProfileModalOpen && !isProfileModalClicked) {
+                setIsProfileModalOpen(false);
+            }
         }
     };
 
@@ -51,12 +58,13 @@ export function Header() {
                     height: '6rem',
                     cursor: 'pointer',
                 }}
-                onClick={() => setIsLogoutModalOpen((prev) => !prev)}
+                onClick={() => setIsProfileModalOpen((prev) => !prev)}
             >
                 <Image
                     src={user.profileImg ?? defaultImage}
                     alt="profile-image"
                     fill
+                    sizes="6rem"
                     style={{
                         borderRadius: '50%',
                         objectFit: 'cover',
@@ -121,9 +129,9 @@ export function Header() {
                 </>
             )}
 
-            <LogoutModal
-                open={isLogoutModalOpen}
-                setOpen={setIsLogoutModalOpen}
+            <ProfileModal
+                open={isProfileModalOpen}
+                setOpen={setIsProfileModalOpen}
                 modalRef={modalRef}
             />
         </header>

@@ -8,7 +8,7 @@ import { BiPencil } from 'react-icons/bi';
 interface InputProps {
     type?: 'text' | 'password' | 'edit';
     placeholder: string;
-    register: UseFormRegisterReturn<any>;
+    register?: UseFormRegisterReturn<any>;
 }
 
 export function Input({
