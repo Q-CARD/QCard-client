@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
-import { Button } from '@/components/common';
+import CategoryChips from '@/components/common/CategoryChips';
 import { BsChevronDown, BsChevronRight } from 'react-icons/bs';
 
 import { getAnswersMe } from '@/api/answers';
@@ -43,21 +43,11 @@ export default function MyAnswerPage() {
     };
 
     return (
-        <div className="w-[79rem] h-full ml-[10rem] flex flex-col items-center gap-[4.8rem] mb-[4.8rem]">
-            {/* 카테고리 칩 필터 구역 */}
-            <div className="mt-[5.5rem] flex flex-wrap gap-[2rem]">
-                {QUESTION_CATEGORY.map((category) => (
-                    <Button
-                        key={`button-question-category-${category.id}`}
-                        type="chip"
-                        title={category.name}
-                        onClick={() => {
-                            selectCategory(category);
-                        }}
-                        isChipClicked={selectedCategory.id === category.id}
-                    />
-                ))}
-            </div>
+        <div className="w-[79rem] h-[clac(100%-5.5rem)] ml-[10rem] my-[5.5rem] flex flex-col items-center gap-[4.8rem]">
+            <CategoryChips
+                selectedCategory={selectedCategory}
+                selectCategory={selectCategory}
+            />
 
             {myAnswerList.length ? (
                 <div className="w-full flex flex-col gap-[4.6rem]">
