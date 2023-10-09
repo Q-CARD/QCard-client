@@ -15,7 +15,7 @@ export function Textarea({
 }: TextareaProps) {
     return (
         <textarea
-            className="w-[86rem] h-[52rem] p-[3.2rem] text-bodySmall text-black placeholder:text-grey-5 bg-grey-1 rounded-[2rem] border-[0.15rem] focus:outline-none resize-none"
+            className="w-[78.8rem] h-[41.2rem] p-[3.2rem] text-bodySmall text-black placeholder:text-grey-5 bg-grey-1 rounded-[1rem] border-[0.3rem] border-transparent focus:outline-none focus:ring-3 focus:border-blue-3 focus:bg-white resize-none"
             placeholder={placeholder}
             autoComplete="false"
             defaultValue={defaultValue}

@@ -1,4 +1,4 @@
-import { getQuestion } from '@/api/questions';
+import { getQuestionById } from '@/api/questions';
 import { IAnswerHearted } from '@/types';
 
 /**
@@ -21,7 +21,7 @@ export const routeByUserAnswered = async (
 
 const checkIsAnswered = async (questionId: number) => {
     try {
-        const data = await getQuestion(questionId);
+        const data = await getQuestionById(questionId, 'SORT_RECENT');
 
         const isMine = data.answers.some((answer: IAnswerHearted) => {
             return answer.isMine;

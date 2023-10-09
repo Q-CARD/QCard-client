@@ -7,7 +7,7 @@ import remarkGfm from 'remark-gfm';
 
 import { TextBoxWrapper } from '@/components/TextBoxWrapper';
 import { Profile } from '@/components/Profile';
-import { getQuestion } from '@/api/questions';
+import { getQuestionById } from '@/api/questions';
 import { IAnswerHearted, IQuestion } from '@/types';
 
 export default function CategoryResultPage({
@@ -30,7 +30,7 @@ export default function CategoryResultPage({
     // TODO - question,answer 페이지 중복 호출 개선
     const loadQuestionDetail = async () => {
         try {
-            const data = await getQuestion(Number(params.id));
+            const data = await getQuestionById(Number(params.id));
 
             const myAnswer = data.answers.find((answer: IAnswerHearted) => {
                 return answer.isMine;

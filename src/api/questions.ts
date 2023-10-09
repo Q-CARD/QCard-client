@@ -5,9 +5,12 @@ export const getQuestionsCategory = async (category: string) => {
     return await http.GET(`/questions/categories/${category}`);
 };
 
-// 특정 질문 상세정보 반환
-export const getQuestion = async (questionId: number) => {
-    return await http.GET(`/questions/${questionId}`);
+// 특정 질문 상세정보 반환 (정렬)
+export const getQuestionById = async (
+    questionId: number,
+    sort?: 'SORT_HEART' | 'SORT_RECENT',
+) => {
+    return await http.GET(`/questions/${questionId}`, { sort: sort });
 };
 
 // 메인 화면에 사용되는 Question 반환
