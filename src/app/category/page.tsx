@@ -17,6 +17,8 @@ import { routeByUserAnswered } from '@/utils/routeByUserAnswered';
  * @description 질문 모음 페이지
  */
 export default function CategoryPage() {
+    const router = useRouter();
+
     const [customQuestionList, setCustomQuestionList] = useState([]);
 
     useEffect(() => {
@@ -52,7 +54,12 @@ export default function CategoryPage() {
                     <span className="text-black text-heading2">
                         미래의 동료가 생성한 큐카드를 살펴봐요
                     </span>
-                    <div className="flex items-center" onClick={() => {}}>
+                    <div
+                        className="flex items-center cursor-pointer"
+                        onClick={() => {
+                            router.push('/category/custom');
+                        }}
+                    >
                         <span className="text-blue-primary text-heading3">
                             더보기
                         </span>
