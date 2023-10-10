@@ -5,7 +5,9 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import CategoryChips from '@/components/common/CategoryChips';
+import CustomQuestionModal from '@/components/CustomQuestionModal';
 import { BsChevronRight } from 'react-icons/bs';
+import { useModal } from '@/hooks/useModal';
 import { routeByUserAnswered } from '@/utils/routeByUserAnswered';
 import { categoryKeyToName } from '@/utils/utils';
 import { QUESTION_CATEGORY } from '@/constants';
@@ -38,6 +40,8 @@ const dummy = [
 ];
 
 export default function CategoryCustomPage() {
+    const { isOpen, modalRef, openModal } = useModal();
+
     const [selectedCategory, setSelectedCategory] = useState<{
         id: Number;
         key: string;
@@ -54,7 +58,7 @@ export default function CategoryCustomPage() {
     };
 
     return (
-        <div className="w-full mb-[6rem] flex flex-col items-center gap-[5.8rem]">
+        <div className="relative w-full h-full mb-[6rem] flex flex-col items-center gap-[5.8rem]">
             <div className="w-full h-[18rem] bg-blue-1 flex justify-center items-center">
                 <span className="text-black text-heading2 mr-[28.2rem]">
                     미래의 동료가 생성한 큐카드를 살펴봐요
@@ -64,7 +68,9 @@ export default function CategoryCustomPage() {
                     alt="plus-icon"
                     width={50}
                     height={50}
-                    onClick={() => {}}
+                    onClick={() => {
+                        isOpen === false && openModal();
+                    }}
                     className="cursor-pointer"
                 />
             </div>
@@ -87,6 +93,10 @@ export default function CategoryCustomPage() {
             </div>
             {/* TODO - 페이지네이션 */}
             <div></div>
+
+            <div className={isOpen ? 'outside' : ''}>
+                <CustomQuestionModal open={isOpen} modalRef={modalRef} />
+            </div>
         </div>
     );
 }
