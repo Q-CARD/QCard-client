@@ -12,6 +12,10 @@ interface QuestionCardProps {
     };
 }
 
+/**
+ *
+ * @description 카테고리 이미지 카드
+ */
 export function QuestionCard({ question }: QuestionCardProps) {
     const { questionId, title } = question;
 

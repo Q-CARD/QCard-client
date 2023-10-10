@@ -10,6 +10,10 @@ interface QuestionDetailCardProps {
     questionInfo: IQuestion;
 }
 
+/**
+ *
+ * @description 카테고리 별 질문 카드
+ */
 export function QuestionDetailCard({ questionInfo }: QuestionDetailCardProps) {
     const router = useRouter();
 
