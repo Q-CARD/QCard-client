@@ -55,48 +55,50 @@ export default function CategoryResultPage({
     };
 
     return (
-        <div className="my-[6.8rem] flex justify-center">
-            <div className="w-[70rem] flex flex-col gap-[9.5rem]">
-                <div className="flex flex-col gap-[5.2rem]">
-                    <div className="text-specialHeading mb-[0.8rem]">
-                        <span className="text-blue-primary">Q.&nbsp;</span>
-                        <span>{questionInfo?.title}</span>
+        <div className="w-full py-[6.8rem]">
+            <div className="flex justify-center">
+                <div className="w-[70rem] flex flex-col gap-[9.5rem]">
+                    <div className="flex flex-col gap-[5.2rem]">
+                        <div className="text-specialHeading mb-[0.8rem]">
+                            <span className="text-blue-primary">Q.&nbsp;</span>
+                            <span>{questionInfo?.title}</span>
+                        </div>
+                        <div className="h-fit p-[3.2rem] text-bodySmall text-black rounded-[1rem] border-[0.3rem] border-blue-3">
+                            {myAnswer?.content ?? '답변 없음'}
+                        </div>
                     </div>
-                    <div className="h-fit p-[3.2rem] text-bodySmall text-black rounded-[1rem] border-[0.3rem] border-blue-3">
-                        {myAnswer?.content ?? '답변 없음'}
-                    </div>
-                </div>
 
-                <div className="flex flex-col gap-[5.2rem]">
-                    <div className="text-specialHeading mb-[0.8rem]">
-                        <span className="text-yellow-sub">A.&nbsp;</span>
-                        <span>GPT의 답을 확인해보세요</span>
-                    </div>
-                    <div className="h-fit p-[3.2rem] text-bodySmall text-black bg-yellow-1 rounded-[1rem] border-[0.3rem] border-yellow-3">
-                        <ReactMarkdown
-                            children={
-                                gptAnswer?.content ?? 'gpt 답변이 없습니다.'
-                            }
-                            remarkPlugins={[remarkGfm]}
-                        />
-                    </div>
-                </div>
-
-                <hr className="h-[0.2rem] bg-grey-4" />
-
-                <div className="flex flex-col gap-[5.2rem]">
-                    <div className="text-specialHeading mb-[0.8rem]">
-                        <span className="text-yellow-sub">A.&nbsp;</span>
-                        <span>동료들의 답변도 살펴보세요</span>
-                    </div>
-                    {otherAnswersList.map((answer: IAnswerHearted) => {
-                        return (
-                            <OtherAnswerCard
-                                key={`other-answer-${answer.answerId}`}
-                                data={answer}
+                    <div className="flex flex-col gap-[5.2rem]">
+                        <div className="text-specialHeading mb-[0.8rem]">
+                            <span className="text-yellow-sub">A.&nbsp;</span>
+                            <span>GPT의 답을 확인해보세요</span>
+                        </div>
+                        <div className="h-fit p-[3.2rem] text-bodySmall text-black bg-yellow-1 rounded-[1rem] border-[0.3rem] border-yellow-3">
+                            <ReactMarkdown
+                                children={
+                                    gptAnswer?.content ?? 'gpt 답변이 없습니다.'
+                                }
+                                remarkPlugins={[remarkGfm]}
                             />
-                        );
-                    })}
+                        </div>
+                    </div>
+
+                    <hr className="h-[0.2rem] bg-grey-4" />
+
+                    <div className="flex flex-col gap-[5.2rem]">
+                        <div className="text-specialHeading mb-[0.8rem]">
+                            <span className="text-yellow-sub">A.&nbsp;</span>
+                            <span>동료들의 답변도 살펴보세요</span>
+                        </div>
+                        {otherAnswersList.map((answer: IAnswerHearted) => {
+                            return (
+                                <OtherAnswerCard
+                                    key={`other-answer-${answer.answerId}`}
+                                    data={answer}
+                                />
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
         </div>

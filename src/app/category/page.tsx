@@ -34,7 +34,7 @@ export default function CategoryPage() {
     };
 
     return (
-        <div className="w-full y-full">
+        <div className="w-full">
             <div className="bg-white px-[15.4rem] pt-[9.8rem] pb-[5.5rem] flex flex-col gap-[6rem]">
                 <span className="text-black text-heading2">
                     카테고리별 큐카드를 사용해 면접을 연습해요
@@ -49,7 +49,7 @@ export default function CategoryPage() {
                 </div>
             </div>
 
-            <div className="bg-blue-1 px-[15.4rem] pt-[8.1rem] pb-[5.5rem] flex flex-col gap-[6rem]">
+            <div className="bg-blue-1 px-[15.4rem] pt-[8.1rem] pb-[9.2rem] flex flex-col gap-[6rem]">
                 <div className="flex justify-between items-center mb-[6rem]">
                     <span className="text-black text-heading2">
                         미래의 동료가 생성한 큐카드를 살펴봐요
@@ -70,7 +70,7 @@ export default function CategoryPage() {
                     </div>
                 </div>
 
-                <div className="flex flex-wrap gap-[2.5rem]">
+                <div className="flex flex-wrap gap-[4rem]">
                     {customQuestionList.map((question: any) => (
                         <CustomQuestionCard
                             key={`category-card-${question.questionId}`}

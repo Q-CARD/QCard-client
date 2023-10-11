@@ -57,20 +57,22 @@ export default function CategoryQuestionPage({
     };
 
     return (
-        <div className="my-[6.8rem] flex flex-col items-center gap-[6rem] break-all">
-            <div className="w-[78.8rem] flex text-specialHeading mb-[0.8rem]">
-                <span className="text-blue-primary">Q.&nbsp;</span>
-                <span>{questionDetail?.title}</span>
+        <div className="w-full py-[6.8rem]">
+            <div className="flex flex-col items-center gap-[6rem] break-all">
+                <div className="w-[78.8rem] flex text-specialHeading mb-[0.8rem]">
+                    <span className="text-blue-primary">Q.&nbsp;</span>
+                    <span>{questionDetail?.title}</span>
+                </div>
+                <Textarea
+                    placeholder="알고 있는 만큼 자세히 작성해 보세요."
+                    register={register('answer', { required: true })}
+                />
+                <Button
+                    type="block"
+                    title="답변하기"
+                    onClick={handleSubmit(submitAnswer)}
+                />
             </div>
-            <Textarea
-                placeholder="알고 있는 만큼 자세히 작성해 보세요."
-                register={register('answer', { required: true })}
-            />
-            <Button
-                type="block"
-                title="답변하기"
-                onClick={handleSubmit(submitAnswer)}
-            />
         </div>
     );
 }

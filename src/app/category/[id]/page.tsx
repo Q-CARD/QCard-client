@@ -34,25 +34,27 @@ export default function CategoryDetailPage({
     };
 
     return (
-        <div className="w-full h-full py-[7.9rem] flex flex-col items-center">
-            <div className="w-[93rem] mb-[6.2rem] flex">
-                <span className="text-heading2 text-blue-primary">
-                    {categoryInfo?.name}
-                </span>
-            </div>
-            <div className="mx-auto flex flex-col">
-                {categoryQuestions.map((question: IQuestion, idx: number) => {
-                    return (
-                        <div
-                            key={`question-detail-card-${question.questionId}`}
-                        >
-                            <QuestionDetailCard questionInfo={question} />
-                            {idx !== categoryQuestions.length - 1 && (
+        <div className="w-full pt-[7.9rem] pb-[8.45rem]">
+            <div className="flex flex-col items-center">
+                <div className="w-[93rem] mb-[6.2rem] flex">
+                    <span className="text-heading2 text-blue-primary">
+                        {categoryInfo?.name}
+                    </span>
+                </div>
+                <div className="mx-auto flex flex-col mb-[calc(5rem-4.6rem)]">
+                    {categoryQuestions.map((question: IQuestion) => {
+                        return (
+                            <div
+                                key={`question-detail-card-${question.questionId}`}
+                            >
+                                <QuestionDetailCard questionInfo={question} />
                                 <hr className="w-full h-[0.2rem] my-[4.6rem] bg-grey-2" />
-                            )}
-                        </div>
-                    );
-                })}
+                            </div>
+                        );
+                    })}
+                </div>
+                {/* TODO - 페이지네이션 */}
+                <div></div>
             </div>
         </div>
     );

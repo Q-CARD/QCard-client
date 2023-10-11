@@ -58,44 +58,46 @@ export default function CategoryCustomPage() {
     };
 
     return (
-        <div className="relative w-full h-full mb-[6rem] flex flex-col items-center gap-[5.8rem]">
-            <div className="w-full h-[18rem] bg-blue-1 flex justify-center items-center">
-                <span className="text-black text-heading2 mr-[28.2rem]">
-                    미래의 동료가 생성한 큐카드를 살펴봐요
-                </span>
-                <Image
-                    src={PlusIcon}
-                    alt="plus-icon"
-                    width={50}
-                    height={50}
-                    onClick={() => {
-                        isOpen === false && openModal();
-                    }}
-                    className="cursor-pointer"
-                />
-            </div>
-            <div className="w-[93rem] flex flex-col">
-                <CategoryChips
-                    selectedCategory={selectedCategory}
-                    selectCategory={selectCategory}
-                />
-                <div className="w-full h-[6rem]"></div>
-                {dummy.map((question: any) => {
-                    return (
-                        <div
-                            key={`custom-question-detail-card-${question.questionId}`}
-                        >
-                            <CustomQuestionDetailCard data={question} />
-                            <hr className="w-full h-[0.2rem] my-[4.6rem] bg-grey-2" />
-                        </div>
-                    );
-                })}
-            </div>
-            {/* TODO - 페이지네이션 */}
-            <div></div>
+        <div className="w-full pb-[6rem]">
+            <div className="flex flex-col items-center gap-[5.8rem]">
+                <div className="w-full h-[18rem] py-[6.87rem] bg-blue-1 flex justify-center items-center">
+                    <span className="text-black text-heading2 mr-[28.2rem]">
+                        미래의 동료가 생성한 큐카드를 살펴봐요
+                    </span>
+                    <Image
+                        src={PlusIcon}
+                        alt="plus-icon"
+                        width={50}
+                        height={50}
+                        onClick={() => {
+                            isOpen === false && openModal();
+                        }}
+                        className="cursor-pointer"
+                    />
+                </div>
+                <div className="w-[93rem] flex flex-col">
+                    <CategoryChips
+                        selectedCategory={selectedCategory}
+                        selectCategory={selectCategory}
+                    />
+                    <div className="w-full h-[6rem]"></div>
+                    {dummy.map((question: any) => {
+                        return (
+                            <div
+                                key={`custom-question-detail-card-${question.questionId}`}
+                            >
+                                <CustomQuestionDetailCard data={question} />
+                                <hr className="w-full h-[0.2rem] my-[4.6rem] bg-grey-2" />
+                            </div>
+                        );
+                    })}
+                </div>
+                {/* TODO - 페이지네이션 */}
+                <div></div>
 
-            <div className={isOpen ? 'outside' : ''}>
-                <CustomQuestionModal open={isOpen} modalRef={modalRef} />
+                <div className={isOpen ? 'outside' : ''}>
+                    <CustomQuestionModal open={isOpen} modalRef={modalRef} />
+                </div>
             </div>
         </div>
     );
