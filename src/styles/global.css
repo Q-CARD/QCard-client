@@ -16,16 +16,6 @@
     src: url('/fonts/Inter-Bold.ttf') format('ttf');
 }
 
-/* custom scroll bar */
-::-webkit-scrollbar {
-    width: 3px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--grey-5);
-    border-radius: 5px;
-}
-
 :root {
     --background-color: #ffffff;
     --primary-blue: #4282ff;
@@ -60,6 +50,25 @@ body {
     color: #000000;
     font-family: 'Inter';
     background-color: var(--background-color);
+}
+
+/* custom scroll bar */
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--grey-4);
+    border-radius: 5px;
+}
+
+textarea::-webkit-scrollbar {
+    width: 4.38px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background: var(--grey-2);
 }
 
 @layer components {
