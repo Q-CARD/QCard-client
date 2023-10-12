@@ -74,7 +74,7 @@ export default function MyProfilePage() {
     const handleDeleteUser = () => {};
 
     return (
-        <div className="w-full h-full">
+        <div className="w-full h-[calc(100%-8.3rem)]">
             <div className="w-fit ml-[25%] mt-[8.3rem] flex flex-col items-center gap-[2.4rem] z-1">
                 <div className="relative mb-[8.1rem]">
                     <div

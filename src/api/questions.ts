@@ -5,9 +5,12 @@ export const getQuestionsCategory = async (category: string) => {
     return await http.GET(`/questions/categories/${category}`);
 };
 
-// 특정 질문 상세정보 반환
-export const getQuestion = async (questionId: number) => {
-    return await http.GET(`/questions/${questionId}`);
+// 특정 질문 상세정보 반환 (정렬)
+export const getQuestionById = async (
+    questionId: number,
+    sort?: 'SORT_HEART' | 'SORT_RECENT',
+) => {
+    return await http.GET(`/questions/${questionId}`, { sort: sort });
 };
 
 // 메인 화면에 사용되는 Question 반환
@@ -15,12 +18,27 @@ export const getQuestionsMain = async () => {
     return await http.GET(`/questions/main`);
 };
 
-// 내가 쓴 질문 리스트 반환
-export const getQuestionsMe = async (param: string) => {
+// question을 검색하여 관련 데이터를 반환
+export const getQuestions = async (
+    category?: string,
+    type?: 'TYPE_QCARD' | 'TYPE_CUSTOM',
+    mine?: boolean,
+    size?: number,
+    page?: number,
+) => {
     return await http.GET(`/questions`, {
-        category: param,
-        type: 'TYPE_CUSTOM',
-        mine: true,
-        size: 100, // 페이지네이션 적용
+        category: category,
+        type: type,
+        mine: mine,
+        size: size,
+        page: page,
     });
+};
+
+// 커스텀 질문 생성
+export const postQuestion = async (payload: {
+    title: string;
+    category: string;
+}) => {
+    return await http.POST(`/questions`, payload);
 };
