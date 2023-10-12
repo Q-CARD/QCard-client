@@ -34,3 +34,11 @@ export const getQuestions = async (
         page: page,
     });
 };
+
+// 커스텀 질문 생성
+export const postQuestion = async (payload: {
+    title: string;
+    category: string;
+}) => {
+    return await http.POST(`/questions`, payload);
+};

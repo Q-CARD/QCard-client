@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import CategoryChips from '@/components/common/CategoryChips';
 import CustomQuestionModal from '@/components/CustomQuestionModal';
@@ -13,34 +13,12 @@ import { categoryKeyToName } from '@/utils/utils';
 import { QUESTION_CATEGORY } from '@/constants';
 import PlusIcon from '@/assets/icons/icons-plus.png';
 import defaultImage from '@/assets/icons/icon-default-profile.png';
-
-const dummy = [
-    {
-        questionId: 119,
-        title: '네트워크 OSI 7계층에 대해서 설명해주세요.',
-        category: 'CATEGORY_NW',
-        type: 'TYPE_CUSTOM',
-        account: {
-            name: '네트워크 개발자',
-            email: 'ashley@gmail.com',
-        },
-        isMine: true,
-    },
-    {
-        questionId: 120,
-        title: '내꺼아닌 커스텀',
-        category: 'CATEGORY_OS',
-        type: 'TYPE_CUSTOM',
-        account: {
-            name: '시연시연',
-            email: 'ashleytest@gmail.com',
-        },
-        isMine: false,
-    },
-];
+import { getQuestions } from '@/api/questions';
 
 export default function CategoryCustomPage() {
-    const { isOpen, modalRef, openModal } = useModal();
+    const { isOpen, modalRef, openModal, closeModal } = useModal();
+
+    const [customQuestionList, setCustomQuestionList] = useState([]);
 
     const [selectedCategory, setSelectedCategory] = useState<{
         id: Number;
@@ -55,6 +33,18 @@ export default function CategoryCustomPage() {
             id: category.id,
             key: category.key,
         });
+    };
+
+    useEffect(() => {
+        if (!isOpen) {
+            loadCustomQuestions();
+        }
+    }, [selectedCategory, isOpen]);
+
+    const loadCustomQuestions = async () => {
+        const data = await getQuestions(selectedCategory.key, 'TYPE_CUSTOM');
+
+        setCustomQuestionList(data.content);
     };
 
     return (
@@ -81,7 +71,7 @@ export default function CategoryCustomPage() {
                         selectCategory={selectCategory}
                     />
                     <div className="w-full h-[6rem]"></div>
-                    {dummy.map((question: any) => {
+                    {customQuestionList.map((question: any) => {
                         return (
                             <div
                                 key={`custom-question-detail-card-${question.questionId}`}
@@ -96,7 +86,11 @@ export default function CategoryCustomPage() {
                 <div></div>
 
                 <div className={isOpen ? 'outside' : ''}>
-                    <CustomQuestionModal open={isOpen} modalRef={modalRef} />
+                    <CustomQuestionModal
+                        open={isOpen}
+                        modalRef={modalRef}
+                        closeModal={closeModal}
+                    />
                 </div>
             </div>
         </div>

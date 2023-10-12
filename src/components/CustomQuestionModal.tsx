@@ -1,15 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 import CategoryChips from './common/CategoryChips';
 import { Button, Textarea } from './common';
 import { QUESTION_CATEGORY } from '@/constants';
+import { postQuestion } from '@/api/questions';
 
 interface CustomQuestionModalProps {
     open: boolean;
     modalRef: React.RefObject<HTMLDivElement>;
+    closeModal: () => void;
+}
+
+interface IModalForm {
+    customQuestion: string;
 }
 
 // TODO - 영역박스 컴포넌트 분리
@@ -21,11 +27,12 @@ interface CustomQuestionModalProps {
 export default function CustomQuestionModal({
     open,
     modalRef,
+    closeModal,
 }: CustomQuestionModalProps) {
-    const { register, handleSubmit, resetField } = useForm();
+    const { register, handleSubmit, resetField } = useForm<IModalForm>();
 
     const [selectedCategory, setSelectedCategory] = useState<{
-        id: Number;
+        id: number;
         key: string;
     }>({
         id: QUESTION_CATEGORY[0].id,
@@ -40,11 +47,10 @@ export default function CustomQuestionModal({
     };
 
     useEffect(() => {
-        // 모달 입력 내용 초기화
-        resetModal();
+        resetModalInputs();
     }, [open]);
 
-    const resetModal = () => {
+    const resetModalInputs = () => {
         setSelectedCategory({
             id: QUESTION_CATEGORY[0].id,
             key: QUESTION_CATEGORY[0].key,
@@ -53,7 +59,22 @@ export default function CustomQuestionModal({
         resetField('customQuestion');
     };
 
-    const handleSubmitQuestion = () => {};
+    const handleSubmitQuestion: SubmitHandler<IModalForm> = async ({
+        customQuestion,
+    }: IModalForm) => {
+        const payload = {
+            title: QUESTION_CATEGORY[selectedCategory.id - 1].name,
+            category: customQuestion,
+        };
+
+        try {
+            const data = await postQuestion(payload);
+        } catch (e) {
+            alert('큐카드 생성에 실패했습니다.');
+        } finally {
+            closeModal();
+        }
+    };
 
     return (
         <div
