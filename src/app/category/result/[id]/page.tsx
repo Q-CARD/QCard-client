@@ -11,6 +11,7 @@ import ThumbsUpIcon from '@/assets/icons/icon-thumbsup.png';
 import ThumbsUpFillIcon from '@/assets/icons/icon-thumbsup-fill.png';
 import Image from 'next/image';
 import { deleteHearts, postHearts } from '@/api/hearts';
+import FolerOrangeImg from '@/assets/images/image-foler-orange.png';
 
 /**
  * @description 질문모음 > 개별 질문 페이지 (입력 후)
@@ -54,6 +55,27 @@ export default function CategoryResultPage({
         } catch (e) {}
     };
 
+    const toggleHeart = async (answerId: number, isHearted: boolean) => {
+        try {
+            if (isHearted) {
+                const data = await deleteHearts(answerId);
+
+                if (data.answerId) {
+                    alert('좋아요를 취소했습니다.');
+                }
+            } else {
+                const data = await postHearts(answerId);
+
+                if (data.answerId) {
+                    alert('좋아요를 눌렀습니다.');
+                }
+            }
+        } catch (e) {
+        } finally {
+            loadQuestionDetail();
+        }
+    };
+
     return (
         <div className="w-full py-[6.8rem]">
             <div className="flex justify-center">
@@ -90,14 +112,29 @@ export default function CategoryResultPage({
                             <span className="text-yellow-sub">A.&nbsp;</span>
                             <span>동료들의 답변도 살펴보세요</span>
                         </div>
-                        {otherAnswersList.map((answer: IAnswerHearted) => {
-                            return (
-                                <OtherAnswerCard
-                                    key={`other-answer-${answer.answerId}`}
-                                    data={answer}
+                        {otherAnswersList.length > 0 ? (
+                            otherAnswersList.map((answer: IAnswerHearted) => {
+                                return (
+                                    <OtherAnswerCard
+                                        key={`other-answer-${answer.answerId}`}
+                                        data={answer}
+                                        toggleHeart={toggleHeart}
+                                    />
+                                );
+                            })
+                        ) : (
+                            <div className="flex flex-col items-center gap-[3.2rem]">
+                                <Image
+                                    src={FolerOrangeImg}
+                                    alt="img-foler-pink"
+                                    width={165}
+                                    height={165}
                                 />
-                            );
-                        })}
+                                <span className="text-grey-5 text-heading4">
+                                    아직 등록된 동료들의 답변이 없어요.
+                                </span>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -105,7 +142,13 @@ export default function CategoryResultPage({
     );
 }
 
-function OtherAnswerCard({ data }: { data: any }) {
+function OtherAnswerCard({
+    data,
+    toggleHeart,
+}: {
+    data: any;
+    toggleHeart: (answerId: number, isHearted: boolean) => void;
+}) {
     const {
         answerId,
         type,
@@ -117,6 +160,7 @@ function OtherAnswerCard({ data }: { data: any }) {
         isHearted,
         isMine,
     } = data;
+
     return (
         <div className="flex flex-col gap-[3rem]">
             <div className="min-h-[7rem] flex items-center gap-[2.6rem]">
@@ -153,9 +197,7 @@ function OtherAnswerCard({ data }: { data: any }) {
                         width={28}
                         height={28}
                         className="cursor-pointer"
-                        onClick={async () => {
-                            await postHearts(answerId);
-                        }}
+                        onClick={() => toggleHeart(answerId, true)}
                     />
                 ) : (
                     <Image
@@ -164,9 +206,7 @@ function OtherAnswerCard({ data }: { data: any }) {
                         width={28}
                         height={28}
                         className="cursor-pointer"
-                        onClick={async () => {
-                            await deleteHearts(answerId);
-                        }}
+                        onClick={() => toggleHeart(answerId, false)}
                     />
                 )}
                 <span className="text-grey-5 text-[1.8rem] font-semibold leading-[2.4rem]">
