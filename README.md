@@ -71,7 +71,13 @@
 
 #### 4. 질문 모음집 화면
 
-(추가 예정)
+<img width="400" alt="image" src="https://github.com/Q-CARD/QCard-client/assets/71035113/7603694a-f2fe-48e2-9a22-aeaea8f0c7b1">
+ <img width="300" alt="Screenshot 2023-10-16 at 10 00 05 PM" src="https://github.com/Q-CARD/QCard-client/assets/71035113/b7016316-95d2-49dd-8e34-a3e68828e307"> <img width="300" alt="Screenshot 2023-10-16 at 10 00 11 PM" src="https://github.com/Q-CARD/QCard-client/assets/71035113/d2925f30-b4aa-4392-b140-2dcf8693a8d9">
+
+- **큐카드 둘러보기**: 미래의 동료가 작성한 큐카드를 살펴볼 수 있습니다.
+- **카테고리별 질문 모음집**: 카테고리 선택 후, 질문에 답변을 작성하면 [마이페이지] - [내가 쓴 답변]에서 모아볼 수 있습니다.
+
+<br>
 
 #### 5. 마이페이지 화면
 <img width="400" alt="마이페이지-프로필 수정" src="https://github.com/Q-CARD/QCard-client/assets/71035113/0981c49b-05c9-43e1-baba-9068d3161c6a"> <img width="400" alt="마이페이지 -나의 답변" src="https://github.com/Q-CARD/QCard-client/assets/71035113/6036a7e8-e301-4d01-972f-e01a3ff58670">
