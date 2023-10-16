@@ -12,6 +12,5 @@ const api = wretch(process.env.NEXT_PUBLIC_PRESIGNED_URL)
     .resolve((r: any) => r.json() as any);
 
 export const postPresignedURL = async (payload: any) => {
-    console.log(payload);
     return await api.url('/default/presigned').post(payload);
 };
