@@ -38,6 +38,7 @@ export const ProfileModal = ({
             if (data) {
                 resetUser();
                 localStorage.removeItem(CONSTANTS.ACCESS_TOKEN);
+                localStorage.removeItem(CONSTANTS.REFRESH_TOKEN);
                 setIsLogin(false);
 
                 setOpen(false);

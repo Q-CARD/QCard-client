@@ -4,13 +4,14 @@ import { CONSTANTS } from '@/constants/common';
 import FormDataAddon from 'wretch/addons/formData';
 import QueryStringAddon from 'wretch/addons/queryString';
 import { getAccountsLogout, getAccountsReissue } from '@/api/accounts';
+import { useRouter } from 'next/navigation';
 
 let token = null;
 let refreshToken = null;
 if (typeof window !== 'undefined') {
     // execute only client side
     token = localStorage.getItem(CONSTANTS.ACCESS_TOKEN);
-    refreshToken = localStorage.getItem('f');
+    refreshToken = localStorage.getItem(CONSTANTS.REFRESH_TOKEN);
 }
 
 const api = wretch(process.env.NEXT_PUBLIC_API_BASE_URL)
@@ -25,7 +26,10 @@ const api = wretch(process.env.NEXT_PUBLIC_API_BASE_URL)
 
             if (data) {
                 localStorage.setItem(CONSTANTS.ACCESS_TOKEN, data.accessToken);
-                localStorage.setItem('f', data.refreshToken);
+                localStorage.setItem(
+                    CONSTANTS.REFRESH_TOKEN,
+                    data.refreshToken,
+                );
 
                 return originalRequest.auth(data.accessToken).fetch().json();
             }
@@ -34,6 +38,7 @@ const api = wretch(process.env.NEXT_PUBLIC_API_BASE_URL)
             if (data) {
                 alert('유효하지 않은 토큰입니다.');
                 localStorage.clear();
+                useRouter().push('/');
             }
         }
     });
