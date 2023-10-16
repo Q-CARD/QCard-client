@@ -3,67 +3,63 @@ import wretch from 'wretch';
 import { CONSTANTS } from '@/constants/common';
 import FormDataAddon from 'wretch/addons/formData';
 import QueryStringAddon from 'wretch/addons/queryString';
-import { getAccountsReissue } from '@/api/accounts';
+import { getAccountsLogout, getAccountsReissue } from '@/api/accounts';
 
 let token = null;
+let refreshToken = null;
 if (typeof window !== 'undefined') {
     // execute only client side
     token = localStorage.getItem(CONSTANTS.ACCESS_TOKEN);
+    refreshToken = localStorage.getItem('f');
 }
 
 const api = wretch(process.env.NEXT_PUBLIC_API_BASE_URL)
     .auth(`${token}`)
     .errorType('json')
+    .resolve((r: any) => r.json() as any)
+    .catcher(500, async (err: any) => {
+        // TODO - response body 확인, refresh token 위치 변경.
+        // 현재 500 에러는 모두 reissue. 정상 작동은 response.details === "JWT EXPIRED" 일때만 reissue 필요.
+        try {
+            const data = await getAccountsReissue();
+
+            if (data) {
+                localStorage.setItem(CONSTANTS.ACCESS_TOKEN, data.accessToken);
+                localStorage.setItem('f', data.refreshToken);
+            }
+        } catch (e) {
+            const data = await getAccountsLogout();
+            localStorage.clear();
+        }
+    });
+
+const reIssueApi = wretch(process.env.NEXT_PUBLIC_API_BASE_URL)
+    .auth(`${refreshToken}`)
+    .errorType('json')
     .resolve((r: any) => r.json() as any);
-
-const reAuthOnTokenExpired = api;
-
-// catcher(
-//     500,
-//     async (error, originalRequest) => {
-//         console.log(error);
-//         const token = await getAccountsReissue();
-
-//         // return originalRequest
-//         //     .auth(`Bearer ${token}`)
-//         //     .fetch() // Replay the request with original method
-//         //     // .unauthorized((err) => {
-//         //     //     throw err;
-//         //     // });
-
-//         // then go ... (see below)
-//     },
-// );
 
 export const http = {
     GET: function get(url: string, query?: any) {
         return query
-            ? reAuthOnTokenExpired
-                  .addon(QueryStringAddon)
-                  .query(query)
-                  .get(url)
-                  .error(0, (err: any) => console.log(err))
-            : reAuthOnTokenExpired
-                  .get(url)
-                  .error(0, (err: any) => console.log(err));
+            ? api.addon(QueryStringAddon).query(query).get(url)
+            : api.get(url);
     },
     POST: function post(url: string, body?: any) {
-        return reAuthOnTokenExpired.url(url).post(body);
+        return api.url(url).post(body);
     },
     PATCH: function patch(url: string, body?: any) {
-        return reAuthOnTokenExpired.url(url).patch(body);
+        return api.url(url).patch(body);
     },
     PUT: function put(url: string, body?: any, params?: any) {
         return params.type === 'record'
-            ? reAuthOnTokenExpired
-                  .addon(FormDataAddon)
-                  .formData(body)
-                  .url(url)
-                  .put()
-            : reAuthOnTokenExpired.url(url).put(body);
+            ? api.addon(FormDataAddon).formData(body).url(url).put()
+            : api.url(url).put(body);
     },
     // delete is a reserved word in JS.
     DELETE: function del(url: string) {
-        return reAuthOnTokenExpired.delete(url);
+        return api.delete(url);
+    },
+    REISSUE: function getReIssue(url: string) {
+        return reIssueApi.get(url);
     },
 };
