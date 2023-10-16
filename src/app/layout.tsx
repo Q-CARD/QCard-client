@@ -1,6 +1,5 @@
 // 어플리케이션 공통 레이아웃
 import type { Metadata } from 'next';
-import Favicon from './favicon.ico';
 import { siteConfig } from '@/utils/site';
 
 import Providers from '@/components/adapter/Provider';
@@ -14,14 +13,24 @@ export const metadata: Metadata = {
         default: siteConfig.name,
         template: `%s - ${siteConfig.name}`,
     },
-    icons: [{ rel: 'icon', url: Favicon.src }],
+    icons: {
+        icon: '/favicon.ico',
+    },
     description: siteConfig.description,
+    themeColor: [
+        { media: '(prefers-color-scheme: light)', color: 'white' },
+        { media: '(prefers-color-scheme: dark)', color: 'black' },
+    ],
     keywords: [
         'Tech Interview',
+        'Self Interview Practice',
         'Next.js',
         'Mock Interview',
         'Chat GPT',
+        'Whisper API',
         'QCard',
+        'Tailwind CSS',
+        'Server Components',
     ],
     authors: [
         {
@@ -34,6 +43,21 @@ export const metadata: Metadata = {
         },
     ],
     creator: 'hyosin-Jang',
+    openGraph: {
+        // openGraph는 SNS로 공유될 때 표시되는 내용
+        type: 'website',
+        locale: 'ko_KR', // 사이트 언어 선택 - 기본은 en-US
+        url: siteConfig.url,
+        title: siteConfig.name,
+        description: siteConfig.description, // 사이트 설명
+        siteName: siteConfig.name,
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: siteConfig.name,
+        description: siteConfig.description,
+        creator: 'hyosin-Jang',
+    },
 };
 
 export default function RootLayout({
