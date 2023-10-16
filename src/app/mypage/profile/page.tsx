@@ -61,7 +61,7 @@ export default function MyProfilePage() {
             });
 
             if (data) {
-                setPresignedUrl(data);
+                setPresignedUrl(data.split('?')[0]);
 
                 return true;
             }
@@ -75,15 +75,13 @@ export default function MyProfilePage() {
         nickname,
         email,
     }: ProfileFormValues) => {
-        const res = await loadPresignedUrl();
+        const res: boolean | undefined = await loadPresignedUrl();
 
         if (res) {
             const payload = {
-                nickname: nickname,
+                name: nickname,
                 email: email,
                 profile: presignedUrl,
-                // profile:
-                //     'https://publicdfsfd.s3.ap-northeast-2.amazonaws.com/123.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQELVWYZT7WXZ6A4A%2F20231016%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Date=20231016T093237Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&x-id=PutObject&X-Amz-Signature=4b023becd9a8df69935812b506e5ddebcee456cc240b092c621a1128870ba273',
             };
 
             try {
