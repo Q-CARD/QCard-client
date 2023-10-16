@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { type Metadata } from 'next';
 import Link from 'next/link';
 import { Footer, Button } from '@/components/common';
 import { DailyQuestionCard } from '@/components/card/DailyQuestionCard';
@@ -11,8 +12,10 @@ import ImgCardDeck3 from '@/assets/images/image-card-deck-3.png';
 import { getQuestionsMain } from '@/api/questions';
 import { IQuestionMain } from '@/types';
 
-export const metadata = {
+export const metadata: Metadata = {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL!),
     title: 'QCard Home',
+    description: 'Start QCard!',
 };
 
 export default async function Home() {
