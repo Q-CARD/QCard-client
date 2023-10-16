@@ -21,3 +21,8 @@ export const getAccountsProfile = async () => {
 export const putAccountsProfile = async (payload: any) => {
     return await http.PUT(`/accounts/profile`, payload);
 };
+
+// 현재 로그인한 유저의 프로필 정보 반환 (이메일도 표시)
+export const getAccountsReissue = async () => {
+    return await http.GET(`/accounts/reissue`);
+};
