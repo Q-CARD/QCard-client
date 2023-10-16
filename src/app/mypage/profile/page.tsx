@@ -12,6 +12,7 @@ import { getAccountsProfile, putAccountsProfile } from '@/api/accounts';
 import { BsCamera } from 'react-icons/bs';
 import defaultImage from '@/assets/icons/icon-default-profile.png';
 import { ERROR_MESSAGES, REGEX } from '@/constants';
+import { postPresignedURL } from '@/api/presigned';
 
 interface ProfileFormValues {
     nickname: string;
@@ -33,22 +34,39 @@ export default function MyProfilePage() {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [profileImgURL, setProfileImgURL] = useState<string>(''); // 미리보기용 임시 url
     const [profileImgFile, setProfileImgFile] = useState<File>();
+    const [presignedUrl, setPresignedUrl] = useState<string>('');
 
     // TODO - 이미지 업로드 api 연동
     const handleProfileImgChange = (e: React.ChangeEvent) => {
-        const file = (e.target as HTMLInputElement).files?.[0];
+        const imgMeta = (e.target as HTMLInputElement).files?.[0];
 
-        if (file) {
+        if (imgMeta) {
             const fileReader = new FileReader();
-            fileReader.readAsDataURL(file);
+            fileReader.readAsDataURL(imgMeta);
             fileReader.onload = (data) => {
                 setProfileImgURL(
                     typeof data.target?.result === 'string'
                         ? data.target?.result
                         : '',
                 );
-                setProfileImgFile(file);
+                setProfileImgFile(imgMeta);
             };
+        }
+    };
+
+    const loadPresignedUrl = async () => {
+        try {
+            const data = await postPresignedURL({
+                fileName: profileImgFile?.name,
+            });
+
+            if (data) {
+                setPresignedUrl(data);
+
+                return true;
+            }
+        } catch (e) {
+            alert('프로필 이미지 등록에 실패했습니다.(1)');
         }
     };
 
@@ -57,24 +75,34 @@ export default function MyProfilePage() {
         nickname,
         email,
     }: ProfileFormValues) => {
-        const payload = {
-            nickname: nickname,
-            email: email,
-            // profile: ,
-        };
+        const res = await loadPresignedUrl();
 
-        // try {
-        //     await putAccountsProfile(payload);
+        if (res) {
+            const payload = {
+                nickname: nickname,
+                email: email,
+                profile: presignedUrl,
+                // profile:
+                //     'https://publicdfsfd.s3.ap-northeast-2.amazonaws.com/123.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQELVWYZT7WXZ6A4A%2F20231016%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Date=20231016T093237Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&x-id=PutObject&X-Amz-Signature=4b023becd9a8df69935812b506e5ddebcee456cc240b092c621a1128870ba273',
+            };
 
-        //     alert('프로필 정보가 수정되었습니다.');
-        // } catch (e) {}
+            try {
+                const data = await putAccountsProfile(payload);
+
+                if (data) {
+                    alert('프로필 정보가 수정되었습니다.');
+                }
+            } catch (e) {
+                alert('프로필 이미지 등록에 실패했습니다.(2)');
+            }
+        }
     };
 
     // TODO - 유저 탈퇴 api 연동 - 탈퇴 api 요청.
     const handleDeleteUser = () => {};
 
     return (
-        <div className="w-full h-[calc(100%-8.3rem)]">
+        <div className="w-full h-full">
             <div className="w-fit ml-[25%] mt-[8.3rem] flex flex-col items-center gap-[2.4rem] z-1">
                 <div className="relative mb-[8.1rem]">
                     <div
