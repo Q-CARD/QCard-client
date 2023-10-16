@@ -39,7 +39,10 @@ export default function LoginPage() {
 
             if (data.accessToken) {
                 localStorage.setItem(CONSTANTS.ACCESS_TOKEN, data.accessToken);
-                localStorage.setItem('f', data.refreshToken);
+                localStorage.setItem(
+                    CONSTANTS.REFRESH_TOKEN,
+                    data.refreshToken,
+                );
 
                 const userdata = await getAccountsProfile();
 
