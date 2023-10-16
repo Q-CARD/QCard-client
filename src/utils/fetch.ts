@@ -17,7 +17,7 @@ const api = wretch(process.env.NEXT_PUBLIC_API_BASE_URL)
     .auth(`${token}`)
     .errorType('json')
     .resolve((r: any) => r.json() as any)
-    .catcher(500, async (err: any) => {
+    .catcher(500, async (err: any, originalRequest) => {
         // TODO - response body 확인, refresh token 위치 변경.
         // 현재 500 에러는 모두 reissue. 정상 작동은 response.details === "JWT EXPIRED" 일때만 reissue 필요.
         try {
@@ -26,10 +26,15 @@ const api = wretch(process.env.NEXT_PUBLIC_API_BASE_URL)
             if (data) {
                 localStorage.setItem(CONSTANTS.ACCESS_TOKEN, data.accessToken);
                 localStorage.setItem('f', data.refreshToken);
+
+                return originalRequest.auth(data.accessToken).fetch().json();
             }
         } catch (e) {
             const data = await getAccountsLogout();
-            localStorage.clear();
+            if (data) {
+                alert('유효하지 않은 토큰입니다.');
+                localStorage.clear();
+            }
         }
     });
 
