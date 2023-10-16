@@ -21,3 +21,13 @@ export const getAccountsProfile = async () => {
 export const putAccountsProfile = async (payload: any) => {
     return await http.PUT(`/accounts/profile`, payload);
 };
+
+// 토큰 재발급 api
+export const getAccountsReissue = async () => {
+    return await http.REISSUE(`/accounts/reissue`);
+};
+
+// 로그아웃 api
+export const getAccountsLogout = async () => {
+    return await http.REISSUE(`/accounts/logout`);
+};

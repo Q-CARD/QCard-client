@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 import { Button } from './Button';
+import { getAccountsLogout } from '@/api/accounts';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { isLoginAtom, userAtom } from '@/store/recoil';
 import defaultImage from '@/assets/icons/icon-default-profile.png';
@@ -30,16 +31,23 @@ export const ProfileModal = ({
         router.push('/mypage/profile');
     };
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
         // TODO - logout api 연동
-        resetUser();
-        localStorage.removeItem(CONSTANTS.ACCESS_TOKEN);
-        setIsLogin(false);
+        try {
+            const data = await getAccountsLogout();
+            if (data) {
+                resetUser();
+                localStorage.removeItem(CONSTANTS.ACCESS_TOKEN);
+                setIsLogin(false);
 
-        setOpen(false);
+                setOpen(false);
 
-        alert('로그아웃 되었습니다.');
-        router.push('/');
+                alert(data.message);
+                router.push('/');
+            }
+        } catch (e) {
+            alert('로그아웃에 실패했습니다.');
+        }
     };
 
     if (!open) {
