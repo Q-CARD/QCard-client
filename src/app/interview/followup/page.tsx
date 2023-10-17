@@ -82,27 +82,25 @@ export default function InterviewFollowupPage() {
         return DEFAULT_QUESTION;
     };
 
+    // 답변 세개를 한번에 보내야하므로 Promise.all() 사용해 비동기 요청 한번에 처리
     const submitAnswer: SubmitHandler<IFormInput> = async (
         formInput: IFormInput,
     ) => {
         if (!saveAndResetAnswer(formInput)) return;
 
-        for (
-            let questionCount = 1;
-            questionCount <= FOLLOWUP_QUESTION_COUNT;
-            questionCount++
-        ) {
-            let body: IAnswerFollwupQuestion = {
-                sequence: questionCount,
-                question_id: questionList?.id,
-                answer:
-                    questionCount == FOLLOWUP_QUESTION_COUNT
-                        ? watch(ANSWER_REGISTER_KEY) // 마지막은 state에 안 담긴 상태
-                        : answerList?.[questionCount - 1],
-            };
-
-            await submitAdditionalAnswer(body);
-        }
+        const res = await Promise.all(
+            [1, 2, 3].map(async (questionCount) => {
+                let body: IAnswerFollwupQuestion = {
+                    sequence: questionCount,
+                    question_id: questionList?.id,
+                    answer:
+                        questionCount == FOLLOWUP_QUESTION_COUNT
+                            ? watch(ANSWER_REGISTER_KEY) // 마지막은 state에 안 담긴 상태
+                            : answerList?.[questionCount - 1],
+                };
+                return await submitAdditionalAnswer(body);
+            }),
+        );
     };
 
     const handleNextButtonClick = () => {
