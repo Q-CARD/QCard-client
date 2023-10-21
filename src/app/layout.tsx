@@ -78,6 +78,10 @@ export default function RootLayout({
                     name="google-adsense-account"
                     content="ca-pub-8512927500598229"
                 ></meta>
+                <meta
+                    name="google-site-verification"
+                    content="dDRif1v0FSnJR0zFW5tQQgJenejegs8x4ZC90_IRDXo"
+                />
             </head>
             <body className="min-h-screen">
                 <Providers>
