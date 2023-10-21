@@ -26,10 +26,6 @@ export default function FollwupCard({
 
     const { register, handleSubmit, reset } = useForm<IFormInput>();
 
-    const handleAnswerList = (answer: string) => {
-        setAnswerList([...answerList, answer]);
-    };
-
     // 다음 질문 찾기
     const getNextQuestion = () => {
         let regEx = new RegExp(`additional_question_${questionCnt}`);
@@ -57,8 +53,6 @@ export default function FollwupCard({
 
     const checkAnswerCount = () => {
         if (answerList.length < 3) {
-            // setQuestionCnt(1);
-            //handleAnswerList(data?.followup_answer); // answer에 추가
             setQuestionCnt((prev) => prev + 1); // 다음문제로 이동
             reset();
             return false;
@@ -81,14 +75,6 @@ export default function FollwupCard({
             }
         }
     };
-    // 답변이 세개가 되면 전송
-    // React.useEffect(() => {
-    //     submitAnswer();
-    // }, [answerList.length]);
-
-    // React.useEffect(() => {
-    //     getAllInterviewInfo();
-    // }, []);
 
     return (
         <div className="flex flex-col w-full">
@@ -99,9 +85,9 @@ export default function FollwupCard({
                 </div>
             </div>
             <form onSubmit={handleSubmit(submitAnswer)}>
-                {/** TODO: textarea width, height 변경 */}
                 <Textarea
-                    placeholder="자세히 입력할 수록 좋아요"
+                    type="short"
+                    placeholder="자세히 입력할수록 좋아요"
                     register={register('followup_answer', { required: true })}
                 />
                 <button type="submit">다음</button>

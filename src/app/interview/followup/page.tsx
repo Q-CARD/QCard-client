@@ -71,7 +71,6 @@ export default function InterviewFollowupPage() {
         return true;
     };
 
-    // TODO: default answer 등록하기
     const getNextQuestion = (): string => {
         if (questionList) {
             let questionKey: keyof IAnswerInterview = Object.keys(

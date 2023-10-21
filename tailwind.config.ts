@@ -66,6 +66,10 @@ const config: Config = {
                     '36x',
                     { fontWeight: '400', lineHeight: '46px' },
                 ],
+                bodyTextarea: [
+                    '20px',
+                    { fontWeight: '500', lineHeight: '52px' },
+                ],
                 // input
                 input: ['16px', { fontWeight: '400', lineHeight: '18px' }],
                 // button
