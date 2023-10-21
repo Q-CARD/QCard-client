@@ -3,6 +3,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { Button } from '@/components/common';
 import { useState, useEffect } from 'react';
 
 import ImgCelebrateTop from '@/assets/images/image-celebrate-top.png';
@@ -43,12 +44,9 @@ export default function InterviewFinishPage() {
                     loading="lazy"
                 />
             </div>
-            {/*TODO: 버튼 컴포넌트 적용 */}
-            <button className="w-fit mt-[5.7rem] py-[2.4rem] px-[3.6rem] bg-blue-primary text-specialHeading3 text-white rounded-[4.7rem]">
-                <Link href="/" className="flex items-center gap-[8px]">
-                    홈으로 돌아가기
-                </Link>
-            </button>
+            <Link href="/" className="flex items-center gap-[8px]">
+                <Button type="long" title=" 홈으로 돌아가기" />
+            </Link>
         </section>
     );
 }

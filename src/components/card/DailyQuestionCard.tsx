@@ -25,8 +25,7 @@ export function DailyQuestionCard({ question }: DailyQuestionCardProps) {
                 <span className="w-full text-heading2 text-black break-all">
                     {title}
                 </span>
-                {/* TODO: 버튼 padding 속성 추가 */}
-                <Button type="round" title="답변하기" />
+                <Button type="long" title="답변하기" />
             </div>
         </div>
     );

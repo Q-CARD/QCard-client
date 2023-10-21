@@ -73,7 +73,7 @@ export default async function Home() {
                         height={703}
                     />
                     <Link href="/interview">
-                        <Button type="round" title="모의 면접 바로가기" />
+                        <Button type="long" title="모의 면접 바로가기" />
                     </Link>
                 </div>
             </section>
@@ -90,9 +90,8 @@ export default async function Home() {
                         width={1131}
                         height={707}
                     />
-                    {/* TODO: 버튼 padding 속성 추가 */}
                     <Link href="/category">
-                        <Button type="round" title="큐카드 모음 바로가기" />
+                        <Button type="long" title="큐카드 모음 바로가기" />
                     </Link>
                 </div>
             </section>
