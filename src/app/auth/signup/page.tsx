@@ -3,11 +3,10 @@
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
-import { Input } from '@/components/Input';
-import { Button } from '@/components/Button';
+import { Button, Input } from '@/components/common';
 import ValidationMessage from '@/components/ValidationMessage';
-import { postSignUp } from '@/api/account';
-import { REGEX } from '@/constants/regex';
+import { postSignUp } from '@/api/accounts';
+import { ERROR_MESSAGES, REGEX } from '@/constants';
 
 interface SignupFormValues {
     nickname: string;
@@ -62,7 +61,7 @@ export default function SignUpPage() {
                     required: true,
                     pattern: {
                         value: REGEX.EMAIL,
-                        message: '이메일 형식을 입력해주세요.',
+                        message: ERROR_MESSAGES.NOT_MATCH_REGEX.EMAIL,
                     },
                 })}
             />
@@ -72,8 +71,17 @@ export default function SignUpPage() {
             <Input
                 type="password"
                 placeholder="비밀번호"
-                register={register('password', { required: true })}
+                register={register('password', {
+                    required: true,
+                    pattern: {
+                        value: REGEX.PW,
+                        message: ERROR_MESSAGES.NOT_MATCH_REGEX.PW,
+                    },
+                })}
             />
+            {errors.password?.message && (
+                <ValidationMessage message={errors.password.message} />
+            )}
             <Input
                 type="password"
                 placeholder="비밀번호 확인"
@@ -83,7 +91,7 @@ export default function SignUpPage() {
                         if (!watch('password')) return;
                         return (
                             passwordConfirm === watch('password') ||
-                            '비밀번호가 일치하지 않습니다.'
+                            ERROR_MESSAGES.PW_CONFIRM_NOT_MATCH
                         );
                     },
                 })}
@@ -91,11 +99,13 @@ export default function SignUpPage() {
             {errors.passwordConfirm?.message && (
                 <ValidationMessage message={errors.passwordConfirm.message} />
             )}
-            <Button
-                type="block"
-                title="회원가입"
-                onClick={handleSubmit(handleSubmitSignup)}
-            />
+            <div className="my-[1.6rem]">
+                <Button
+                    type="block"
+                    title="회원가입"
+                    onClick={handleSubmit(handleSubmitSignup)}
+                />
+            </div>
         </form>
     );
 }

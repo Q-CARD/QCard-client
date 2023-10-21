@@ -1,10 +1,9 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { IoIosArrowForward } from 'react-icons/io';
 
-import { parseCategoryName } from '@/utils/parseData';
 import { IQuestion } from '@/types';
+import { Button } from '@/components/common';
 
 interface DailyQuestionCardProps {
     question: IQuestion;
@@ -13,24 +12,22 @@ interface DailyQuestionCardProps {
 export function DailyQuestionCard({ question }: DailyQuestionCardProps) {
     const router = useRouter();
 
-    const { questionId, title, category } = question;
+    const { questionId, title } = question;
 
     return (
         <div
-            className="w-[86rem] h-[31.6rem] px-[1.6rem] rounded-[2rem] border border-[0.1rem] border-grey-4 cursor-pointer flex items-center justify-end gap-[0.8rem]"
+            className="w-[93rem] h-[42.2rem] py-[10rem] px-[13.6rem] rounded-[1rem] bg-white cursor-pointer flex flex-col items-center gap-[10rem]"
             onClick={() => {
                 router.push(`/category/question/${questionId}`);
             }}
         >
-            <div className="w-[76.4rem] flex flex-col items-center gap-[2rem] text-center">
-                <span className="w-full text-specialHeading text-black break-all">
+            <div className="w-[76.4rem] flex flex-col items-center gap-[10rem] text-center">
+                <span className="w-full text-heading2 text-black break-all">
                     {title}
                 </span>
-                <div className="w-[8.3rem] h-[2.5rem] text-[1rem] font-semibold leading-[2.5rem] text-white bg-blue-primary rounded-[2rem]">
-                    {parseCategoryName(category)}
-                </div>
+                {/* TODO: 버튼 padding 속성 추가 */}
+                <Button type="round" title="답변하기" />
             </div>
-            <IoIosArrowForward size={24} color="var(--black)" />
         </div>
     );
 }

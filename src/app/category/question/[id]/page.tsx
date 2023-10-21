@@ -1,16 +1,17 @@
-// 질문 상세 페이지_입력 전
 'use client';
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
-import { Button } from '@/components/Button';
-import { Textarea } from '@/components/Textarea';
-import { getQuestion } from '@/api/question';
-import { postAnswers } from '@/api/answer';
+import { Button, Textarea } from '@/components/common';
+import { getQuestionById } from '@/api/questions';
+import { postAnswers } from '@/api/answers';
 import { IQuestionDetail } from '@/types';
 
+/**
+ * @description 질문모음 > 개별 질문 페이지 (입력 전)
+ */
 export default function CategoryQuestionPage({
     params,
 }: {
@@ -20,9 +21,7 @@ export default function CategoryQuestionPage({
 
     const { register, handleSubmit } = useForm();
 
-    const [questionDetail, setQuestionDetail] = useState<
-        IQuestionDetail | undefined
-    >();
+    const [questionDetail, setQuestionDetail] = useState<any>();
 
     useEffect(() => {
         loadQuestionDetail();
@@ -31,9 +30,12 @@ export default function CategoryQuestionPage({
     // TODO - question,answer 페이지 중복 호출 개선
     const loadQuestionDetail = async () => {
         try {
-            const data = await getQuestion(Number(params.id));
+            const data = await getQuestionById(
+                Number(params.id),
+                'SORT_RECENT',
+            );
 
-            setQuestionDetail(data);
+            setQuestionDetail(data.question);
         } catch (e) {}
     };
 
@@ -55,20 +57,22 @@ export default function CategoryQuestionPage({
     };
 
     return (
-        <div className="my-[12.8rem] flex flex-col items-center gap-[3.2rem]">
-            <div className="text-specialHeading mb-[0.8rem]">
-                <span className="text-blue-primary">Q. </span>
-                <span>{questionDetail?.question?.title}</span>
+        <div className="w-full py-[6.8rem]">
+            <div className="flex flex-col items-center gap-[6rem] break-all">
+                <div className="w-[78.8rem] flex text-specialHeading mb-[0.8rem]">
+                    <span className="text-blue-primary">Q.&nbsp;</span>
+                    <span>{questionDetail?.title}</span>
+                </div>
+                <Textarea
+                    placeholder="알고 있는 만큼 자세히 작성해 보세요."
+                    register={register('answer', { required: true })}
+                />
+                <Button
+                    type="block"
+                    title="답변하기"
+                    onClick={handleSubmit(submitAnswer)}
+                />
             </div>
-            <Textarea
-                placeholder="자세히 입력할 수록 좋아요"
-                register={register('answer', { required: true })}
-            />
-            <Button
-                type="block"
-                title="등록하기"
-                onClick={handleSubmit(submitAnswer)}
-            />
         </div>
     );
 }

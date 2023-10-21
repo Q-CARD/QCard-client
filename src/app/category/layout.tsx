@@ -3,5 +3,5 @@ interface CategoryLayoutProps {
 }
 
 export default function CategoryLayout({ children }: CategoryLayoutProps) {
-    return <div className="w-screen y-full">{children}</div>;
+    return <div className="w-screen h-[calc(100vh-11.2rem)]">{children}</div>;
 }

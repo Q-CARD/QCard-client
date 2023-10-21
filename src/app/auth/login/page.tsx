@@ -3,14 +3,13 @@
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
-import { Input } from '@/components/Input';
-import { Button } from '@/components/Button';
+import { Button, Input } from '@/components/common';
 import ValidationMessage from '@/components/ValidationMessage';
-import { getAccountsProfile, postSignIn } from '@/api/account';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { getAccountsProfile, postSignIn } from '@/api/accounts';
+import { useSetRecoilState } from 'recoil';
 import { userAtom, isLoginAtom } from '@/store/recoil';
-import { ACCESS_TOKEN } from '@/constants/constants';
-import { REGEX } from '@/constants/regex';
+import { CONSTANTS } from '@/constants/common';
+import { ERROR_MESSAGES, REGEX } from '@/constants';
 
 interface LoginFormValues {
     email: string;
@@ -26,8 +25,8 @@ export default function LoginPage() {
         formState: { errors },
     } = useForm<LoginFormValues>();
 
-    const [userData, setUserData] = useRecoilState(userAtom);
-    const handleLogin = useSetRecoilState(isLoginAtom);
+    const setUserData = useSetRecoilState(userAtom);
+    const setIsLogin = useSetRecoilState(isLoginAtom);
 
     const handleSubmitLogin = async ({ email, password }: LoginFormValues) => {
         const payload = {
@@ -38,10 +37,9 @@ export default function LoginPage() {
         try {
             const data = await postSignIn(payload);
 
-            // TODO - api 성공 응답 code 요청드리기
             if (data.accessToken) {
-                localStorage.setItem(ACCESS_TOKEN, data.accessToken);
-                // localStorage.setItem('REFRESH_TOKEN', data.refreshToken);
+                localStorage.setItem(CONSTANTS.ACCESS_TOKEN, data.accessToken);
+                localStorage.setItem('f', data.refreshToken);
 
                 const userdata = await getAccountsProfile();
 
@@ -49,13 +47,18 @@ export default function LoginPage() {
                     setUserData({
                         nickname: userdata.name,
                         email: userdata.email,
+                        profileImg: userdata.profile,
                     });
-                    handleLogin(true);
+
+                    setIsLogin(true);
                 }
 
                 router.push('/');
             }
-        } catch (e) {}
+        } catch (e: any) {
+            // const errorResponse = JSON.parse(e.message);
+            // alert(errorResponse.details);
+        }
     };
 
     const moveToSignup = () => {
@@ -70,7 +73,7 @@ export default function LoginPage() {
                     required: true,
                     pattern: {
                         value: REGEX.EMAIL,
-                        message: '이메일 형식을 입력해주세요.',
+                        message: ERROR_MESSAGES.NOT_MATCH_REGEX.EMAIL,
                     },
                 })}
             />
@@ -80,13 +83,24 @@ export default function LoginPage() {
             <Input
                 type="password"
                 placeholder="비밀번호"
-                register={register('password', { required: true })}
+                register={register('password', {
+                    required: true,
+                    pattern: {
+                        value: REGEX.PW,
+                        message: ERROR_MESSAGES.NOT_MATCH_REGEX.PW,
+                    },
+                })}
             />
-            <Button
-                type="block"
-                title="로그인"
-                onClick={handleSubmit(handleSubmitLogin)}
-            />
+            {errors.password?.message && (
+                <ValidationMessage message={errors.password.message} />
+            )}
+            <div className="my-[1.6rem]">
+                <Button
+                    type="block"
+                    title="로그인"
+                    onClick={handleSubmit(handleSubmitLogin)}
+                />
+            </div>
             <div className="text-input">
                 <span className="text-grey-5">회원이 아닌가요? </span>
                 <span

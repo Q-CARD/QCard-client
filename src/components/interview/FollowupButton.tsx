@@ -1,51 +1,26 @@
 'use client';
-import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-
-import { AiOutlineArrowRight } from 'react-icons/ai';
-import { useRecoilValue } from 'recoil';
-import { interviewListAtom } from '@/utils/atom';
+import { AiOutlineRight } from 'react-icons/ai';
 
 export default function FollowupButton() {
     const searchParams = useSearchParams();
     const router = useRouter();
-
-    const [interviewQuestionId, setInterviewQuestionId] = useState<number>(0);
-    const interviewId = searchParams?.get('interviewid') ?? 1;
     const answer = parseInt(searchParams?.get('answer') ?? '1');
-
-    const interviewQuestion = useRecoilValue(interviewListAtom);
-
-    const handlePageResult = () => {
-        let curPage: any = interviewQuestion?.[answer - 1];
-        if (!curPage) {
-            alert('질문 없음');
-            return;
-        }
-        setInterviewQuestionId(curPage?.id);
-    };
-
-    useEffect(() => {
-        handlePageResult();
-    }, [answer]);
+    const interviewId = parseInt(searchParams.get('id') ?? '1');
 
     // 꼬리질문으로 이동
     const handleFollowupQuestion = () => {
-        const pathname = `/interview/followup?id=${interviewQuestionId}&answer=${answer}`;
+        const pathname = `/interview/followup?id=${interviewId}&answer=${answer}`;
         router.replace(pathname);
     };
 
     return (
         <button
             onClick={handleFollowupQuestion}
-            className="flex justify-center items-center w-full py-[2.4rem] px-[3.6rem] text-heading5 rounded-3xl bg-blue-primary text-white"
+            className="flex justify-center items-center w-full py-[2.4rem] px-[3.6rem] rounded-[1rem] bg-blue-primary text-white gap-[4px]"
         >
-            꼬리질문으로 가기
-            <AiOutlineArrowRight
-                size="18"
-                color="var(--white)"
-                className="ml-[0.8rem]"
-            />
+            <span className="text-heading3">꼬리 질문 연습하기</span>
+            <AiOutlineRight size={25} />
         </button>
     );
 }

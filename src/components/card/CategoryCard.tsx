@@ -26,16 +26,16 @@ export function CategoryCard({ categoryInfo }: CategoryCardProps) {
 
     return (
         <div
-            className="w-fit h-fit px-[4.8rem] py-[6.6rem] rounded-[2rem] shadow-4 cursor-pointer flex flex-col items-center gap-[3.7rem]"
+            className="w-fit h-fit px-[5rem] pt-[3rem] pb-[2.5rem] rounded-[2rem] shadow-buttonColor2 cursor-pointer flex flex-col items-center gap-[2.8rem]"
             onClick={() => beforeEnter(`/category/${id}`)}
         >
             <Image
                 src={image}
                 alt={`category-${name}`}
                 width={155}
-                height={170}
+                height={155}
             />
-            <span className="text-heading5">{name}</span>
+            <span className="text-black text-heading5">{name}</span>
         </div>
     );
 }
