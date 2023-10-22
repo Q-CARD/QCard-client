@@ -63,8 +63,8 @@ export default function CustomQuestionModal({
         customQuestion,
     }: IModalForm) => {
         const payload = {
-            title: QUESTION_CATEGORY[selectedCategory.id - 1].name,
-            category: customQuestion,
+            title: customQuestion,
+            category: selectedCategory.key,
         };
 
         try {
