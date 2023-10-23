@@ -92,7 +92,7 @@ export function Header() {
     return (
         <header
             className={`fixed top-0 flex bg-white items-center w-full 
-        h-[11.2rem] px-[16rem] shadow-header z-${ZINDEX['50']}`}
+        h-[11.2rem] px-[16rem] shadow-header z-50`}
             onClick={handleOutsideClick}
         >
             <Link aria-label="Home" href="/">
