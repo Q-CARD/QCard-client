@@ -35,9 +35,25 @@ export default function MyProfilePage() {
     const [profileImgURL, setProfileImgURL] = useState<string>(''); // 미리보기용 임시 url
     const [profileImgFile, setProfileImgFile] = useState<File>();
     const [presignedUrl, setPresignedUrl] = useState<string>('');
+    const [profileUploadUrl, setProfileUploadUrl] = useState<string>(''); // 업로드 결과로 받은 url
+
+    const loadPresignedUrl = async (profileImgFile: any) => {
+        try {
+            const data = await postPresignedURL({
+                fileName: profileImgFile?.name,
+            });
+            if (data) {
+                setPresignedUrl(data);
+                return data;
+            }
+        } catch (e) {
+            console.error(e);
+            alert('프로필 이미지 등록에 실패했습니다.(1)');
+        }
+    };
 
     // TODO - 이미지 업로드 api 연동
-    const handleProfileImgChange = (e: React.ChangeEvent) => {
+    const handleProfileImgChange = async (e: React.ChangeEvent) => {
         const imgMeta = (e.target as HTMLInputElement).files?.[0];
 
         if (imgMeta) {
@@ -52,21 +68,28 @@ export default function MyProfilePage() {
                 setProfileImgFile(imgMeta);
             };
         }
-    };
 
-    const loadPresignedUrl = async () => {
-        try {
-            const data = await postPresignedURL({
-                fileName: profileImgFile?.name,
-            });
+        const presignedUrl: string | undefined = await loadPresignedUrl(
+            imgMeta,
+        );
 
-            if (data) {
-                setPresignedUrl(data.split('?')[0]);
+        if (presignedUrl && imgMeta) {
+            try {
+                const data = await fetch(presignedUrl, {
+                    method: 'PUT',
+                    body: imgMeta,
+                    headers: new Headers({
+                        'Content-Type': imgMeta.type,
+                    }),
+                });
 
-                return true;
+                if (data) {
+                    setProfileUploadUrl(data.url.split('?')[0]);
+                    alert('프로필 정보가 수정되었습니다.');
+                }
+            } catch (e) {
+                alert('프로필 이미지 등록에 실패했습니다.(2)');
             }
-        } catch (e) {
-            alert('프로필 이미지 등록에 실패했습니다.(1)');
         }
     };
 
@@ -75,13 +98,11 @@ export default function MyProfilePage() {
         nickname,
         email,
     }: ProfileFormValues) => {
-        const res: boolean | undefined = await loadPresignedUrl();
-
-        if (res) {
+        if (presignedUrl && profileImgFile) {
             const payload = {
                 name: nickname,
                 email: email,
-                profile: presignedUrl,
+                profile: profileUploadUrl,
             };
 
             try {
@@ -91,7 +112,8 @@ export default function MyProfilePage() {
                     alert('프로필 정보가 수정되었습니다.');
                 }
             } catch (e) {
-                alert('프로필 이미지 등록에 실패했습니다.(2)');
+                alert('프로필 정보 수정에 실패했습니다.(3)');
+                console.error(e);
             }
         }
     };
