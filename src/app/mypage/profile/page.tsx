@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useRecoilValue } from 'recoil';
@@ -31,11 +31,17 @@ export default function MyProfilePage() {
         defaultValues: { nickname: user.nickname, email: user.email },
     });
 
+    // 서버 렌더링 결과와 클라이언트 렌더링 결과가 다른 경우 hydration failed 에러 발생, 에러 방지를 위해 dom이 로드됐는지 확인
+    const [domLoaded, setDomLoaded] = useState<boolean>(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [profileImgURL, setProfileImgURL] = useState<string>(''); // 미리보기용 임시 url
     const [profileImgFile, setProfileImgFile] = useState<File>();
     const [presignedUrl, setPresignedUrl] = useState<string>('');
     const [profileUploadUrl, setProfileUploadUrl] = useState<string>(''); // 업로드 결과로 받은 url
+
+    useEffect(() => {
+        setDomLoaded(true);
+    }, []);
 
     const loadPresignedUrl = async (profileImgFile: any) => {
         try {
@@ -133,19 +139,21 @@ export default function MyProfilePage() {
                             height: '16.4rem',
                         }}
                     >
-                        <Image
-                            src={
-                                profileImgURL ||
-                                (user.profileImg ?? defaultImage)
-                            }
-                            alt="profile-image"
-                            fill
-                            sizes="16.4rem"
-                            style={{
-                                borderRadius: '50%',
-                                objectFit: 'cover',
-                            }}
-                        />
+                        {domLoaded && (
+                            <Image
+                                src={
+                                    profileImgURL ||
+                                    (user.profileImg ?? defaultImage)
+                                }
+                                alt="profile-image"
+                                fill
+                                sizes="16.4rem"
+                                style={{
+                                    borderRadius: '50%',
+                                    objectFit: 'cover',
+                                }}
+                            />
+                        )}
                     </div>
                     <label
                         htmlFor="fileInput"
