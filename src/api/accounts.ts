@@ -19,7 +19,7 @@ export const getAccountsProfile = async () => {
 
 // 프로필 수정
 export const putAccountsProfile = async (payload: any) => {
-    return await http.PUT(`/accounts/profile`, payload);
+    return await http.PUT(`/accounts/profile`, payload, { type: 'default' });
 };
 
 // 토큰 재발급 api

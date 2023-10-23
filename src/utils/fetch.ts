@@ -51,9 +51,12 @@ export const http = {
         return api.url(url).patch(body);
     },
     PUT: function put(url: string, body?: any, params?: any) {
-        return params.type === 'record'
-            ? api.addon(FormDataAddon).formData(body).url(url).put()
-            : api.url(url).put(body);
+        switch (params?.type) {
+            case 'record':
+                return api.addon(FormDataAddon).formData(body).url(url).put();
+            default:
+                return api.url(url).put(body);
+        }
     },
     // delete is a reserved word in JS.
     DELETE: function del(url: string) {
