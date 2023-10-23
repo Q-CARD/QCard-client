@@ -64,19 +64,17 @@ export default async function Home() {
                 <p className="flex mt-[3rem] text-grey-6 text-specialHeading5">
                     실전 같은 연습으로 경험을 쌓아나가요!
                 </p>
-                <div className="relative mt-[6.9rem]">
+                <div className="flex flex-col mt-[6.9rem] items-center">
                     <Image
                         src={ImgInterviewIllust}
+                        className="mb-[-7.5rem]"
                         alt="img-interview-illust"
                         width={1079}
                         height={703}
                     />
-                    <div className="absolute bottom-[7.5rem] left-[calc(50%-35.3rem/2)]">
-                        {/* TODO: 버튼 padding 속성 추가 */}
-                        <Link href="/interview">
-                            <Button type="round" title="모의 면접 바로가기" />
-                        </Link>
-                    </div>
+                    <Link href="/interview">
+                        <Button type="long" title="모의 면접 바로가기" />
+                    </Link>
                 </div>
             </section>
             <section className="flex flex-col bg-yellow-1 pt-[14.8rem] pb-[11.7rem] px-[16rem]">
@@ -84,19 +82,17 @@ export default async function Home() {
                 <p className="mt-[3rem] text-grey-6 text-specialHeading5">
                     QCARD 질문부터 미래의 동료들의 질문으로 연습해요!
                 </p>
-                <div className="relative mt-[4.6rem]">
+                <div className="flex flex-col items-center mt-[4.6rem]">
                     <Image
                         src={ImgMainCategory}
+                        className="mb-[-7.5rem]"
                         alt="img-main-category"
                         width={1131}
                         height={707}
                     />
-                    <div className="absolute bottom-[7.5rem] left-[calc(50%-35.3rem/2)]">
-                        {/* TODO: 버튼 padding 속성 추가 */}
-                        <Link href="/category">
-                            <Button type="round" title="큐카드 모음 바로가기" />
-                        </Link>
-                    </div>
+                    <Link href="/category">
+                        <Button type="long" title="큐카드 모음 바로가기" />
+                    </Link>
                 </div>
             </section>
             <Footer />

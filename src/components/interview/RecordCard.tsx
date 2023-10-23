@@ -71,7 +71,7 @@ export default function RecordCard({
     const questionId = searchParams.get('question') ?? '1';
     const [permission, setPermission] = useState<boolean>(false);
 
-    const MIN_TIME_LIMIT = 2; // TODO: 실 배포시 60으로 수정
+    const MIN_TIME_LIMIT = 60;
 
     React.useEffect(() => {
         getRecordingStatus(recording.status);
