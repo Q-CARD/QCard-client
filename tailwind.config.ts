@@ -17,6 +17,10 @@ const config: Config = {
                 main: 'linear-gradient(108deg, rgba(255, 228, 157, 0.21) -12.78%, #FFFBF0 19.6%, #F3F8FF 102.97%)',
                 finish: 'linear-gradient(108deg, #FFE49D -12.78%, #FFFBF0 19.6%, #F3F8FF 102.97%)',
             },
+            zIndex: {
+                '50': '50', // Header
+                '51': '51', // ProfileModal
+            },
             fontSize: {
                 // heading - bold
                 heading1: ['56px', { fontWeight: '700', lineHeight: '66px' }],

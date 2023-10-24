@@ -8,7 +8,6 @@ import { Button } from './Button';
 import { ProfileModal } from './ProfileModal';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { isLoginAtom, userAtom } from '@/store/recoil';
-import { ZINDEX } from '@/constants';
 import Logo from '@/assets/logo.png';
 import defaultImage from '@/assets/icons/icon-default-profile.png';
 
@@ -92,7 +91,7 @@ export function Header() {
     return (
         <header
             className={`fixed top-0 flex bg-white items-center w-full 
-        h-[11.2rem] px-[16rem] shadow-header z-${ZINDEX['50']}`}
+        h-[11.2rem] px-[16rem] shadow-header z-[50]`}
             onClick={handleOutsideClick}
         >
             <Link aria-label="Home" href="/">

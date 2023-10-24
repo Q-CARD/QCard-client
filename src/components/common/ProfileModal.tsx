@@ -7,7 +7,7 @@ import { getAccountsLogout } from '@/api/accounts';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { isLoginAtom, userAtom } from '@/store/recoil';
 import defaultImage from '@/assets/icons/icon-default-profile.png';
-import { CONSTANTS, ZINDEX } from '@/constants';
+import { CONSTANTS } from '@/constants';
 
 interface ProfileModalProps {
     open: boolean;
@@ -57,7 +57,7 @@ export const ProfileModal = ({
 
     return (
         <div
-            className={`absolute top-[9.8rem] right-[16rem] w-[38rem] h-[26rem] pb-[2.9rem] bg-white rounded-[0.6rem] shadow-[0_4px_6px_0_rgba(0,0,0,0.10)] z-${ZINDEX[51]} flex flex-col items-center`}
+            className={`absolute top-[9.8rem] right-[16rem] w-[38rem] h-[26rem] pb-[2.9rem] bg-white rounded-[0.6rem] shadow-[0_4px_6px_0_rgba(0,0,0,0.10)] z-[51] flex flex-col items-center`}
             ref={modalRef}
         >
             <div
