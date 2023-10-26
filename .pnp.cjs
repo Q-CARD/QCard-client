@@ -39,6 +39,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["animate.css", "npm:4.1.1"],\
             ["autoprefixer", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:10.4.15"],\
             ["axios", "npm:1.5.0"],\
+            ["cookies-next", "npm:4.0.0"],\
             ["eslint", "npm:8.47.0"],\
             ["eslint-config-next", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:13.4.19"],\
             ["mic-recorder-to-mp3", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:2.2.2"],\
@@ -580,6 +581,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/cookie", [\
+        ["npm:0.4.1", {\
+          "packageLocation": "./.yarn/cache/@types-cookie-npm-0.4.1-274a704dc6-3275534ed6.zip/node_modules/@types/cookie/",\
+          "packageDependencies": [\
+            ["@types/cookie", "npm:0.4.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/debug", [\
         ["npm:4.1.8", {\
           "packageLocation": "./.yarn/cache/@types-debug-npm-4.1.8-a04e2ca136-a9a9bb40a1.zip/node_modules/@types/debug/",\
@@ -666,6 +676,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/node", [\
+        ["npm:16.18.59", {\
+          "packageLocation": "./.yarn/cache/@types-node-npm-16.18.59-4e24b17922-70f28744d2.zip/node_modules/@types/node/",\
+          "packageDependencies": [\
+            ["@types/node", "npm:16.18.59"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:20.5.6", {\
           "packageLocation": "./.yarn/cache/@types-node-npm-20.5.6-f7a7eed369-d2ce44f1cf.zip/node_modules/@types/node/",\
           "packageDependencies": [\
@@ -1525,6 +1542,27 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/console-control-strings-npm-1.1.0-e3160e5275-8755d76787.zip/node_modules/console-control-strings/",\
           "packageDependencies": [\
             ["console-control-strings", "npm:1.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["cookie", [\
+        ["npm:0.4.2", {\
+          "packageLocation": "./.yarn/cache/cookie-npm-0.4.2-7761894d5f-a00833c998.zip/node_modules/cookie/",\
+          "packageDependencies": [\
+            ["cookie", "npm:0.4.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["cookies-next", [\
+        ["npm:4.0.0", {\
+          "packageLocation": "./.yarn/cache/cookies-next-npm-4.0.0-aea6170f1f-d9ee812bca.zip/node_modules/cookies-next/",\
+          "packageDependencies": [\
+            ["cookies-next", "npm:4.0.0"],\
+            ["@types/cookie", "npm:0.4.1"],\
+            ["@types/node", "npm:16.18.59"],\
+            ["cookie", "npm:0.4.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -5395,6 +5433,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["animate.css", "npm:4.1.1"],\
             ["autoprefixer", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:10.4.15"],\
             ["axios", "npm:1.5.0"],\
+            ["cookies-next", "npm:4.0.0"],\
             ["eslint", "npm:8.47.0"],\
             ["eslint-config-next", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:13.4.19"],\
             ["mic-recorder-to-mp3", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:2.2.2"],\

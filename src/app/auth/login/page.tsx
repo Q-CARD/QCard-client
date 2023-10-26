@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
+import wretch from 'wretch';
 import { Button, Input } from '@/components/common';
 import ValidationMessage from '@/components/ValidationMessage';
 import { getAccountsProfile, postSignIn } from '@/api/accounts';
@@ -11,6 +12,13 @@ import { userAtom, isLoginAtom } from '@/store/recoil';
 import { CONSTANTS } from '@/constants/common';
 import { ERROR_MESSAGES, REGEX } from '@/constants';
 
+import { setCookie } from 'cookies-next';
+
+interface IUserProfile {
+    email: string;
+    name: string;
+    profile: string; // TODO: 프로필 이미지 초기값 null인지 확인
+}
 interface LoginFormValues {
     email: string;
     password: string;
@@ -38,13 +46,18 @@ export default function LoginPage() {
             const data = await postSignIn(payload);
 
             if (data.accessToken) {
-                localStorage.setItem(CONSTANTS.ACCESS_TOKEN, data.accessToken);
-                localStorage.setItem(
-                    CONSTANTS.REFRESH_TOKEN,
-                    data.refreshToken,
-                );
+                // client단 쿠키에 at, rt 저장
+                setCookie(CONSTANTS.ACCESS_TOKEN, data.accessToken);
+                setCookie(CONSTANTS.REFRESH_TOKEN, data.refreshToken);
 
-                const userdata = await getAccountsProfile();
+                // 토큰 부착 후 연달아 보내야하므로 api 분리
+                const userdata: IUserProfile = await wretch(
+                    process.env.NEXT_PUBLIC_API_BASE_URL,
+                )
+                    .auth(`${data.accessToken}`)
+                    .errorType('json')
+                    .resolve((r: any) => r.json() as any)
+                    .get('/accounts/profile');
 
                 if (userdata) {
                     setUserData({

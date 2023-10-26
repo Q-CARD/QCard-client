@@ -8,6 +8,7 @@ import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { isLoginAtom, userAtom } from '@/store/recoil';
 import defaultImage from '@/assets/icons/icon-default-profile.png';
 import { CONSTANTS } from '@/constants';
+import { deleteCookie } from 'cookies-next';
 
 interface ProfileModalProps {
     open: boolean;
@@ -37,8 +38,8 @@ export const ProfileModal = ({
             const data = await getAccountsLogout();
             if (data) {
                 resetUser();
-                localStorage.removeItem(CONSTANTS.ACCESS_TOKEN);
-                localStorage.removeItem(CONSTANTS.REFRESH_TOKEN);
+                deleteCookie(CONSTANTS.ACCESS_TOKEN);
+                deleteCookie(CONSTANTS.REFRESH_TOKEN);
                 setIsLogin(false);
 
                 setOpen(false);

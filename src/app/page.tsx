@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
+    // TODO: 서버단 요청 잘되는지 확인 필요
     const questionsMain: IQuestionMain = await getQuestionsMain();
 
     const questionDaily = questionsMain.questionDaily;
