@@ -100,6 +100,10 @@ export function Header() {
                     alt="qcard-logo"
                     width={134}
                     height={44}
+                    style={{
+                        width: 'auto',
+                        height: 'auto',
+                    }}
                     className="object-cover"
                     sizes="155px"
                     loading="lazy"
