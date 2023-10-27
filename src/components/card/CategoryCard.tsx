@@ -27,7 +27,7 @@ export function CategoryCard({ categoryInfo }: CategoryCardProps) {
     return (
         <div
             className="w-fit h-fit px-[5rem] pt-[3rem] pb-[2.5rem] rounded-[2rem] shadow-buttonColor2 cursor-pointer flex flex-col items-center gap-[2.8rem]"
-            onClick={() => beforeEnter(`/category/${id}`)}
+            onClick={() => router.push(`/category/${id}`)}
         >
             <Image
                 src={image}
