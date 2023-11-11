@@ -36,15 +36,15 @@ export const ProfileModal = ({
         // TODO - logout api 연동
         try {
             const data = await getAccountsLogout();
+
             if (data) {
                 resetUser();
+                localStorage.removeItem(CONSTANTS.ACCESS_TOKEN);
+                localStorage.removeItem(CONSTANTS.REFRESH_TOKEN);
                 deleteCookie(CONSTANTS.ACCESS_TOKEN);
-                deleteCookie(CONSTANTS.REFRESH_TOKEN);
                 setIsLogin(false);
-
                 setOpen(false);
-
-                alert(data.message);
+                alert('로그아웃이 완료되었습니다.');
                 router.push('/');
             }
         } catch (e) {
@@ -74,7 +74,7 @@ export const ProfileModal = ({
                     }}
                 >
                     <Image
-                        src={user.profileImg ?? defaultImage}
+                        src={user?.profileImg ?? defaultImage}
                         alt="profile-modal-image"
                         fill
                         sizes="6rem"

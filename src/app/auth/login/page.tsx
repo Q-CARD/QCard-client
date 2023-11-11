@@ -11,7 +11,6 @@ import { useSetRecoilState } from 'recoil';
 import { userAtom, isLoginAtom } from '@/store/recoil';
 import { CONSTANTS } from '@/constants/common';
 import { ERROR_MESSAGES, REGEX } from '@/constants';
-
 import { setCookie } from 'cookies-next';
 
 interface IUserProfile {
@@ -44,11 +43,13 @@ export default function LoginPage() {
 
         try {
             const data = await postSignIn(payload);
-
-            if (data.accessToken) {
-                // client단 쿠키에 at, rt 저장
-                setCookie(CONSTANTS.ACCESS_TOKEN, data.accessToken);
-                setCookie(CONSTANTS.REFRESH_TOKEN, data.refreshToken);
+            if (data?.accessToken) {
+                localStorage.setItem(CONSTANTS.ACCESS_TOKEN, data.accessToken);
+                localStorage.setItem(
+                    CONSTANTS.REFRESH_TOKEN,
+                    data.refreshToken,
+                );
+                setCookie(CONSTANTS.ACCESS_TOKEN, data.accessToken); // 로그인 판별 미들웨어용
 
                 // 토큰 부착 후 연달아 보내야하므로 api 분리
                 const userdata: IUserProfile = await wretch(
