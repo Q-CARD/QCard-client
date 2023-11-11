@@ -676,10 +676,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/node", [\
-        ["npm:16.18.59", {\
-          "packageLocation": "./.yarn/cache/@types-node-npm-16.18.59-4e24b17922-70f28744d2.zip/node_modules/@types/node/",\
+        ["npm:16.18.61", {\
+          "packageLocation": "./.yarn/cache/@types-node-npm-16.18.61-b60a4b345f-fdd162829e.zip/node_modules/@types/node/",\
           "packageDependencies": [\
-            ["@types/node", "npm:16.18.59"]\
+            ["@types/node", "npm:16.18.61"]\
           ],\
           "linkType": "HARD"\
         }],\
@@ -1561,7 +1561,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["cookies-next", "npm:4.0.0"],\
             ["@types/cookie", "npm:0.4.1"],\
-            ["@types/node", "npm:16.18.59"],\
+            ["@types/node", "npm:16.18.61"],\
             ["cookie", "npm:0.4.2"]\
           ],\
           "linkType": "HARD"\
