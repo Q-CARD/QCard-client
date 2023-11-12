@@ -22,7 +22,7 @@ export default function CategoryQuestionPage({
     const { register, handleSubmit } = useForm();
 
     const [questionDetail, setQuestionDetail] = useState<any>();
-    const [answerDetail, setAnswerDetail] = useState<any>();
+    const [answerDetail, setAnswerDetail] = useState<any>([]);
 
     useEffect(() => {
         loadQuestionDetail();
@@ -64,7 +64,7 @@ export default function CategoryQuestionPage({
     };
 
     const submitAnswer = ({ answer }: any) => {
-        const method = answerDetail ? 'put' : 'post';
+        const method = answerDetail?.length > 0 ? 'put' : 'post';
         sendAnswer(answer, method);
 
         router.push(`/category/result/${params.id}`);
