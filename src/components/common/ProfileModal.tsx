@@ -74,7 +74,11 @@ export const ProfileModal = ({
                     }}
                 >
                     <Image
-                        src={user?.profileImg ?? defaultImage}
+                        src={
+                            user?.profileImg.length > 0
+                                ? user.profileImg
+                                : defaultImage
+                        }
                         alt="profile-modal-image"
                         fill
                         sizes="6rem"
