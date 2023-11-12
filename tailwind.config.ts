@@ -12,10 +12,26 @@ const config: Config = {
         './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     ],
     theme: {
+        keyframes: {
+            bounce: {
+                '0%, 100%': {
+                    transform: 'translateY(-35%)',
+                    'animation-timing-function': 'cubic-bezier(0.8,0,1,1)',
+                },
+                '50%': {
+                    transform: 'none',
+                    'animation-timing-function': 'cubic-bezier(0,0,0.2,1)',
+                },
+            },
+        },
         extend: {
             backgroundImage: {
                 main: 'linear-gradient(108deg, rgba(255, 228, 157, 0.21) -12.78%, #FFFBF0 19.6%, #F3F8FF 102.97%)',
                 finish: 'linear-gradient(108deg, #FFE49D -12.78%, #FFFBF0 19.6%, #F3F8FF 102.97%)',
+            },
+            zIndex: {
+                '50': '50', // Header
+                '51': '51', // ProfileModal
             },
             fontSize: {
                 // heading - bold
@@ -122,6 +138,9 @@ const config: Config = {
                 4: '0px 14px 42px 0px rgba(20, 20, 43, 0.14)',
                 3: '0px 8px 28px 0px rgba(20, 20, 43, 0.10)',
                 2: '0px 2px 12px 0px rgba(20, 20, 43, 0.08)',
+            },
+            animation: {
+                bounce: 'bounce 3.5s infinite',
             },
         },
     },

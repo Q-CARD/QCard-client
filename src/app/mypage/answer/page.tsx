@@ -8,7 +8,7 @@ import CategoryChips from '@/components/common/CategoryChips';
 import { BsChevronDown, BsChevronRight } from 'react-icons/bs';
 
 import { getAnswersMe } from '@/api/answers';
-import { IAnswer, IAnswerHearted } from '@/types';
+import { IAnswerHearted } from '@/types';
 import { QUESTION_CATEGORY } from '@/constants/data';
 import FolerPinkImg from '@/assets/images/image-foler-pink.png';
 
@@ -49,7 +49,7 @@ export default function MyAnswerPage() {
                 selectCategory={selectCategory}
             />
 
-            {myAnswerList.length ? (
+            {myAnswerList?.length ? (
                 <div className="w-full flex flex-col gap-[4.6rem]">
                     {myAnswerList.map((answer: any) => (
                         <MyAnswerCard

@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 
 import { Button, Textarea } from '@/components/common';
 import { getQuestionById } from '@/api/questions';
-import { postAnswers } from '@/api/answers';
+import { postAnswers, putAnswer } from '@/api/answers';
 import { IQuestionDetail } from '@/types';
 
 /**
@@ -22,6 +22,7 @@ export default function CategoryQuestionPage({
     const { register, handleSubmit } = useForm();
 
     const [questionDetail, setQuestionDetail] = useState<any>();
+    const [answerDetail, setAnswerDetail] = useState<any>([]);
 
     useEffect(() => {
         loadQuestionDetail();
@@ -36,22 +37,35 @@ export default function CategoryQuestionPage({
             );
 
             setQuestionDetail(data.question);
+            setAnswerDetail(data.answers);
         } catch (e) {}
     };
 
-    const sendAnswer = async (answer: string) => {
+    const sendAnswer = async (answer: string, type: 'put' | 'post') => {
         const payload = {
             questionId: Number(params.id),
             content: answer,
         };
 
         try {
-            const data = await postAnswers(payload);
+            let data;
+            switch (type) {
+                // 답변 없는 경우
+                case 'post':
+                    data = await postAnswers(payload);
+                    break;
+                // 등록된 답변이 있는 경우
+                case 'put':
+                    data = await putAnswer(answerDetail[0].answerId, answer);
+                    break;
+            }
+            return data;
         } catch (e) {}
     };
 
     const submitAnswer = ({ answer }: any) => {
-        sendAnswer(answer);
+        const method = answerDetail?.length > 0 ? 'put' : 'post';
+        sendAnswer(answer, method);
 
         router.push(`/category/result/${params.id}`);
     };
@@ -64,6 +78,9 @@ export default function CategoryQuestionPage({
                     <span>{questionDetail?.title}</span>
                 </div>
                 <Textarea
+                    defaultValue={
+                        (answerDetail && answerDetail[0]?.content) ?? ''
+                    }
                     placeholder="알고 있는 만큼 자세히 작성해 보세요."
                     register={register('answer', { required: true })}
                 />

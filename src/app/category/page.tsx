@@ -71,7 +71,7 @@ export default function CategoryPage() {
                 </div>
 
                 <div className="flex flex-wrap gap-[4rem]">
-                    {customQuestionList.map((question: any) => (
+                    {customQuestionList?.map((question: any) => (
                         <CustomQuestionCard
                             key={`category-card-${question.questionId}`}
                             data={question}
