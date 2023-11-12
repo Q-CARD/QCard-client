@@ -19,7 +19,7 @@ export const getAccountsProfile = async () => {
 
 // 프로필 수정 - 클라이언트
 export const putAccountsProfile = async (payload: any) => {
-    return await http.PUT(`/accounts/profile`, payload);
+    return await http.PUT(`/accounts/profile`, payload, { type: 'default' });
 };
 
 // 토큰 재발급 api - 서버, 클라이언트 모두 사용될 수 있음
@@ -30,4 +30,9 @@ export const getAccountsReissue = async () => {
 // 로그아웃 api - 클라이언트
 export const getAccountsLogout = async () => {
     return await http.REISSUE(`/accounts/logout`);
+};
+
+// 회원 탈퇴
+export const deleteAccount = async () => {
+    return await http.DELETE(`/accounts/`);
 };

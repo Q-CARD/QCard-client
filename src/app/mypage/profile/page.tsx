@@ -1,17 +1,21 @@
 'use client';
 
 import Image from 'next/image';
-import { useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 
-import { useRecoilValue } from 'recoil';
+import { useEffect, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { userAtom, isLoginAtom } from '@/store/recoil';
 import { Button, Input } from '@/components/common';
 import ValidationMessage from '@/components/ValidationMessage';
-import { userAtom } from '@/store/recoil';
-import { getAccountsProfile, putAccountsProfile } from '@/api/accounts';
+
+import { deleteAccount, putAccountsProfile } from '@/api/accounts';
+import { postPresignedURL } from '@/api/presigned';
 import { BsCamera } from 'react-icons/bs';
 import defaultImage from '@/assets/icons/icon-default-profile.png';
-import { ERROR_MESSAGES, REGEX } from '@/constants';
+import { CONSTANTS, ERROR_MESSAGES, REGEX } from '@/constants';
+import { deleteCookie } from 'cookies-next';
 
 interface ProfileFormValues {
     nickname: string;
@@ -19,62 +23,142 @@ interface ProfileFormValues {
 }
 
 export default function MyProfilePage() {
-    const user = useRecoilValue(userAtom);
+    const [user, setUser] = useRecoilState(userAtom);
+    const setIsLogin = useSetRecoilState(isLoginAtom);
+    const router = useRouter();
 
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<ProfileFormValues>({
-        // defaultValues: async () => getAccountsProfile(),
         defaultValues: { nickname: user.nickname, email: user.email },
     });
 
+    // 서버 렌더링 결과와 클라이언트 렌더링 결과가 다른 경우 hydration failed 에러 발생, 에러 방지를 위해 dom이 로드됐는지 확인
+    const [domLoaded, setDomLoaded] = useState<boolean>(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [profileImgURL, setProfileImgURL] = useState<string>(''); // 미리보기용 임시 url
-    const [profileImgFile, setProfileImgFile] = useState<File>();
+    const [profileImgFile, setProfileImgFile] = useState<File>(); // 이미지 메타정보
+    const [presignedUrl, setPresignedUrl] = useState<string>('');
+    const [profileUploadUrl, setProfileUploadUrl] = useState<string>(''); // 업로드 결과로 받은 url
 
-    // TODO - 이미지 업로드 api 연동
-    const handleProfileImgChange = (e: React.ChangeEvent) => {
-        const file = (e.target as HTMLInputElement).files?.[0];
+    useEffect(() => {
+        setDomLoaded(true);
+    }, []);
 
-        if (file) {
+    const loadPresignedUrl = async (profileImgFile: any) => {
+        try {
+            const data = await postPresignedURL({
+                fileName: profileImgFile?.name,
+            });
+            if (data) {
+                setPresignedUrl(data);
+                return data;
+            }
+        } catch (e) {
+            console.error(e);
+            alert('프로필 이미지 등록에 실패했습니다.(1)');
+        }
+    };
+
+    // onChange - 미리 보기 데이터만 업데이트
+    const handleProfileImgChange = async (e: React.ChangeEvent) => {
+        const imgMeta = (e.target as HTMLInputElement).files?.[0];
+
+        if (imgMeta) {
             const fileReader = new FileReader();
-            fileReader.readAsDataURL(file);
+            fileReader.readAsDataURL(imgMeta);
             fileReader.onload = (data) => {
+                // 미리보기
                 setProfileImgURL(
                     typeof data.target?.result === 'string'
                         ? data.target?.result
                         : '',
                 );
-                setProfileImgFile(file);
+                setProfileImgFile(imgMeta);
             };
         }
     };
 
-    // TODO - 프로필 수정 api 연동
+    const getPrifleUploadUrl = async (presignedUrl: string) => {
+        let profileUploadUrl;
+        if (presignedUrl && profileImgFile) {
+            try {
+                const data = await fetch(presignedUrl, {
+                    method: 'PUT',
+                    body: profileImgFile,
+                    headers: new Headers({
+                        'Content-Type': profileImgFile.type,
+                    }),
+                });
+
+                if (data) {
+                    console.log('data', data);
+                    setProfileUploadUrl(data.url.split('?')[0]);
+                    profileUploadUrl = data.url.split('?')[0];
+                }
+            } catch (e) {
+                alert('프로필 이미지 등록에 실패했습니다.(2)');
+            }
+        }
+        return profileUploadUrl;
+    };
+
     const handleSubmitProfile = async ({
         nickname,
         email,
     }: ProfileFormValues) => {
-        const payload = {
-            nickname: nickname,
-            email: email,
-            // profile: ,
-        };
+        const presignedUrl: string | undefined = await loadPresignedUrl(
+            profileImgFile,
+        );
+        let profileUploadUrl = null;
 
-        // try {
-        //     await putAccountsProfile(payload);
+        if (presignedUrl) {
+            profileUploadUrl = await getPrifleUploadUrl(presignedUrl);
+        }
 
-        //     alert('프로필 정보가 수정되었습니다.');
-        // } catch (e) {}
+        if (presignedUrl && profileImgFile && profileUploadUrl) {
+            const payload = {
+                name: nickname,
+                email: email,
+                profile: profileUploadUrl,
+            };
+
+            try {
+                const data = await putAccountsProfile(payload);
+                if (data) {
+                    alert('프로필 정보가 수정되었습니다.');
+
+                    const updateProfile = {
+                        nickname: nickname,
+                        email: email,
+                        profileImg: profileUploadUrl,
+                    };
+                    setUser(updateProfile);
+                }
+            } catch (e) {
+                alert('프로필 정보 수정에 실패했습니다.(3)');
+                console.error(e);
+            }
+        }
     };
 
-    // TODO - 유저 탈퇴 api 연동 - 탈퇴 api 요청.
-    const handleDeleteUser = () => {};
+    const handleDeleteUser = async () => {
+        try {
+            const data = await deleteAccount();
+            if (data) {
+                localStorage.removeItem(CONSTANTS.ACCESS_TOKEN);
+                localStorage.removeItem(CONSTANTS.REFRESH_TOKEN);
+                deleteCookie(CONSTANTS.ACCESS_TOKEN);
+                setIsLogin(false);
+                router.replace('/');
+            }
+        } catch (e) {}
+    };
 
     return (
-        <div className="w-full h-[calc(100%-8.3rem)]">
+        <div className="w-full h-full">
             <div className="w-fit ml-[25%] mt-[8.3rem] flex flex-col items-center gap-[2.4rem] z-1">
                 <div className="relative mb-[8.1rem]">
                     <div
@@ -85,21 +169,23 @@ export default function MyProfilePage() {
                             height: '16.4rem',
                         }}
                     >
-                        <Image
-                            src={
-                                profileImgURL ||
-                                (user?.profileImg?.length > 0
-                                    ? user.profileImg
-                                    : defaultImage)
-                            }
-                            alt="profile-image"
-                            fill
-                            sizes="16.4rem"
-                            style={{
-                                borderRadius: '50%',
-                                objectFit: 'cover',
-                            }}
-                        />
+                        {domLoaded && (
+                            <Image
+                                src={
+                                    profileImgURL ||
+                                    (user?.profileImg?.length > 0
+                                        ? user.profileImg
+                                        : defaultImage)
+                                }
+                                alt="profile-image"
+                                fill
+                                sizes="16.4rem"
+                                style={{
+                                    borderRadius: '50%',
+                                    objectFit: 'cover',
+                                }}
+                            />
+                        )}
                     </div>
                     <label
                         htmlFor="fileInput"
