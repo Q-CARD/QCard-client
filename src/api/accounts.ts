@@ -31,3 +31,8 @@ export const getAccountsReissue = async () => {
 export const getAccountsLogout = async () => {
     return await http.REISSUE(`/accounts/logout`);
 };
+
+// 회원 탈퇴
+export const deleteAccount = async () => {
+    return await http.DELETE(`/accounts/`);
+};
