@@ -66,7 +66,7 @@ export function Header() {
             >
                 <Image
                     src={
-                        user?.profileImg.length > 0
+                        user?.profileImg?.length > 0
                             ? user.profileImg
                             : defaultImage
                     }
