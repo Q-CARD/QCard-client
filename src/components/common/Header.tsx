@@ -85,7 +85,6 @@ export function Header() {
 
     useEffect(() => {
         if (!isLoginToken) {
-            console.log('isLoginToken', isLoginToken);
             setIsLogin(false);
             setRightButton(RIGHTBUTTONS.signIn);
         } else if (user.email && user.email.length > 0) {
