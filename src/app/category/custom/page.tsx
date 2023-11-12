@@ -71,7 +71,7 @@ export default function CategoryCustomPage() {
                         selectCategory={selectCategory}
                     />
                     <div className="w-full h-[6rem]"></div>
-                    {customQuestionList.map((question: any) => {
+                    {customQuestionList?.map((question: any) => {
                         return (
                             <div
                                 key={`custom-question-detail-card-${question.questionId}`}

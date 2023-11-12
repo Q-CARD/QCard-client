@@ -8,20 +8,22 @@ import { Button } from './Button';
 import { ProfileModal } from './ProfileModal';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { isLoginAtom, userAtom } from '@/store/recoil';
-import { ZINDEX } from '@/constants';
 import Logo from '@/assets/logo.png';
 import defaultImage from '@/assets/icons/icon-default-profile.png';
+import { CONSTANTS } from '@/constants';
 
 export function Header() {
-    // Link: <a>요소 확장 프리페칭 + 클라이언트 사이드 내비게이션
-    // useRouter: 프로그래밍 방식으로 라우트 변경 (브라우저 API 처럼 push, replace, reload 사용 가능)
-
     const pathname = usePathname();
     const isAuthPath = pathname.includes('auth');
     const isMyPagePath = pathname.includes('mypage');
 
     const user = useRecoilValue(userAtom);
     const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
+
+    let isLoginToken: string | null = null;
+    if (typeof window !== 'undefined') {
+        isLoginToken = localStorage.getItem(CONSTANTS.ACCESS_TOKEN);
+    }
 
     // logout modal
     const [isProfileModalOpen, setIsProfileModalOpen] =
@@ -44,11 +46,13 @@ export function Header() {
 
     // right buttons
     const RIGHTBUTTONS = {
+        // 로그인 안한 경우
         signIn: (
             <Link href="/auth/login">
                 <Button type="round" title="Sign in" />
             </Link>
         ),
+        // 로그인한 경우
         profile: (
             <div
                 style={{
@@ -61,7 +65,11 @@ export function Header() {
                 onClick={() => setIsProfileModalOpen((prev) => !prev)}
             >
                 <Image
-                    src={user.profileImg ?? defaultImage}
+                    src={
+                        user?.profileImg?.length > 0
+                            ? user.profileImg
+                            : defaultImage
+                    }
                     alt="profile-image"
                     fill
                     sizes="6rem"
@@ -74,11 +82,14 @@ export function Header() {
         ),
     };
     const [rightButton, setRightButton] = useState<React.ReactNode>(
-        RIGHTBUTTONS.signIn,
+        RIGHTBUTTONS.signIn, // 기본은 로그인 안한 값
     );
 
     useEffect(() => {
-        if (user.email && user.email.length > 0) {
+        if (!isLoginToken) {
+            setIsLogin(false);
+            setRightButton(RIGHTBUTTONS.signIn);
+        } else if (user.email && user.email.length > 0) {
             setIsLogin(true);
 
             setRightButton(RIGHTBUTTONS.profile);
@@ -87,12 +98,12 @@ export function Header() {
 
             setRightButton(RIGHTBUTTONS.signIn);
         }
-    }, [isLogin]);
+    }, [isLogin, isLoginToken, user]);
 
     return (
         <header
             className={`fixed top-0 flex bg-white items-center w-full 
-        h-[11.2rem] px-[16rem] shadow-header z-${ZINDEX['50']}`}
+        h-[11.2rem] px-[16rem] shadow-header z-50`}
             onClick={handleOutsideClick}
         >
             <Link aria-label="Home" href="/">
@@ -101,9 +112,13 @@ export function Header() {
                     alt="qcard-logo"
                     width={134}
                     height={44}
+                    style={{
+                        width: 'auto',
+                        height: 'auto',
+                    }}
                     className="object-cover"
                     sizes="155px"
-                    loading="lazy"
+                    //loading="lazy"
                 />
             </Link>
 

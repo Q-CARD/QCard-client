@@ -1,6 +1,7 @@
 // 어플리케이션 공통 레이아웃
 import type { Metadata } from 'next';
 import { siteConfig } from '@/utils/site';
+import GoogleAnalytics from './GoogleAnalytics';
 
 import Providers from '@/components/adapter/Provider';
 import { Header } from '@/components/common/Header';
@@ -84,6 +85,7 @@ export default function RootLayout({
                 />
             </head>
             <body className="min-h-screen">
+                <GoogleAnalytics />
                 <Providers>
                     <div className="flex flex-col h-full overflow-x-hidden">
                         <Header />

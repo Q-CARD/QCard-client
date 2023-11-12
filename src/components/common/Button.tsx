@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface ButtonProps {
-    type: 'block' | 'round' | 'chip' | 'black';
+    type: 'block' | 'round' | 'chip' | 'black' | 'long';
     title: string;
     onClick?: () => void;
     disabled?: boolean;
@@ -20,6 +20,7 @@ export function Button({
     const roundConfig = `w-fit h-fit px-[2.4rem] py-[1.8rem] rounded-[3rem] text-buttonRound text-white bg-blue-primary`;
     const chipConfig = `w-fit h-fit px-[2rem] py-[1.1rem] rounded-[2.3rem] text-buttonChip border-[0.2rem] hover:text-white hover:border-transparent hover:bg-blue-primary`;
     const blackConfig = `w-fit h-fit px-[2.4rem] py-[1.8rem] rounded-[3rem] text-buttonRound text-white bg-black`;
+    const longConfig = `w-[35.3rem] h-fit px-[5.6rem] py-[2.8rem] rounded-[4.7rem] text-heading3 text-white bg-blue-primary`;
 
     let buttonStyle = '';
     switch (type) {
@@ -34,6 +35,8 @@ export function Button({
             break;
         case 'black':
             buttonStyle = blackConfig;
+        case 'long':
+            buttonStyle = longConfig;
     }
 
     return type === 'chip' ? ( // TODO - bugFix로 우선 컴포넌트 분기. 추후 개선

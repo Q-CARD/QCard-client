@@ -7,7 +7,8 @@ import { getAccountsLogout } from '@/api/accounts';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { isLoginAtom, userAtom } from '@/store/recoil';
 import defaultImage from '@/assets/icons/icon-default-profile.png';
-import { CONSTANTS, ZINDEX } from '@/constants';
+import { CONSTANTS } from '@/constants';
+import { deleteCookie } from 'cookies-next';
 
 interface ProfileModalProps {
     open: boolean;
@@ -35,14 +36,15 @@ export const ProfileModal = ({
         // TODO - logout api 연동
         try {
             const data = await getAccountsLogout();
+
             if (data) {
                 resetUser();
                 localStorage.removeItem(CONSTANTS.ACCESS_TOKEN);
+                localStorage.removeItem(CONSTANTS.REFRESH_TOKEN);
+                deleteCookie(CONSTANTS.ACCESS_TOKEN);
                 setIsLogin(false);
-
                 setOpen(false);
-
-                alert(data.message);
+                alert('로그아웃이 완료되었습니다.');
                 router.push('/');
             }
         } catch (e) {
@@ -56,7 +58,7 @@ export const ProfileModal = ({
 
     return (
         <div
-            className={`absolute top-[9.8rem] right-[16rem] w-[38rem] h-[26rem] pb-[2.9rem] bg-white rounded-[0.6rem] shadow-[0_4px_6px_0_rgba(0,0,0,0.10)] z-${ZINDEX[51]} flex flex-col items-center`}
+            className={`absolute top-[9.8rem] right-[16rem] w-[38rem] h-[26rem] pb-[2.9rem] bg-white rounded-[0.6rem] shadow-[0_4px_6px_0_rgba(0,0,0,0.10)] z-[51] flex flex-col items-center`}
             ref={modalRef}
         >
             <div
@@ -72,7 +74,11 @@ export const ProfileModal = ({
                     }}
                 >
                     <Image
-                        src={user.profileImg ?? defaultImage}
+                        src={
+                            user?.profileImg?.length > 0
+                                ? user.profileImg
+                                : defaultImage
+                        }
                         alt="profile-modal-image"
                         fill
                         sizes="6rem"
