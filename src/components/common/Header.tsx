@@ -25,8 +25,6 @@ export function Header() {
         isLoginToken = localStorage.getItem(CONSTANTS.ACCESS_TOKEN);
     }
 
-    console.log('isLoginToken', isLoginToken);
-
     // logout modal
     const [isProfileModalOpen, setIsProfileModalOpen] =
         useState<boolean>(false);
@@ -67,7 +65,11 @@ export function Header() {
                 onClick={() => setIsProfileModalOpen((prev) => !prev)}
             >
                 <Image
-                    src={user.profileImg ?? defaultImage}
+                    src={
+                        user?.profileImg.length > 0
+                            ? user.profileImg
+                            : defaultImage
+                    }
                     alt="profile-image"
                     fill
                     sizes="6rem"
@@ -116,7 +118,7 @@ export function Header() {
                     }}
                     className="object-cover"
                     sizes="155px"
-                    loading="lazy"
+                    //loading="lazy"
                 />
             </Link>
 

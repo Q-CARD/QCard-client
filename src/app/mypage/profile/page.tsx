@@ -88,7 +88,9 @@ export default function MyProfilePage() {
                         <Image
                             src={
                                 profileImgURL ||
-                                (user.profileImg ?? defaultImage)
+                                (user.profileImg.length > 0
+                                    ? user.profileImg
+                                    : defaultImage)
                             }
                             alt="profile-image"
                             fill
