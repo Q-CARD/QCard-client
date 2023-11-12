@@ -1,15 +1,13 @@
 'use server';
-import { NextRequest, NextResponse, NextFetchEvent } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { CONSTANTS } from './constants';
 
-// Limit the middleware to paths in matcher array.
 export const config = {
     matcher: [
         '/mypage/:path*',
         '/interview/question/:path*',
         '/interview/result/:path*',
         '/interview/followup/:path*',
-        // '/category/question/:path*', // TODO: 카테고리별 질문 리스트 화면 토큰 필요 여부 확인
         '/category/:path*',
     ],
 };
