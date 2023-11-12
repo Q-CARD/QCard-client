@@ -10,7 +10,7 @@ export const getAnswersMe = async (param: string) => {
     return await http.GET(`/answers/me`, { category: param });
 };
 
-// 특정 답변에 대한 수정 전송 - 안쓰임
+// 특정 답변에 대한 수정 전송 - 클라이언트
 export const putAnswer = async (answerId: number, content: string) => {
     return await http.PUT(`/answers/${answerId}`, { content: content });
 };
