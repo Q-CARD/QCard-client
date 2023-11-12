@@ -1,18 +1,21 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { userAtom, isLoginAtom } from '@/store/recoil';
 import { Button, Input } from '@/components/common';
 import ValidationMessage from '@/components/ValidationMessage';
-import { userAtom } from '@/store/recoil';
-import { getAccountsProfile, putAccountsProfile } from '@/api/accounts';
+
+import { deleteAccount, putAccountsProfile } from '@/api/accounts';
+import { postPresignedURL } from '@/api/presigned';
 import { BsCamera } from 'react-icons/bs';
 import defaultImage from '@/assets/icons/icon-default-profile.png';
-import { ERROR_MESSAGES, REGEX } from '@/constants';
-import { postPresignedURL } from '@/api/presigned';
+import { CONSTANTS, ERROR_MESSAGES, REGEX } from '@/constants';
+import { deleteCookie } from 'cookies-next';
 
 interface ProfileFormValues {
     nickname: string;
@@ -20,14 +23,15 @@ interface ProfileFormValues {
 }
 
 export default function MyProfilePage() {
-    const user = useRecoilValue(userAtom);
+    const [user, setUser] = useRecoilState(userAtom);
+    const setIsLogin = useSetRecoilState(isLoginAtom);
+    const router = useRouter();
 
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<ProfileFormValues>({
-        // defaultValues: async () => getAccountsProfile(),
         defaultValues: { nickname: user.nickname, email: user.email },
     });
 
@@ -35,7 +39,7 @@ export default function MyProfilePage() {
     const [domLoaded, setDomLoaded] = useState<boolean>(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [profileImgURL, setProfileImgURL] = useState<string>(''); // 미리보기용 임시 url
-    const [profileImgFile, setProfileImgFile] = useState<File>();
+    const [profileImgFile, setProfileImgFile] = useState<File>(); // 이미지 메타정보
     const [presignedUrl, setPresignedUrl] = useState<string>('');
     const [profileUploadUrl, setProfileUploadUrl] = useState<string>(''); // 업로드 결과로 받은 url
 
@@ -58,7 +62,7 @@ export default function MyProfilePage() {
         }
     };
 
-    // TODO - 이미지 업로드 api 연동
+    // onChange - 미리 보기 데이터만 업데이트
     const handleProfileImgChange = async (e: React.ChangeEvent) => {
         const imgMeta = (e.target as HTMLInputElement).files?.[0];
 
@@ -66,6 +70,7 @@ export default function MyProfilePage() {
             const fileReader = new FileReader();
             fileReader.readAsDataURL(imgMeta);
             fileReader.onload = (data) => {
+                // 미리보기
                 setProfileImgURL(
                     typeof data.target?.result === 'string'
                         ? data.target?.result
@@ -74,37 +79,46 @@ export default function MyProfilePage() {
                 setProfileImgFile(imgMeta);
             };
         }
+    };
 
-        const presignedUrl: string | undefined = await loadPresignedUrl(
-            imgMeta,
-        );
-
-        if (presignedUrl && imgMeta) {
+    const getPrifleUploadUrl = async (presignedUrl: string) => {
+        let profileUploadUrl;
+        if (presignedUrl && profileImgFile) {
             try {
                 const data = await fetch(presignedUrl, {
                     method: 'PUT',
-                    body: imgMeta,
+                    body: profileImgFile,
                     headers: new Headers({
-                        'Content-Type': imgMeta.type,
+                        'Content-Type': profileImgFile.type,
                     }),
                 });
 
                 if (data) {
+                    console.log('data', data);
                     setProfileUploadUrl(data.url.split('?')[0]);
-                    alert('프로필 정보가 수정되었습니다.');
+                    profileUploadUrl = data.url.split('?')[0];
                 }
             } catch (e) {
                 alert('프로필 이미지 등록에 실패했습니다.(2)');
             }
         }
+        return profileUploadUrl;
     };
 
-    // TODO - 프로필 수정 api 연동
     const handleSubmitProfile = async ({
         nickname,
         email,
     }: ProfileFormValues) => {
-        if (presignedUrl && profileImgFile) {
+        const presignedUrl: string | undefined = await loadPresignedUrl(
+            profileImgFile,
+        );
+        let profileUploadUrl = null;
+
+        if (presignedUrl) {
+            profileUploadUrl = await getPrifleUploadUrl(presignedUrl);
+        }
+
+        if (presignedUrl && profileImgFile && profileUploadUrl) {
             const payload = {
                 name: nickname,
                 email: email,
@@ -113,9 +127,15 @@ export default function MyProfilePage() {
 
             try {
                 const data = await putAccountsProfile(payload);
-
                 if (data) {
                     alert('프로필 정보가 수정되었습니다.');
+
+                    const updateProfile = {
+                        nickname: nickname,
+                        email: email,
+                        profileImg: profileUploadUrl,
+                    };
+                    setUser(updateProfile);
                 }
             } catch (e) {
                 alert('프로필 정보 수정에 실패했습니다.(3)');
@@ -124,8 +144,18 @@ export default function MyProfilePage() {
         }
     };
 
-    // TODO - 유저 탈퇴 api 연동 - 탈퇴 api 요청.
-    const handleDeleteUser = () => {};
+    const handleDeleteUser = async () => {
+        try {
+            const data = await deleteAccount();
+            if (data) {
+                localStorage.removeItem(CONSTANTS.ACCESS_TOKEN);
+                localStorage.removeItem(CONSTANTS.REFRESH_TOKEN);
+                deleteCookie(CONSTANTS.ACCESS_TOKEN);
+                setIsLogin(false);
+                router.replace('/');
+            }
+        } catch (e) {}
+    };
 
     return (
         <div className="w-full h-full">

@@ -8,14 +8,10 @@ import { Button } from './Button';
 import { ProfileModal } from './ProfileModal';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { isLoginAtom, userAtom } from '@/store/recoil';
-import { ZINDEX } from '@/constants';
 import Logo from '@/assets/logo.png';
 import defaultImage from '@/assets/icons/icon-default-profile.png';
 
 export function Header() {
-    // Link: <a>요소 확장 프리페칭 + 클라이언트 사이드 내비게이션
-    // useRouter: 프로그래밍 방식으로 라우트 변경 (브라우저 API 처럼 push, replace, reload 사용 가능)
-
     const pathname = usePathname();
     const isAuthPath = pathname.includes('auth');
     const isMyPagePath = pathname.includes('mypage');
@@ -61,7 +57,11 @@ export function Header() {
                 onClick={() => setIsProfileModalOpen((prev) => !prev)}
             >
                 <Image
-                    src={user.profileImg ?? defaultImage}
+                    src={
+                        user.profileImg.length > 0
+                            ? user.profileImg
+                            : defaultImage
+                    }
                     alt="profile-image"
                     fill
                     sizes="6rem"
@@ -87,7 +87,7 @@ export function Header() {
 
             setRightButton(RIGHTBUTTONS.signIn);
         }
-    }, [isLogin]);
+    }, [isLogin, user]);
 
     return (
         <header
