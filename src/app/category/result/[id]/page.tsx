@@ -38,10 +38,6 @@ export default function CategoryResultPage({
         try {
             const data = await getQuestionById(Number(params.id), 'SORT_HEART');
 
-            const myAnswer = data.answers.find((answer: IAnswerHearted) => {
-                return answer.isMine;
-            });
-
             const otherAnswers = data.answers.filter(
                 (answer: IAnswerHearted) => {
                     return !answer.isMine;
@@ -49,7 +45,7 @@ export default function CategoryResultPage({
             );
 
             setQuestionInfo(data.question);
-            setMyAnswer(myAnswer);
+            setMyAnswer(data.myAnswer);
             setGptAnswer(data.gpt);
             setOtherAnswersList(otherAnswers);
         } catch (e) {}
