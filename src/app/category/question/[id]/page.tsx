@@ -56,16 +56,16 @@ export default function CategoryQuestionPage({
                     break;
                 // 등록된 답변이 있는 경우
                 case 'put':
-                    data = await putAnswer(answerDetail[0].answerId, answer);
+                    data = await putAnswer(answerDetail.answerId, answer);
                     break;
             }
             return data;
         } catch (e) {}
     };
 
-    const submitAnswer = ({ answer }: any) => {
+    const submitAnswer = async ({ answer }: any) => {
         const method = answerDetail?.content?.length > 0 ? 'put' : 'post';
-        sendAnswer(answer, method);
+        await sendAnswer(answer, method);
 
         router.push(`/category/result/${params.id}`);
     };
