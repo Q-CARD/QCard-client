@@ -37,7 +37,7 @@ export default function CategoryQuestionPage({
             );
 
             setQuestionDetail(data.question);
-            setAnswerDetail(data.answers);
+            setAnswerDetail(data.myAnswer);
         } catch (e) {}
     };
 
@@ -64,7 +64,7 @@ export default function CategoryQuestionPage({
     };
 
     const submitAnswer = ({ answer }: any) => {
-        const method = answerDetail?.length > 0 ? 'put' : 'post';
+        const method = answerDetail?.content?.length > 0 ? 'put' : 'post';
         sendAnswer(answer, method);
 
         router.push(`/category/result/${params.id}`);
@@ -78,9 +78,7 @@ export default function CategoryQuestionPage({
                     <span>{questionDetail?.title}</span>
                 </div>
                 <Textarea
-                    defaultValue={
-                        (answerDetail && answerDetail[0]?.content) ?? ''
-                    }
+                    defaultValue={(answerDetail && answerDetail?.content) ?? ''}
                     placeholder="알고 있는 만큼 자세히 작성해 보세요."
                     register={register('answer', { required: true })}
                 />

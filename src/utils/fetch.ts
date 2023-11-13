@@ -31,17 +31,24 @@ type WretchError = Error & {
     json?: Object;
 };
 
+const removeToken = () => {
+    localStorage.removeItem(CONSTANTS.ACCESS_TOKEN);
+    localStorage.removeItem(CONSTANTS.REFRESH_TOKEN);
+    deleteCookie(CONSTANTS.ACCESS_TOKEN);
+    window.location.href = '/';
+};
+
 const logoutHandler = async () => {
     try {
         const data = await getAccountsLogout();
         if (data) {
-            localStorage.removeItem(CONSTANTS.ACCESS_TOKEN);
-            localStorage.removeItem(CONSTANTS.REFRESH_TOKEN);
-            deleteCookie(CONSTANTS.ACCESS_TOKEN);
-            window.location.href = '/';
+            // 토큰 제거 후 홈으로 이동
+            removeToken();
         }
     } catch (e) {
+        // refresh token 만료 후 로그아웃 api에서 에러가 발생한 경우에도 토큰 제거 후 홈으로 이동
         console.error(e);
+        removeToken();
     }
 };
 
@@ -51,6 +58,7 @@ const authErrorHandler = async (error: WretchError, originalRequest: any) => {
     try {
         data = await getAccountsReissue();
     } catch (e) {
+        // reissue에서 문제가 발생한 경우에만 로그아웃 api 미호출
         logoutHandler();
     }
 
