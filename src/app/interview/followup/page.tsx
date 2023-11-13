@@ -134,7 +134,7 @@ export default function InterviewFollowupPage() {
                     {questionCount}. 꼬리 질문
                 </span>
             </div>
-            <form onSubmit={handleSubmit(submitAnswer)}>
+            <form onSubmit={handleSubmit(submitAnswer)} className="w-full">
                 <div className="flex flex-col bg-white items-center rounded-[1rem] px-[4.9rem] py-[4.9rem] gap-[3.6rem] self-stretch">
                     <h1 className="text-heading3 text-grey-5 break-keep">
                         {questionList?.question_model?.title}
