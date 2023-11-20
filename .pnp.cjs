@@ -32,6 +32,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@mdx-js/react", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:2.3.0"],\
             ["@next/mdx", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:13.5.2"],\
             ["@tanstack/react-query", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:4.35.3"],\
+            ["@types/gtag.js", "npm:0.0.17"],\
             ["@types/mdx", "npm:2.0.7"],\
             ["@types/node", "npm:20.5.6"],\
             ["@types/react", "npm:18.2.21"],\
@@ -615,6 +616,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/estree-jsx", "npm:1.0.0"],\
             ["@types/estree", "npm:1.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/gtag.js", [\
+        ["npm:0.0.17", {\
+          "packageLocation": "./.yarn/cache/@types-gtag.js-npm-0.0.17-9bd7666382-9ba341f7ad.zip/node_modules/@types/gtag.js/",\
+          "packageDependencies": [\
+            ["@types/gtag.js", "npm:0.0.17"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -5426,6 +5436,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@mdx-js/react", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:2.3.0"],\
             ["@next/mdx", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:13.5.2"],\
             ["@tanstack/react-query", "virtual:87ce6f7a1d8d8c34fae9da93f76715b792efa8882f2510705a102d5d9a35540a3059bc3770af538554a993623275742f02ce970e870a0b7f7f724747b6d7b35f#npm:4.35.3"],\
+            ["@types/gtag.js", "npm:0.0.17"],\
             ["@types/mdx", "npm:2.0.7"],\
             ["@types/node", "npm:20.5.6"],\
             ["@types/react", "npm:18.2.21"],\

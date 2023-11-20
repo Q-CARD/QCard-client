@@ -429,6 +429,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/gtag.js@npm:^0.0.17":
+  version: 0.0.17
+  resolution: "@types/gtag.js@npm:0.0.17"
+  checksum: 9ba341f7ad8b4539606956af1592027dc7846a2f39950aa11f4b987fd959444777f7364d1089871c80019f011cb7b7a523e2f816e8b6fe19e66db0e82e6cbd88
+  languageName: node
+  linkType: hard
+
 "@types/hast@npm:^2.0.0":
   version: 2.3.6
   resolution: "@types/hast@npm:2.3.6"
@@ -4489,6 +4496,7 @@ __metadata:
     "@mdx-js/react": ^2.3.0
     "@next/mdx": ^13.4.19
     "@tanstack/react-query": ^4.33.0
+    "@types/gtag.js": ^0.0.17
     "@types/mdx": ^2.0.7
     "@types/node": 20.5.6
     "@types/react": 18.2.21
